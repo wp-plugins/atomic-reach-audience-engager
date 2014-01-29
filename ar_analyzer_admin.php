@@ -30,11 +30,11 @@
 ?>
 
 <div class="wrap">
-  <?php echo "<h2>" . __( 'Atomic Reach Post Optimizer Configuration', 'aranalyzer_trdom' ) . "</h2>"; ?>
+  <?php echo "<h2>" . __( 'Atomic Reach Audience Engager Configuration', 'aranalyzer_trdom' ) . "</h2>"; ?>
   
   <form name="aranalyzer_form" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
     <input type="hidden" name="aranalyzer_saved" value="Y">
-    <?php echo "<h4>" . __( 'Atomic Reach Post Optimizer Settings', 'aranalyzer_trdom' ) . "</h4>"; ?>
+    <?php echo "<h4>" . __( 'Atomic Reach Audience Engager Settings', 'aranalyzer_trdom' ) . "</h4>"; ?>
     
     <div id="ar-btns-state">
 <?php if( (empty($consumerkey) || empty($secretkey)) || ($aranalyzer_state_keys === 'FALSE' || empty($aranalyzer_state_keys)) ): ?>

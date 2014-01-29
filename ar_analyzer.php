@@ -46,7 +46,7 @@ Author URI: http://www.atomicreach.com
     // add a meta box for each of the wordpress page types: posts and pages
     foreach (array('post','page') as $type) 
     {
-      add_meta_box('aranalyzer_metabox', 'Atomic Reach Optimizer', 'aranalyzer_metabox_setup', $type, 'normal', 'high');
+      add_meta_box('aranalyzer_metabox', 'Atomic Reach Audience Engager', 'aranalyzer_metabox_setup', $type, 'normal', 'high');
     }
   }
   
@@ -168,7 +168,7 @@ Author URI: http://www.atomicreach.com
     wp_enqueue_script('ar_simple.modal_js', MY_PLUGIN_PATH . 'modal/js/jquery.simplemodal.js', array( 'jquery'));
     wp_enqueue_script('ar_modal.windows_js', MY_PLUGIN_PATH . 'modal/js/modal.windows.js', array( 'jquery'));
     wp_enqueue_style('ar_modal_css', MY_PLUGIN_PATH . '/modal/css/modal-windows.css');
-    add_menu_page("Atomic Reach Post Optimizer Configuration", "AR Optimizer", 1, "ar-analyzer-admin", "aranalyzer_admin", plugin_dir_url( __FILE__ ) . "custom/ar-logo-icon.gif");
+    add_menu_page("Atomic Reach Audience Engager Configuration", "Audience Engager", 1, "ar-analyzer-admin", "aranalyzer_admin", plugin_dir_url( __FILE__ ) . "custom/ar-logo-icon.gif");
   }
   
   add_action('admin_menu', 'aranalyzer_admin_actions');
