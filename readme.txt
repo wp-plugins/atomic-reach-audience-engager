@@ -12,7 +12,9 @@ Optimizing content for your target audience has never been easier.
 
 == Description ==
 
-Get your content scored to see how you can create remarkable content for your target audience. Sign up at [score.atomicreach.com](http://score.atomicreach.com) so that we can run your blog through our content optimization engine. Paired with this plugin, you will gain critical insights to help engage your target audience and amplify your content with every post.  The plugin sends data insights to your Atomic Reach account (at [score.atomicreach.com](http://score.atomicreach.com)) and helps you write relevant content targeted to your online audience(s), maximizing your performance for true engagement
+Get your content scored to see how you can create remarkable content for your target audience. Sign up at [score.atomicreach.com](http://score.atomicreach.com) so that we can run your blog through our content optimization engine. Paired with this plugin, you will gain critical insights to help engage your target audience and amplify your content with every post. 
+= Note =
+The plugin sends data insights to your Atomic Reach account (at [score.atomicreach.com](http://score.atomicreach.com)) and helps you write relevant content targeted to your online audience(s), maximizing your performance for true engagement
 
 This is not your grandma's SEO tool. We leave the meta tagging to the SEO dinosaurs.
 We help you produce and structure engaging content for real people, not search engine page rankings.
@@ -20,11 +22,6 @@ We help you produce and structure engaging content for real people, not search e
 The Atomic Reach plugin analyzes your content as you're writing it, highlighting critical areas to help you improve the performance of your article before you hit publish.
 
 **So how good is this plugin?** Glad you asked. People who use our content optimization engine generate a 75% increase in audience engagement! And here's a bonus: this plugin is free for bloggers!
-
-= Note: =
-The plugin sends data insights to your Atomic Reach account (at score.atomicreach.com) and helps you write relevant content targeted to your online audience(s), maximizing your performance for true engagement. It is important that you run your blog through the score.atomicreach.com account so that we can run an analysis on your historical content and provide important audience insights.
-
-So how good is this plugin? Glad you asked. People who use our content optimization engine generate a 75% increase in audience engagement! And here's a bonus: this plugin is free for bloggers!
 
 == Installation ==
 
