@@ -2,7 +2,7 @@
 /*
 Plugin Name: Atomic Reach Audience Engager
 Plugin URI: http://www.atomicreach.com
-Description: Atomic Reach Plugin for optimizing posts content to help you maximize your content's performance for true engagement every time.
+Description: Optimizing content for your target audience has never been easier.
 Version: 1.5.5
 Author URI: http://www.atomicreach.com
 */
