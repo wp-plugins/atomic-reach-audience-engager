@@ -61,7 +61,7 @@ jQuery(document).ready(function($) {
 
         text_paragraphs = $('#content_ifr').contents().find(domExpression);
         $.each(paragraphs, function(index, value) {
-          if (value == 'HIT')
+          if (value == 'HIT' || value == 'UNAVAILABLE')
             return;
           type = (value == 'TOO SIMPLE')?'too-simple':'too-complex';
           $(text_paragraphs[index]).wrapInner("<span class='highlight-so "+type+"'></span>");

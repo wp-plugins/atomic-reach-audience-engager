@@ -38,6 +38,11 @@
     
     <div id="ar-btns-state">
 <?php if( (empty($consumerkey) || empty($secretkey)) || ($aranalyzer_state_keys === 'FALSE' || empty($aranalyzer_state_keys)) ): ?>
+        
+        <div id="arInfoMsg"><p>This plugin works with the Atomic Reach Scoring Engine. Paired together, creators are able to analyze their historical content with our Scoring Engine and realize their Atomic Score, through a series of proprietary measures based on their target audience.</p>
+                            <p>The Atomic Reach Audience Engager™ allows content creators to optimize their work before it’s published in real-time so that it is best suited for their target audience and delivers maximized engagement everywhere that content is published.</p>
+                            <p>Make sure you create an account at <a href="http://score.atomicreach.com/" target="_blank">score.atomicreach.com</a>.</p></div>
+        
     <p><a href="#" class="ar_btn-login mw">Connect to AR</a></p>
     <p>To get the secret and consumer keys click on the Connect to AR button</p>  
 <?php else:?>
