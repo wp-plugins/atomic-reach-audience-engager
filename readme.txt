@@ -4,7 +4,7 @@ Donate link: http://www.atomicreach.com
 Tags: seo, post, content, quality, optimization, optimize, audience, sophistication, engagement, atomic reach
 Requires at least: 3.4
 Tested up to: 3.8.x
-Stable tag: trunk
+Stable tag: 1.6.25
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,13 +35,13 @@ The Atomic Reach plugin analyzes your content as you're writing it, highlighting
 = Do I need an Atomic Reach account to use the plugin? =
 Yes, an Atomic Reach account is required for the plugin to work! Create an account [here](http://score.atomicreach.com/) and make sure to submit your RSS feed to unlock the full benefits of the plugin. Follow steps 1 and 3 in this [guide](http://www.atomicreach.com/wp-content/uploads/2013/11/Atomic-Reach-Scoring-document-1.pdf) to learn how to create an account and submit your content.
 
-= The Analyze This Post’s Content box is checked, but why is my content not getting analyzed? =
+= The Analyze This Postâ€™s Content box is checked, but why is my content not getting analyzed? =
 
-After the Analyze This Post’s Content box is checked, you must click the Save Draft button (or if your content is already published click the Update button) to begin the analysis. To learn more about how the plugin works click [here](http://blog.atomicreach.com/how-to-create-content-that-your-target-audience-will-love-with-our-wordpress-plugin/).
+After the Analyze This Postâ€™s Content box is checked, you must click the Save Draft button (or if your content is already published click the Update button) to begin the analysis. To learn more about how the plugin works click [here](http://blog.atomicreach.com/how-to-create-content-that-your-target-audience-will-love-with-our-wordpress-plugin/).
 
 = Do I need to publish my content for it to get analyzed? =
 
-No! We’ve developed an algorithm that can determine the performance of your content before it’s published. In order to get your content analyzed, simply save it as a draft. The plugin will then provide you with feedback to help optimize your content in realtime. To learn more about how to use the plugin [click here]( http://www.atomicreach.com/install-atomic-reach-wordpress-plugin-2/#slideshare).
+No! Weâ€™ve developed an algorithm that can determine the performance of your content before itâ€™s published. In order to get your content analyzed, simply save it as a draft. The plugin will then provide you with feedback to help optimize your content in realtime. To learn more about how to use the plugin [click here]( http://www.atomicreach.com/install-atomic-reach-wordpress-plugin-2/#slideshare).
 
 = Is there a way to highlight areas for improvement within the text? = 
 
@@ -53,11 +53,11 @@ You content is optimized when your score bar reaches green. After our analysis o
 
 = How do I improve my score? How do I know what to edit? =
 
-After your content is analyzed, the results box will indicate the strengths and weaknesses of your post. The plugin will provide suggestions to help you through the optimization process. Improving these weak areas will improve your content’s quality and increase your score. 
+After your content is analyzed, the results box will indicate the strengths and weaknesses of your post. The plugin will provide suggestions to help you through the optimization process. Improving these weak areas will improve your contentâ€™s quality and increase your score. 
 
-=  I’ve made the changes based on the analysis, now what? =
+=  Iâ€™ve made the changes based on the analysis, now what? =
 
-You can rescore your content by clicking the Save Draft button and your new assessment will be provided within seconds. You can do this as often as you like until you’re happy with your assessment.
+You can rescore your content by clicking the Save Draft button and your new assessment will be provided within seconds. You can do this as often as you like until youâ€™re happy with your assessment.
 
 = I still need help, who should I talk to? =
 Feel free to [email us](http://www.atomicreach.com/contact-us/) anytime.
@@ -69,6 +69,10 @@ Feel free to [email us](http://www.atomicreach.com/contact-us/) anytime.
 3. screenshot-3.png
 
 == Changelog ==
+1.6.25 (2014.02.03)
+- Major update to UI
+- API improvements
+
 1.5.51 (2014.01.21)
 - fixed readme.txt file
 

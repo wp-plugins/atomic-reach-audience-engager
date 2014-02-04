@@ -3,8 +3,9 @@
 Plugin Name: Atomic Reach Audience Engager
 Plugin URI: http://www.atomicreach.com
 Description: Optimizing content for your target audience has never been easier.
-Version: 1.5.5
+Version: 1.6.25.201402040154
 Author URI: http://www.atomicreach.com
+Author: atomicreach
 */
   if (!session_id()) {
       session_start();
@@ -20,8 +21,8 @@ Author URI: http://www.atomicreach.com
   // define('API_HOST', 'http://api.arv3.local');
   // define('AR_URL', 'http://arv3.local'); 
   /* Staging */
-  // define('API_HOST', 'https://api.dev.arv3.atomicreach.com'); // with SSL
-  // define('AR_URL', 'http://dev.arv3.atomicreach.com');
+//   define('API_HOST', 'https://api.dev.arv3.atomicreach.com'); // with SSL
+//   define('AR_URL', 'http://dev.arv3.atomicreach.com');
   
   /* Production */
   define('API_HOST', 'https://api.score.atomicreach.com'); // with SSL
@@ -46,7 +47,7 @@ Author URI: http://www.atomicreach.com
     // add a meta box for each of the wordpress page types: posts and pages
     foreach (array('post','page') as $type) 
     {
-      add_meta_box('aranalyzer_metabox', 'Atomic Reach Audience Engager', 'aranalyzer_metabox_setup', $type, 'normal', 'high');
+      add_meta_box('aranalyzer_metabox', 'Atomic Reach Audience Engager', 'aranalyzer_metabox_setup', $type, 'side', 'high');
     }
   }
   
@@ -71,10 +72,12 @@ Author URI: http://www.atomicreach.com
         
         echo '<div style="background-color: #FFFFE0; border: 1px solid #E6DB55; padding: 0 0 0 6px;font-family:sans-serif; font-size:12px;">
                    <p id="aranalizerOk">The secret key and consumer key have being updated.</p>
+                   <p>Close this window to continue</p>
               </div>';
       }else{
         echo '<div style="background-color:#FFEBE8;; border: 1px solid #CC0000; padding: 0 0 0 6px;font-family:sans-serif; font-size:12px;">
                 <p>The secret key and consumer key have not being updated.</p>
+                <p>close this window to continue</p>
               </div>';
       }
       exit(); 
@@ -321,7 +324,7 @@ if ( is_admin() ) {
    }else{
      $aColorText = array(
                      'arBarColor' => 'green',
-                     'arText'     => 'Content refinements are suggested <br />To update this page analysis, save as draft or update and check this tab again.',
+                     'arText'     => 'Content refinements are suggested',
                      'scoring' => $scoring,
                    );       
    }
@@ -329,5 +332,82 @@ if ( is_admin() ) {
    return $aColorText;
    
   }
+  /** plugin Tour **/
+/**
+ * Adds a simple WordPress pointer to Settings menu
+ */
+ 
+function ar_enqueue_pointer_script_style( $hook_suffix ) {
+	
+	// Assume pointer shouldn't be shown
+	$enqueue_pointer_script_style = false;
+
+	// Get array list of dismissed pointers for current user and convert it to array
+	$dismissed_pointers = explode( ',', get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
+
+	// Check if our pointer is not among dismissed ones
+	if( !in_array( 'ar_settings_pointer', $dismissed_pointers ) ) {
+		$enqueue_pointer_script_style = true;
+		
+		// Add footer scripts using callback function
+		add_action( 'admin_print_footer_scripts', 'ar_pointer_print_scripts' );
+	}
+
+	// Enqueue pointer CSS and JS files, if needed
+	if( $enqueue_pointer_script_style ) {
+		wp_enqueue_style( 'wp-pointer' );
+		wp_enqueue_script( 'wp-pointer' );
+	}
+	
+}
+add_action( 'admin_enqueue_scripts', 'ar_enqueue_pointer_script_style' );
+
+function ar_pointer_print_scripts() {
+
+	$pointer_content  = "<h3>Atomic Reach Audience Engager!</h3>";
+	$pointer_content .= "<p>Click here to connect your plugin to the Atomic Reach Scoring Engine.</p>";
+	?>
+	
+	<script type="text/javascript">
+	//<![CDATA[
+	jQuery(document).ready( function($) {
+		$('#toplevel_page_ar-analyzer-admin').pointer({
+			content:		'<?php echo $pointer_content; ?>',
+			position:		{
+								edge:	'left', // arrow direction
+								align:	'center' // vertical alignment
+							},
+			pointerWidth:	350,
+			close:			function() {
+								$.post( ajaxurl, {
+										pointer: 'ar_settings_pointer', // pointer ID
+										action: 'dismiss-wp-pointer'
+								});
+							}
+		}).pointer('open');
+	});
+	//]]>
+	</script>
+
+<?php
+}
+/** plugin Tour **/
+
+/**
+ * Add action links in Plugins table
+ */
+ 
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'atomicreach_plugin_action_links' );
+function atomicreach_plugin_action_links( $links ) {
+
+	return array_merge(
+		array(
+			'settings' => '<a href="' . admin_url( 'admin.php?page=ar-analyzer-admin' ) . '">' . __( 'Settings', 'atomicreach' ) . '</a>'
+		),
+		$links
+	);
+
+}
+
    
 ?>
