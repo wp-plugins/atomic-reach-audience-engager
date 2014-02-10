@@ -1,10 +1,10 @@
-=== Atomic Reach Audience Engager===
+===Atomic Engager===
 Contributors: atomicreach
 Donate link: http://www.atomicreach.com
 Tags: seo, post, content, quality, optimization, optimize, audience, sophistication, engagement, atomic reach
 Requires at least: 3.4
 Tested up to: 3.8.x
-Stable tag: 1.6.25
+Stable tag: 1.6.28
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,9 @@ Feel free to [email us](http://www.atomicreach.com/contact-us/) anytime.
 3. screenshot-3.png
 
 == Changelog ==
+1.6.28 (2014.02.10)
+- minor UI updates
+
 1.6.25 (2014.02.03)
 - Major update to UI
 - API improvements

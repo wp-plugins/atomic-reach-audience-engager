@@ -1,9 +1,9 @@
 <?php 
 /*
-Plugin Name: Atomic Reach Audience Engager
+Plugin Name: Atomic Engager
 Plugin URI: http://www.atomicreach.com
 Description: Optimizing content for your target audience has never been easier.
-Version: 1.6.25
+Version: 1.6.28
 Author URI: http://www.atomicreach.com
 Author: atomicreach
 */
@@ -47,7 +47,7 @@ Author: atomicreach
     // add a meta box for each of the wordpress page types: posts and pages
     foreach (array('post','page') as $type) 
     {
-      add_meta_box('aranalyzer_metabox', 'Atomic Reach Audience Engager', 'aranalyzer_metabox_setup', $type, 'side', 'high');
+      add_meta_box('aranalyzer_metabox', 'Atomic Engager', 'aranalyzer_metabox_setup', $type, 'side', 'high');
     }
   }
   
@@ -171,7 +171,7 @@ Author: atomicreach
     wp_enqueue_script('ar_simple.modal_js', MY_PLUGIN_PATH . 'modal/js/jquery.simplemodal.js', array( 'jquery'));
     wp_enqueue_script('ar_modal.windows_js', MY_PLUGIN_PATH . 'modal/js/modal.windows.js', array( 'jquery'));
     wp_enqueue_style('ar_modal_css', MY_PLUGIN_PATH . '/modal/css/modal-windows.css');
-    add_menu_page("Atomic Reach Audience Engager Configuration", "Audience Engager", 1, "ar-analyzer-admin", "aranalyzer_admin", plugin_dir_url( __FILE__ ) . "custom/ar-logo-icon.gif");
+    add_menu_page("Atomic Engager Configuration", "Atomic Engager", 1, "ar-analyzer-admin", "aranalyzer_admin", plugin_dir_url( __FILE__ ) . "custom/ar-logo-icon.gif");
   }
   
   add_action('admin_menu', 'aranalyzer_admin_actions');
@@ -364,7 +364,7 @@ add_action( 'admin_enqueue_scripts', 'ar_enqueue_pointer_script_style' );
 
 function ar_pointer_print_scripts() {
 
-	$pointer_content  = "<h3>Atomic Reach Audience Engager!</h3>";
+	$pointer_content  = "<h3>Atomic Engager!</h3>";
 	$pointer_content .= "<p>Click here to connect your plugin to the Atomic Reach Scoring Engine.</p>";
 	?>
 	

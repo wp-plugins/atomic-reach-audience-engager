@@ -110,7 +110,7 @@ if ($test) {
                     <?php if ($scoring->data->analysis->gm->total > 0): ?>
                         <li>
                             <input type="checkbox" id="chkgm" name="chk"value="false">
-                            <label for="chkgm">Grammar Mistakes</label>
+                            <label for="chkgm">Grammar Insights</label>
                         </li>
                     <?php endif; ?>
                     <?php if ($scoring->data->analysis->lc->invalid > 0): ?>
@@ -339,9 +339,9 @@ if ($test) {
 
                                     <?php if ($scoring->data->analysis->gm->total > 0): ?>
                                         <?php if ($scoring->data->analysis->gm->total == 1): ?>
-                                            <div><a href="#gm">There is <?php echo $scoring->data->analysis->gm->total; ?> grammar error.</a></div>
+                                            <div><a href="#gm">There is <?php echo $scoring->data->analysis->gm->total; ?> grammar insight.</a></div>
                                         <?php else: ?>
-                                            <div><a href="#gm">There are <?php echo $scoring->data->analysis->gm->total; ?> grammar errors.</a></div>
+                                            <div><a href="#gm">There are <?php echo $scoring->data->analysis->gm->total; ?> grammar insights.</a></div>
                 <?php endif; ?>
                                         <div>
                                             <ul class="details grammar-mistakes">
@@ -391,7 +391,7 @@ if ($test) {
                         </div><!-- end linguistic -->
                         
                         <div id="ar_sophistication" class="arMeasureBlock">
-                            <h3>Audience Match</h3>
+                            <h3>Audience Elements</h3>
                             <ul class="ar_spritelist" id="accordion">
                                 <!-- Audience Match -->
                                 <?php if ($scoring->data->analysis->so === 'UNAVAILABLE'): ?>

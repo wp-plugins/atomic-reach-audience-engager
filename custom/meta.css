@@ -471,10 +471,6 @@ padding-top: 0 !important;}
     background-color:#D5D5D5;
 }hr.ar-uniquenness {
     width: 90%;
-}
-#aranalyzer_metabox h3.hndle span{
-    width: 125px;
-    line-height: 25px;
 }.ar_noIcon > li:before {
     content: none !important;
 }.ar-thumbsUp {
@@ -495,6 +491,6 @@ padding-top: 0 !important;}
     padding: 0 7px;
 }#arInoMsg p{
     font-size: 14px;
-}#ar_structure > h3 {
-    cursor: default;
+}.arMeasureBlock > h3 {
+    cursor: default !important;
 }
