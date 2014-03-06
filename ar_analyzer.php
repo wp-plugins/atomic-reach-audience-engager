@@ -3,7 +3,7 @@
 Plugin Name: Atomic Engager
 Plugin URI: http://www.atomicreach.com
 Description: Optimizing content for your target audience has never been easier.
-Version: 1.6.28
+Version: 1.6.50
 Author URI: http://www.atomicreach.com
 Author: atomicreach
 */
@@ -16,8 +16,8 @@ Author: atomicreach
   define('MY_PLUGIN_PATH', plugins_url('/', __FILE__));
   
   /* Development */
-  // define('API_HOST', 'http://api.probar.atomicreach.com');
-  // define('AR_URL', 'http://probar.atomicreach.com'); 
+//   define('API_HOST', 'http://api.probar.atomicreach.com');
+//   define('AR_URL', 'http://probar.atomicreach.com'); 
   // define('API_HOST', 'http://api.arv3.local');
   // define('AR_URL', 'http://arv3.local'); 
   /* Staging */
@@ -40,6 +40,10 @@ Author: atomicreach
     wp_enqueue_script('ar_meta_js', MY_PLUGIN_PATH . '/custom/meta.js', array( 'jquery'));
     wp_enqueue_style('ar_meta_css', MY_PLUGIN_PATH . '/custom/meta.css');
     wp_enqueue_script('ar_highlightRegex_js', MY_PLUGIN_PATH . '/highlightRegex/highlightRegex.js', array( 'jquery'));
+    
+    // thick box
+    wp_enqueue_script('thickbox',null,array('jquery'));
+              wp_enqueue_style('thickbox.css', '/'.WPINC.'/js/thickbox/thickbox.css', null, '1.0');
         
     // review the function reference for parameter details
     // http://codex.wordpress.org/Function_Reference/add_meta_box
@@ -213,6 +217,8 @@ Author: atomicreach
       $consumerKey = get_option('aranalyzer_consumerkey');
       $secretKey = get_option('aranalyzer_secretkey');   
       $scoringObj = aranalyzer_api_getmetadata($consumerKey, $secretKey, $title, $content, $segmentId);
+      
+  
 
       // delete_post_meta($post_ID, '_ar_api_status');
       update_option('aranalyzer_state_keys', 'TRUE');

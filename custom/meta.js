@@ -37,8 +37,11 @@ jQuery(document).ready(function($) {
    });
    
      
-  $('#chksp').change(function() {    
+  $('#chksp, #chksp2').change(function() {    
       if($(this).is(":checked")) {
+          
+          console.log("button clicked");
+          
          $('#content_ifr').contents().highlightRegex(regexSm, {
           tagType:   'span',
           className: 'highlight-sp',

@@ -62,7 +62,7 @@ jQuery(function ($) {
 				{top:"-" + (d.container.height() + 20)},
 				500,
 				function () {
-				  //  urlcb = d.container[0].baseURI // + '&modekeys=true'
+//				    urlcb = d.container[0].baseURI + "" + '&modekeys=true'
 				    urlcb = window.location.protocol + "//" + window.location.host + window.location.pathname + '?page=ar-analyzer-admin';
 				    var dataString = '&modekeys=true';
             $.ajax({
