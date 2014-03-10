@@ -4,13 +4,7 @@ $light_blue = '#91c7f9';
 $light_orange = '#FFA20C';
 
 // this is to make test without calling to the API
-$test = false;
-    
-      
-    
-      
-      
-      
+$test = false;      
 if ($test) {
     include('metabox-harcoded.php');
 } else {
@@ -377,16 +371,16 @@ if ($test) {
                                     }
                                     // url
                                     if (isset($value->url) &&!empty($value->url)) {
-                                    $ul_gm .= '<li><a class="toggle-link mw" href="' . $value->url . '" target="_blank">See explanation</a></li>';
+                                    $ul_gm .= '<li><a class="toggle-link" href="' . $value->url . '" target="_blank">See explanation</a></li>';
                                     }
                           ?>          
                                     
-                                    <div id="mw-modal-content">
+          <!--                          <div id="mw-modal-content">
   <div class="close"><a href="#" class="simplemodal-close">X</a></div>
   <div id="mw-modal-data">
-   <iframe id="AtomicReachLogin" src="<?php echo $value->url ; ?>" width="800" height="415" scrolling="no"></iframe> 
+   <iframe id="AtomicReachLogin" src="<?php // echo $value->url ; ?>" width="800" height="415" scrolling="no"></iframe> 
   </div>
-</div>
+</div>-->
                             <?php        
                                     
                                     
