@@ -181,6 +181,14 @@ Author: atomicreach
   add_action('admin_menu', 'aranalyzer_admin_actions');
 
   function aranalyzer_review($post_ID) {
+   // code by Sergio
+
+	global $flag;
+	if($flag == 1){
+	 return;
+	}
+	$flag = 1;
+   // End Sergio Code
     
    // if (!session_id()) {
        // session_start();
