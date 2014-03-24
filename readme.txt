@@ -12,16 +12,11 @@ Optimizing content for your target audience has never been easier.
 
 == Description ==
 
-Get your content scored to see how you can create remarkable content for your target audience. Sign up at [score.atomicreach.com](http://score.atomicreach.com) so that we can run your blog through our content optimization engine. Paired with this plugin, you will gain critical insights to help engage your target audience and amplify your content with every post. 
+The Atomic Audience Engager™ is a diagnostic tool for your CMS to help you take the guesswork out of perfecting your content for your target audience.
+Watch your content engage a larger audience. We've seen amazing results with significant jumps in engagement across web and social metrics that will get you really excited about creating content for your audience. 
+Not only will we tell you about your actual results, we'll let you know who your audience is, where they read your content, and when they are reading it. That's some valuable information!
 = Note =
-The plugin sends data insights to your Atomic Reach account (at [score.atomicreach.com](http://score.atomicreach.com)) and helps you write relevant content targeted to your online audience(s), maximizing your performance for true engagement
-
-This is not your grandma's SEO tool. We leave the meta tagging to the SEO dinosaurs.
-We help you produce and structure engaging content for real people, not search engine page rankings.
-
-The Atomic Reach plugin analyzes your content as you're writing it, highlighting critical areas to help you improve the performance of your article before you hit publish.
-
-**So how good is this plugin?** Glad you asked. People who use our content optimization engine generate a 75% increase in audience engagement! And here's a bonus: this plugin is free for bloggers!
+The plugin sends data insights to your Atomic Reach account (at [score.atomicreach.com](http://score.atomicreach.com)) and helps you write relevant content targeted to your online audience(s), maximizing your performance for true engagement.  Sign up at [score.atomicreach.com](http://score.atomicreach.com) to get Atomic Insights.
 
 == Installation ==
 
