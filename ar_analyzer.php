@@ -3,7 +3,7 @@
 Plugin Name: Atomic Engager
 Plugin URI: http://www.atomicreach.com
 Description: Optimizing content for your target audience has never been easier.
-Version: 1.6.80
+Version: 1.6.85
 Author URI: http://www.atomicreach.com
 Author: atomicreach
 */
@@ -181,12 +181,15 @@ Author: atomicreach
   add_action('admin_menu', 'aranalyzer_admin_actions');
 
   function aranalyzer_review($post_ID) {
-   // code by Sergio
+  // code by Sergio
+global $wp_version;
+if( version_compare( $wp_version, '3.8', '<') ) {
 	global $flag;
 	if($flag != 1){
    		$flag=1;
    		return;
 	}
+}
    // End Sergio Code
     
    // if (!session_id()) {
