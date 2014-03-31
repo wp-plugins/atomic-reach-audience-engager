@@ -336,18 +336,19 @@ if ($test) {
                                 <?php
                                 // states: passed (green) - warning (yellow) - error (red)
                                 $ms = $scoring->data->analysis->ln->measured->sentences;
-                                $rs = $scoring->data->analysis->ln->recommended->sentences;
+                                $rsMin = $scoring->data->analysis->ln->recommended->sentencesMin;
+								$rsMax = $scoring->data->analysis->ln->recommended->sentencesMax;
                                 // $state = arnanlyzer_rsl_state($ms, $rs);
                                 $state = strtolower($scoring->data->analysis->ln->state);
                                 switch ($state) {
                                     case 'green':
-                                        echo '<li class="ar_checkmarks_passed"><div>Length of post is ' . $ms . ' sentences, which meets the minimum recommended length of ' . $rs . '-75 sentences.</div></li>';
+                                        echo '<li class="ar_checkmarks_passed"><div>Length of post is ' . $ms . ' sentences, which meets the minimum recommended length of ' . $rsMin . ' - '. $rsMax .' sentences.</div></li>';
                                         break;
                                     case 'yellow':
-                                        echo '<li class="ar_checkmarks_warning"><div>Length of post is ' . $ms . ' sentences. We recommend a range of ' . $rs . '-75 sentences.</div></li>';
+                                        echo '<li class="ar_checkmarks_warning"><div>Length of post is ' . $ms . ' sentences. We recommend a range of ' . $rsMin . ' - '. $rsMax .' sentences.</div></li>';
                                         break;
                                     case 'red':
-                                        echo '<li class="ar_checkmarks_error"><div>Length of post is ' . $ms . ' sentences. We recommend a range of ' . $rs . '-75 sentences.</div></li>';
+                                        echo '<li class="ar_checkmarks_error"><div>Length of post is ' . $ms . ' sentences. We recommend a range of ' . $rsMin . ' - '. $rsMax .' sentences.</div></li>';
                                         break;
                                 }
                                 ?>
@@ -523,18 +524,18 @@ if ($test) {
 
             <?php
          //   Display similar articles
-            if (is_array($scoring->data->analysis->su->similar)) {
+         //   if (is_array($scoring->data->analysis->su->similar)) {
                 ?>
-                                    <h4 style='color: #000000;'>Similar Articles:</h4>
-                                    <ol>
-                                    <?php foreach ($scoring->data->analysis->su->similar AS $article) { ?>
-                                            <li><a href="<?php echo $article->url; ?>" target="_blank"><?php echo $article->title; ?></a></li>
-                                        <?php } ?>
-                                    </ol>
+                                <!--    <h4 style='color: #000000;'>Similar Articles:</h4> 
+                                    <ol>  -->
+                                    <?php // foreach ($scoring->data->analysis->su->similar AS $article) { ?>
+                                    <!--        <li><a href="<?php // echo $article->url; ?>" target="_blank"><?php // echo $article->title; ?></a></li> -->
+                                        <?php // } ?>
+                                <!--    </ol>   -->
                                         <?php
-                                    } else {
-                                        echo 'no similar article found!!';
-                                    }
+                                //    } else {
+                                //        echo 'no similar article found!!';
+                                 //   }
                                     ?>
                             </ul><!-- end .ar_spritelist ar_noIcon -->
                         </div><!-- END  ar_unique -->

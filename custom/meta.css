@@ -501,4 +501,6 @@ p.contentSource {
     font-size: 130%;
     margin-left: -10px;
     padding-right: 5px;
+}.emotion-details li strong {
+    text-transform: capitalize;
 }
