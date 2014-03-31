@@ -18,7 +18,7 @@ jQuery(document).ready(function($) {
        $(this).find('div').removeClass('ui-state-active');
    });
 
- 
+
    // Spelling Mistakes    
    aSm = $("ul.spelling-mistakes li").find('span.smText').clone().not(":last").append("\\b|\\b").end().text();
    var regexSm = new RegExp('(?:\\b|_)(' + aSm + ')(?:\\b|_)','ig');
@@ -167,4 +167,15 @@ jQuery(document).ready(function($) {
         
        return true;
    });       
+CustomDictionary = {
+ 		add : function(w) {
+ 			return jQuery.ajax({
+ 				url : 'admin-ajax.php',
+ 				data : { action : 'ar_analyzer_custom_dictionary', word : w },
+ 				async : false
+ 			}).responseText == 'OK';
+ 		}
+ }
+
+
 });

@@ -138,8 +138,20 @@ class AR_Client {
 	public function getAudienceList(){
 		return $this->doRequest('/source/get-audience-list', array());
 	}
-  
-  public function trackWordpressData($data) {
-    return $this->doRequest('/wordpress/track-data', array('data' => $data));
-  }
+
+  	public function trackWordpressData($data) {
+    	return $this->doRequest('/wordpress/track-data', array('data' => $data));
+  	}
+
+	public function addDictionary($word) {
+		return $this->doRequest('/dictionary/add', array('word' => $word));
+	}
+	
+	public function removeDictionary($word) {
+		return $this->doRequest('/dictionary/remove', array('word' => $word));
+	}
+	
+	public function listDictionaries() {
+		return $this->doRequest('/dictionary/list', array());
+	}
 }

@@ -4,7 +4,7 @@ Donate link: http://www.atomicreach.com
 Tags: seo, post, content, quality, optimization, optimize, audience, sophistication, engagement, atomic reach
 Requires at least: 3.4
 Tested up to: 3.8.x
-Stable tag: 1.6.85
+Stable tag: 1.7.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,11 +12,17 @@ Optimizing content for your target audience has never been easier.
 
 == Description ==
 
-The Atomic Audience Engager™ is a diagnostic tool for your CMS to help you take the guesswork out of perfecting your content for your target audience.
-Watch your content engage a larger audience. We've seen amazing results with significant jumps in engagement across web and social metrics that will get you really excited about creating content for your audience. 
-Not only will we tell you about your actual results, we'll let you know who your audience is, where they read your content, and when they are reading it. That's some valuable information!
+Get your content scored to see how you can create remarkable content for your target audience. Sign up at [score.atomicreach.com](http://score.atomicreach.com) so that we can run your blog through our content optimization engine. Paired with this plugin, you will gain critical insights to help engage your target audience and amplify your content with every post. 
 = Note =
-The plugin sends data insights to your Atomic Reach account (at [score.atomicreach.com](http://score.atomicreach.com)) and helps you write relevant content targeted to your online audience(s), maximizing your performance for true engagement.  Sign up at [score.atomicreach.com](http://score.atomicreach.com) to get Atomic Insights.
+The plugin sends data insights to your Atomic Reach account (at [score.atomicreach.com](http://score.atomicreach.com)) and helps you write relevant content targeted to your online audience(s), maximizing your performance for true engagement
+
+This is not your grandma's SEO tool. We leave the meta tagging to the SEO dinosaurs.
+We help you produce and structure engaging content for real people, not search engine page rankings.
+
+The Atomic Reach plugin analyzes your content as you're writing it, highlighting critical areas to help you improve the performance of your article before you hit publish.
+
+**So how good is this plugin?** Glad you asked. People who use our content optimization engine generate a 75% increase in audience engagement! And here's a bonus: this plugin is free for bloggers!
+
 == Installation ==
 
 1. Upload `arpostanalyzer` folder to the `/wp-content/plugins/` directory
@@ -63,8 +69,12 @@ Feel free to [email us](http://www.atomicreach.com/contact-us/) anytime.
 3. screenshot-3.png
 
 == Changelog ==
-1.6.85 (2014.03.28)
--fixed wp version conflict for slow API response
+1.7.10 (2014.03.29)
+-Added custom dictionary
+-New emotion messaging
+-Added similar articles
+-Improved measuers
+-Bug fixes
 
 1.6.80 (2014.03.14)
 -fixed duplicate API call issue

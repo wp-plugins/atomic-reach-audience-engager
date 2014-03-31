@@ -1,12 +1,12 @@
-<?php 
+<?php
 /*
-Plugin Name: Atomic Engager
-Plugin URI: http://www.atomicreach.com
-Description: Optimizing content for your target audience has never been easier.
-Version: 1.6.85
-Author URI: http://www.atomicreach.com
-Author: atomicreach
-*/
+  Plugin Name: Atomic Engager
+  Plugin URI: http://www.atomicreach.com
+  Description: Optimizing content for your target audience has never been easier.
+  Version: 1.7.10
+  Author URI: http://www.atomicreach.com
+  Author: atomicreach
+ */
   if (!session_id()) {
       session_start();
   }
@@ -16,10 +16,10 @@ Author: atomicreach
   define('MY_PLUGIN_PATH', plugins_url('/', __FILE__));
   
   /* Development */
-//   define('API_HOST', 'http://api.probar.atomicreach.com');
-//   define('AR_URL', 'http://probar.atomicreach.com'); 
-  // define('API_HOST', 'http://api.arv3.local');
-  // define('AR_URL', 'http://arv3.local'); 
+  // define('API_HOST', 'http://api.probar.atomicreach.com');
+  // define('AR_URL', 'http://probar.atomicreach.com'); 
+//   define('API_HOST', 'http://api.arv3.local');
+//   define('AR_URL', 'http://arv3.local'); 
   /* Staging */
 //   define('API_HOST', 'https://api.dev.arv3.atomicreach.com'); // with SSL
 //   define('AR_URL', 'http://dev.arv3.atomicreach.com');
@@ -40,10 +40,7 @@ Author: atomicreach
     wp_enqueue_script('ar_meta_js', MY_PLUGIN_PATH . '/custom/meta.js', array( 'jquery'));
     wp_enqueue_style('ar_meta_css', MY_PLUGIN_PATH . '/custom/meta.css');
     wp_enqueue_script('ar_highlightRegex_js', MY_PLUGIN_PATH . '/highlightRegex/highlightRegex.js', array( 'jquery'));
-    
-    // thick box
-    wp_enqueue_script('thickbox',null,array('jquery'));
-              wp_enqueue_style('thickbox.css', '/'.WPINC.'/js/thickbox/thickbox.css', null, '1.0');
+    //wp_enqueue_script('ar_customDictionaryContextMenu_js', MY_PLUGIN_PATH . '/customDictionaryContextMenu/editor_plugin.js', array('jquery'));
         
     // review the function reference for parameter details
     // http://codex.wordpress.org/Function_Reference/add_meta_box
@@ -51,7 +48,7 @@ Author: atomicreach
     // add a meta box for each of the wordpress page types: posts and pages
     foreach (array('post','page') as $type) 
     {
-      add_meta_box('aranalyzer_metabox', 'Atomic Engager', 'aranalyzer_metabox_setup', $type, 'side', 'high');
+      add_meta_box('aranalyzer_metabox', 'Atomic Reach Audience Engager', 'aranalyzer_metabox_setup', $type, 'normal', 'high');
     }
   }
   
@@ -76,12 +73,10 @@ Author: atomicreach
         
         echo '<div style="background-color: #FFFFE0; border: 1px solid #E6DB55; padding: 0 0 0 6px;font-family:sans-serif; font-size:12px;">
                    <p id="aranalizerOk">The secret key and consumer key have being updated.</p>
-                   <p>Close this window to continue</p>
               </div>';
       }else{
         echo '<div style="background-color:#FFEBE8;; border: 1px solid #CC0000; padding: 0 0 0 6px;font-family:sans-serif; font-size:12px;">
                 <p>The secret key and consumer key have not being updated.</p>
-                <p>close this window to continue</p>
               </div>';
       }
       exit(); 
@@ -164,6 +159,30 @@ Author: atomicreach
     return $result;
   }
 
+  function ar_analyzer_custom_dictionary() {
+  	$success = false;
+  	$word = $_GET['word'];
+	if ($word) {
+	  	require_once(MY_PLUGIN_FOLDER . '/includes/ARClient.php');
+	        
+	    $host = API_HOST;
+	    $consumerKey = get_option('aranalyzer_consumerkey');
+	    $secretKey = get_option('aranalyzer_secretkey');
+	    $apiClient = New AR_Client($host, $consumerKey, $secretKey);
+	    $apiClient->init();
+	
+	    $result = $apiClient->addDictionary($word);
+	    
+		if ($result->status == AR_Client::STATUS_OK) {
+			$success = true;
+		}
+	}
+	echo $success ? 'OK' : 'ERROR';
+	exit();
+  }
+  
+  add_action('wp_ajax_ar_analyzer_custom_dictionary', 'ar_analyzer_custom_dictionary');
+  
   function aranalyzer_admin() {
     // this option will have the state of the keys in case of error will set to FALSE
     $ar_state_keys = get_option('ar_state_keys');
@@ -175,7 +194,7 @@ Author: atomicreach
     wp_enqueue_script('ar_simple.modal_js', MY_PLUGIN_PATH . 'modal/js/jquery.simplemodal.js', array( 'jquery'));
     wp_enqueue_script('ar_modal.windows_js', MY_PLUGIN_PATH . 'modal/js/modal.windows.js', array( 'jquery'));
     wp_enqueue_style('ar_modal_css', MY_PLUGIN_PATH . '/modal/css/modal-windows.css');
-    add_menu_page("Atomic Engager Configuration", "Atomic Engager", 1, "ar-analyzer-admin", "aranalyzer_admin", plugin_dir_url( __FILE__ ) . "custom/ar-logo-icon.gif");
+    add_menu_page("Atomic Reach Audience Engager Configuration", "Audience Engager", 1, "ar-analyzer-admin", "aranalyzer_admin", plugin_dir_url( __FILE__ ) . "custom/ar-logo-icon.gif");
   }
   
   add_action('admin_menu', 'aranalyzer_admin_actions');
@@ -190,8 +209,7 @@ if( version_compare( $wp_version, '3.8', '<') ) {
    		return;
 	}
 }
-   // End Sergio Code
-    
+   // End Sergio Code   
    // if (!session_id()) {
        // session_start();
    // }      
@@ -227,8 +245,6 @@ if( version_compare( $wp_version, '3.8', '<') ) {
       $consumerKey = get_option('aranalyzer_consumerkey');
       $secretKey = get_option('aranalyzer_secretkey');   
       $scoringObj = aranalyzer_api_getmetadata($consumerKey, $secretKey, $title, $content, $segmentId);
-      
-  
 
       // delete_post_meta($post_ID, '_ar_api_status');
       update_option('aranalyzer_state_keys', 'TRUE');
@@ -348,82 +364,96 @@ if ( is_admin() ) {
    return $aColorText;
    
   }
-  /** plugin Tour **/
+   
+  /*********************/
+  /* TinyMCE custom functions */
+  /*********************/
+  
+  function tiny_mce_custom_init($init) {
+  	$init['plugins'] = 'inlinepopups,tabfocus,paste,media,fullscreen,wordpress,wpeditimage,wpgallery,wplink,wpdialogs,customdictionarycontextmenu';
+  	return $init;
+  }
+  
+  add_filter('tiny_mce_before_init', 'tiny_mce_custom_init');
+  
+  function tiny_mce_custom_plugins() {
+  	return array('customdictionarycontextmenu' => MY_PLUGIN_PATH.'/customDictionaryContextMenu/editor_plugin.js');
+  }
+  
+  add_filter('mce_external_plugins', 'tiny_mce_custom_plugins');
+
+/** plugin Tour * */
+
 /**
  * Adds a simple WordPress pointer to Settings menu
  */
- 
-function ar_enqueue_pointer_script_style( $hook_suffix ) {
-	
-	// Assume pointer shouldn't be shown
-	$enqueue_pointer_script_style = false;
+function ar_enqueue_pointer_script_style($hook_suffix) {
 
-	// Get array list of dismissed pointers for current user and convert it to array
-	$dismissed_pointers = explode( ',', get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
+    // Assume pointer shouldn't be shown
+    $enqueue_pointer_script_style = false;
 
-	// Check if our pointer is not among dismissed ones
-	if( !in_array( 'ar_settings_pointer', $dismissed_pointers ) ) {
-		$enqueue_pointer_script_style = true;
-		
-		// Add footer scripts using callback function
-		add_action( 'admin_print_footer_scripts', 'ar_pointer_print_scripts' );
-	}
+    // Get array list of dismissed pointers for current user and convert it to array
+    $dismissed_pointers = explode(',', get_user_meta(get_current_user_id(), 'dismissed_wp_pointers', true));
 
-	// Enqueue pointer CSS and JS files, if needed
-	if( $enqueue_pointer_script_style ) {
-		wp_enqueue_style( 'wp-pointer' );
-		wp_enqueue_script( 'wp-pointer' );
-	}
-	
+    // Check if our pointer is not among dismissed ones
+    if (!in_array('ar_settings_pointer', $dismissed_pointers)) {
+        $enqueue_pointer_script_style = true;
+
+        // Add footer scripts using callback function
+        add_action('admin_print_footer_scripts', 'ar_pointer_print_scripts');
+    }
+
+    // Enqueue pointer CSS and JS files, if needed
+    if ($enqueue_pointer_script_style) {
+        wp_enqueue_style('wp-pointer');
+        wp_enqueue_script('wp-pointer');
+    }
 }
-add_action( 'admin_enqueue_scripts', 'ar_enqueue_pointer_script_style' );
+
+add_action('admin_enqueue_scripts', 'ar_enqueue_pointer_script_style');
 
 function ar_pointer_print_scripts() {
 
-	$pointer_content  = "<h3>Atomic Engager!</h3>";
-	$pointer_content .= "<p>Click here to connect your plugin to the Atomic Reach Scoring Engine.</p>";
-	?>
-	
-	<script type="text/javascript">
-	//<![CDATA[
-	jQuery(document).ready( function($) {
-		$('#toplevel_page_ar-analyzer-admin').pointer({
-			content:		'<?php echo $pointer_content; ?>',
-			position:		{
-								edge:	'left', // arrow direction
-								align:	'center' // vertical alignment
-							},
-			pointerWidth:	350,
-			close:			function() {
-								$.post( ajaxurl, {
-										pointer: 'ar_settings_pointer', // pointer ID
-										action: 'dismiss-wp-pointer'
-								});
-							}
-		}).pointer('open');
-	});
-	//]]>
-	</script>
+    $pointer_content = "<h3>Atomic Engager!</h3>";
+    $pointer_content .= "<p>Click here to connect your plugin to the Atomic Reach Scoring Engine.</p>";
+    ?>
 
-<?php
+    <script type="text/javascript">
+        //<![CDATA[
+        jQuery(document).ready(function($) {
+            $('#toplevel_page_ar-analyzer-admin').pointer({
+                content: '<?php echo $pointer_content; ?>',
+                position: {
+                    edge: 'left', // arrow direction
+                    align: 'center' // vertical alignment
+                },
+                pointerWidth: 350,
+                close: function() {
+                    $.post(ajaxurl, {
+                        pointer: 'ar_settings_pointer', // pointer ID
+                        action: 'dismiss-wp-pointer'
+                    });
+                }
+            }).pointer('open');
+        });
+        //]]>
+    </script>
+
+    <?php
 }
-/** plugin Tour **/
 
+/** plugin Tour * */
 /**
  * Add action links in Plugins table
  */
- 
-add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'atomicreach_plugin_action_links' );
-function atomicreach_plugin_action_links( $links ) {
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'atomicreach_plugin_action_links');
 
-	return array_merge(
-		array(
-			'settings' => '<a href="' . admin_url( 'admin.php?page=ar-analyzer-admin' ) . '">' . __( 'Settings', 'atomicreach' ) . '</a>'
-		),
-		$links
-	);
+function atomicreach_plugin_action_links($links) {
 
+    return array_merge(
+            array(
+        'settings' => '<a href="' . admin_url('admin.php?page=ar-analyzer-admin') . '">' . __('Settings', 'atomicreach') . '</a>'
+            ), $links
+    );
 }
-
-   
 ?>
