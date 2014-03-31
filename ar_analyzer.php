@@ -3,7 +3,7 @@
   Plugin Name: Atomic Engager
   Plugin URI: http://www.atomicreach.com
   Description: Optimizing content for your target audience has never been easier.
-  Version: 1.7.10
+  Version: 1.7.15
   Author URI: http://www.atomicreach.com
   Author: atomicreach
  */
@@ -48,7 +48,7 @@
     // add a meta box for each of the wordpress page types: posts and pages
     foreach (array('post','page') as $type) 
     {
-      add_meta_box('aranalyzer_metabox', 'Atomic Reach Audience Engager', 'aranalyzer_metabox_setup', $type, 'normal', 'high');
+      add_meta_box('aranalyzer_metabox', 'Atomic Reach Audience Engager', 'aranalyzer_metabox_setup', $type, 'side', 'high');
     }
   }
   
@@ -73,10 +73,12 @@
         
         echo '<div style="background-color: #FFFFE0; border: 1px solid #E6DB55; padding: 0 0 0 6px;font-family:sans-serif; font-size:12px;">
                    <p id="aranalizerOk">The secret key and consumer key have being updated.</p>
+					<p>Close this window to continue</p>
               </div>';
       }else{
         echo '<div style="background-color:#FFEBE8;; border: 1px solid #CC0000; padding: 0 0 0 6px;font-family:sans-serif; font-size:12px;">
                 <p>The secret key and consumer key have not being updated.</p>
+				<p>Close this window to continue</p>
               </div>';
       }
       exit(); 
@@ -194,7 +196,7 @@
     wp_enqueue_script('ar_simple.modal_js', MY_PLUGIN_PATH . 'modal/js/jquery.simplemodal.js', array( 'jquery'));
     wp_enqueue_script('ar_modal.windows_js', MY_PLUGIN_PATH . 'modal/js/modal.windows.js', array( 'jquery'));
     wp_enqueue_style('ar_modal_css', MY_PLUGIN_PATH . '/modal/css/modal-windows.css');
-    add_menu_page("Atomic Reach Audience Engager Configuration", "Audience Engager", 1, "ar-analyzer-admin", "aranalyzer_admin", plugin_dir_url( __FILE__ ) . "custom/ar-logo-icon.gif");
+    add_menu_page("Atomic Engager Configuration", "Audience Engager", 1, "ar-analyzer-admin", "aranalyzer_admin", plugin_dir_url( __FILE__ ) . "custom/ar-logo-icon.gif");
   }
   
   add_action('admin_menu', 'aranalyzer_admin_actions');
