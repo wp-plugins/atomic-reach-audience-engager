@@ -3,7 +3,7 @@
   Plugin Name: Atomic Engager
   Plugin URI: http://www.atomicreach.com
   Description: Optimizing content for your target audience has never been easier.
-  Version: 1.7.25
+  Version: 1.7.27
   Author URI: http://www.atomicreach.com
   Author: atomicreach
  */
@@ -370,14 +370,7 @@ if ( is_admin() ) {
   /*********************/
   /* TinyMCE custom functions */
   /*********************/
-  
-  function tiny_mce_custom_init($init) {
-  	$init['plugins'] = 'inlinepopups,tabfocus,paste,media,fullscreen,wordpress,wpeditimage,wpgallery,wplink,wpdialogs,customdictionarycontextmenu';
-  	return $init;
-  }
-  
-  add_filter('tiny_mce_before_init', 'tiny_mce_custom_init');
-  
+ 
   function tiny_mce_custom_plugins() {
   	return array('customdictionarycontextmenu' => MY_PLUGIN_PATH.'/customDictionaryContextMenu/editor_plugin.js');
   }
