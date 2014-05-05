@@ -79,6 +79,14 @@ jQuery(document).ready(function($) {
 
    // Grammar Mistakes    
    aGm = $("ul.grammar-mistakes li").find('span.gmText').clone().not(":last").append("|").end().text();
+   
+   // Adding again words with different space code
+   $.each(aGm.split('|'), function(index, value) {
+	 if (value.indexOf(String.fromCharCode(32)) != -1) {
+		 aGm += '|' + value.split(String.fromCharCode(32)).join(String.fromCharCode(160));
+	 }
+   });
+   
    var regexGm = new RegExp(aGm,'gi');
 
    $("#highlight-gm").toggle(function(){        

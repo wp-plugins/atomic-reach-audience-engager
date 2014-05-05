@@ -101,7 +101,7 @@ if ($test) {
                         <span><?php echo round(number_format($aBarColorText['scoring'], 1)); ?></span>
                     </div>
                 </div>
-                <div class="ar-message">Aim for an Atomic Score of 60+, but with the suggestions below you can gain even greater engagement.</div>
+                <!--<div class="ar-message">Aim for an Atomic Score of 60+, but with the suggestions below you can gain even greater engagement.</div>-->
             </div>
             <?php if ($scoring->data->analysis->sm->total > 0 || $scoring->data->analysis->gm->total > 0 || $scoring->data->analysis->lc->invalid > 0 || !empty($scoring->data->analysis->so->paragraphs)): ?>
                 <ul id="hl-class">
@@ -211,7 +211,7 @@ if ($test) {
                                                 $ul_so .= '<li style="background: none;">
                                     <p class="ar-message">' . $ar_message . '</p>
 						  		<br />
-							<a href="https://www.slideshare.net/secret/ydYaIIq7pSJDxK" target="_blank" class="toggle-link ar-message-link">Refer to our tips on how to achieve a content sophistication match for your audience <span>here</span></a>.
+							<a href="http://hub.atomicreach.com/i/303975/" target="_blank" class="toggle-link ar-message-link">Refer to our tips on how to achieve a content sophistication match for your audience <span>here</span></a>.
                                   </li>';
 //                                foreach ($scoring->data->analysis->so->paragraphs as $index => $match) {
 //                                if ($match == 'HIT' || $match == 'UNAVAILABLE')
@@ -266,6 +266,7 @@ if ($test) {
                                                 }
                                                 echo $ul_tg;
                                                 ?>
+                                                <p>Refer to our tips on how to write with emotion <a href="http://hub.atomicreach.com/i/303948/" target="_blank" class="toggle-link ar-message-link"><span>here</span></a>.</p>
                                             </ul>
                                         </div>
                                    
@@ -299,6 +300,7 @@ if ($test) {
                                             foreach ($scoring->data->analysis->tm->recomendations as $recomendation)
                                                 echo '<li><span class="soText">' . $recomendation . '</span></li>';
                                             ?>
+                                             <p>Refer to our guide on how to create engaging titles <a href="http://hub.atomicreach.com/i/303939/" target="_blank" class="toggle-link ar-message-link"><span>here</span></a>.</p>
                                         </ul>
                                     <?php else: ?>
                                         <?= $scoring->data->analysis->tm->message; ?>
@@ -482,7 +484,9 @@ if ($test) {
                                                 }
                                                 echo $ul_gm;
                                                 ?>
+                                                    <p>Refer to our guide on how to write with an active voice <a href="http://hub.atomicreach.com/i/304278/" target="_blank" class="toggle-link ar-message-link"><span>here</span></a>.</p>
                                             </ul>
+                                            
                                         </div>
                                             <?php else: ?>
                                         <div>There are no grammar errors.</div>

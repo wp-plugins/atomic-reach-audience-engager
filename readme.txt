@@ -4,7 +4,7 @@ Donate link: http://www.atomicreach.com
 Tags: seo, post, content, quality, optimization, optimize, audience, sophistication, engagement, atomic reach
 Requires at least: 3.4
 Tested up to: 3.8.x
-Stable tag: 1.7.27
+Stable tag: 1.7.30
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,10 @@ Feel free to [email us](http://www.atomicreach.com/contact-us/) anytime.
 3. screenshot-3.png
 
 == Changelog ==
+1.7.30 (2014.05.05)
+-Fixed bugs
+-Fixed WordPress 3.9 compatibility bugs (Editor)
+
 1.7.27 (2014.04.08)
 -Fixed WP editor plugin conflict
 

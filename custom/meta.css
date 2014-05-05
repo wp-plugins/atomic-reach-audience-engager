@@ -450,9 +450,9 @@ p.contentSource {
     position: relative;
     height: 100px !important;
     width: 100px !important;
-}.box-score {
-    height: 180px !important;
-}div#ar_score .scoreText{
+}
+/*.box-score {height: 180px !important;}*/
+div#ar_score .scoreText{
     height: 0 !important;
 }.circle-score .scoreText span{
     font-size: 60px;

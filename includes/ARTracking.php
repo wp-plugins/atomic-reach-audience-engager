@@ -70,18 +70,8 @@ if ( !class_exists( 'AR_Tracking' ) ) {
           'version'    => $theme_data->display( 'Version', false, false ),
           'author'     => $theme_data->display( 'Author', false, false ),
           'author_uri' => $theme_data->display( 'AuthorURI', false, false ),
+          'template' => $theme_data->display( 'Template', false, false ),
         );
-        if ( isset( $theme_data->template ) && !empty( $theme_data->template ) && $theme_data->parent() ) {
-          $theme['template'] = array(
-            'version'    => $theme_data->parent()->display( 'Version', false, false ),
-            'name'       => $theme_data->parent()->display( 'Name', false, false ),
-            'theme_uri'  => $theme_data->parent()->display( 'ThemeURI', false, false ),
-            'author'     => $theme_data->parent()->display( 'Author', false, false ),
-            'author_uri' => $theme_data->parent()->display( 'AuthorURI', false, false ),
-          );
-        } else {
-          $theme['template'] = '';
-        }
       } else {
         $theme_data = (object) get_theme_data( get_stylesheet_directory() . '/style.css' );
         $theme      = array(
@@ -89,6 +79,8 @@ if ( !class_exists( 'AR_Tracking' ) ) {
           'name'     => $theme_data->Name,
           'author'   => $theme_data->Author,
           'template' => $theme_data->Template,
+          'theme_uri'  => $theme_data->URI,
+          'author_uri'  => $theme_data->AuthorURI,
         );
       }
 

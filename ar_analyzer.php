@@ -3,7 +3,7 @@
   Plugin Name: Atomic Engager
   Plugin URI: http://www.atomicreach.com
   Description: Optimizing content for your target audience has never been easier.
-  Version: 1.7.27
+  Version: 1.7.30
   Author URI: http://www.atomicreach.com
   Author: atomicreach
  */
@@ -18,8 +18,8 @@
   /* Development */
   // define('API_HOST', 'http://api.probar.atomicreach.com');
   // define('AR_URL', 'http://probar.atomicreach.com'); 
-//   define('API_HOST', 'http://api.arv3.local');
-//   define('AR_URL', 'http://arv3.local'); 
+   //define('API_HOST', 'http://api.arv3.local');
+   //define('AR_URL', 'http://arv3.local'); 
   /* Staging */
 //   define('API_HOST', 'https://api.dev.arv3.atomicreach.com'); // with SSL
 //   define('AR_URL', 'http://dev.arv3.atomicreach.com');
@@ -372,7 +372,13 @@ if ( is_admin() ) {
   /*********************/
  
   function tiny_mce_custom_plugins() {
-  	return array('customdictionarycontextmenu' => MY_PLUGIN_PATH.'/customDictionaryContextMenu/editor_plugin.js');
+  	global $wp_version;
+    if (version_compare($wp_version, '3.9', '<')) {
+      return array('customdictionarycontextmenu' => MY_PLUGIN_PATH.'/customDictionaryContextMenu/editor_plugin.js');
+    }
+    else {
+     return array('customdictionarycontextmenu' => MY_PLUGIN_PATH.'/customDictionaryContextMenu/plugin.js');
+    }
   }
   
   add_filter('mce_external_plugins', 'tiny_mce_custom_plugins');
