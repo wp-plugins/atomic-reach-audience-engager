@@ -3,7 +3,7 @@
   Plugin Name: Atomic Engager
   Plugin URI: http://www.atomicreach.com
   Description: Optimizing content for your target audience has never been easier.
-  Version: 1.7.30
+  Version: 1.7.50
   Author URI: http://www.atomicreach.com
   Author: atomicreach
  */
@@ -112,6 +112,17 @@
     $ar_enabled = get_post_meta($post->ID, '_ar_meta_review_enabled', TRUE);
     $ar_audience = get_post_meta($post->ID, '_ar_meta_audience_list', TRUE);
     
+    
+    
+   
+    
+    
+//      $custom_fields = get_post_custom($post->ID);
+//  $my_custom_field = $custom_fields['_ar_meta_audience_list'];
+//  foreach ( $my_custom_field as $key => $value ) {
+//    echo $key . " => " . $value . "<br />";
+//  }
+
     // will return TRUE if the keys have been set correctly in AR Optimizer (modal windows login to AR)
     $ar_state_keys = get_option('aranalyzer_state_keys');
     
@@ -124,6 +135,15 @@
     $secretKey = get_option('aranalyzer_secretkey');   
     $audienceList = aranalyzer_api_getaudiencelist($consumerKey, $secretKey);
 
+//    Store user selected targetAudience to show the pie image. HZ
+       foreach ($audienceList->sources AS $source) {
+        foreach ($source->segments AS $v) {
+            if ($v->id == $ar_audience){
+                $targetAud = $v->targetAudience;
+            }
+        }
+    }
+    
     // including the metabox php code
     require_once(MY_PLUGIN_FOLDER . '/custom/meta.php');
   }
@@ -247,7 +267,7 @@ if( version_compare( $wp_version, '3.8', '<') ) {
       $consumerKey = get_option('aranalyzer_consumerkey');
       $secretKey = get_option('aranalyzer_secretkey');   
       $scoringObj = aranalyzer_api_getmetadata($consumerKey, $secretKey, $title, $content, $segmentId);
-
+      
       // delete_post_meta($post_ID, '_ar_api_status');
       update_option('aranalyzer_state_keys', 'TRUE');
       
@@ -258,11 +278,10 @@ if( version_compare( $wp_version, '3.8', '<') ) {
         update_option('aranalyzer_state_keys', 'FALSE');
         
         $_SESSION['_ar_api_error'] = $scoringObj->error;
-        
       }
       else
       {
-          
+       
         $_SESSION['_ar_api_error'] = false;
                 
         // Fix the special case when only one suggestion comes in the spelling options

@@ -426,6 +426,7 @@ p.contentSource {
 .ar_meta_control > ul {
     margin: 0 auto;
     max-width: 300px;
+    clear: both;
 }
 
 /** 1.6.2 **/
@@ -446,6 +447,7 @@ p.contentSource {
     background-color: #DB2536 !important;
     border-radius: 50px !important;
     color: #FFFFFF;
+    float: left;
     margin: 0 auto 8px;
     position: relative;
     height: 100px !important;
@@ -462,6 +464,9 @@ div#ar_score .scoreText{
     left: 17px;
     line-height: 95px;
     vertical-align: middle;
+}.aud-pie > img {
+    float: right;
+    max-width: 110px;
 }
 .arMeasureBlock{
     background-color: #E4E4E4;
@@ -483,7 +488,7 @@ div#ar_score .scoreText{
     font-weight: 600;
     padding: 5px 0;
 }div#ar_score{
-    height: 110px;
+    height: auto;
 }#arInfoMsg{
     max-width: 550px;
     background-color: #FEFEFE;

@@ -101,6 +101,27 @@ if ($test) {
                         <span><?php echo round(number_format($aBarColorText['scoring'], 1)); ?></span>
                     </div>
                 </div>
+                <div class="aud-pie">
+                    <?php
+                   if($scoring->data->analysis->so->detail == 'TOO COMPLEX'){
+                        $pieImg = 'AR-TooComplicated.png';
+                    }elseif($scoring->data->analysis->so->detail == 'TOO SIMPLE'){
+                        $pieImg = 'AR-TooSimple.png';
+                    }elseif($scoring->data->analysis->so->detail == 'HIT'){
+                        if ($targetAud == 'GENERAL'){
+                            $pieImg = 'AR-Match-General.png';
+                        }elseif ($targetAud == 'KNOWLEDGEABLE'){
+                            $pieImg = 'AR-Match-Knowledgable.png';
+                        }elseif ($targetAud == 'ACADEMIC'){
+                            $pieImg = 'AR-Match-Academic.png';
+                        }elseif ($targetAud == 'SPECIALIST'){
+                            $pieImg = 'AR-Match-Specialist.png';
+                        }
+                    }
+                    ?>
+                    <img src="<?php echo plugins_url('/', __FILE__).$pieImg; ?>" alt="atomic reach pie of sophistication" />
+                    
+                </div>
                 <!--<div class="ar-message">Aim for an Atomic Score of 60+, but with the suggestions below you can gain even greater engagement.</div>-->
             </div>
             <?php if ($scoring->data->analysis->sm->total > 0 || $scoring->data->analysis->gm->total > 0 || $scoring->data->analysis->lc->invalid > 0 || !empty($scoring->data->analysis->so->paragraphs)): ?>
@@ -150,30 +171,31 @@ if ($test) {
                         <div class="resultsAreaInner">
                             <div id="ar_score">
                                 <!-- x score place -->
-                                <div class="bar-shadow">
-                                    <div class="bar">
+                                <!--<div class="bar-shadow">-->
+<!--                                    <div class="bar">
                                         <div class="score">
                                             <div class="redBar">&nbsp;</div>
                                             <div class="yellowBar">&nbsp;</div>
                                             <div class="greenBar">&nbsp;</div>
                                             <div class="indicator">
-                                                <div class="marker" style="margin-left:<?php echo number_format($aBarColorText['scoring'], 1); ?>%;">&nbsp;</div>
+                                                <div class="marker" style="margin-left:<?php // echo number_format($aBarColorText['scoring'], 1); ?>%;">&nbsp;</div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <?php if (number_format($aBarColorText['scoring'], 1) <= 33): ?>
-                                    <div class="pbMsg">Need Changes!</div>
-                                <?php elseif (number_format($aBarColorText['scoring'], 1) > 33 && number_format($aBarColorText['scoring'], 1) <= 66): ?>
-                                    <div class="pbMsg">Almost There!</div>
-                                <?php elseif (number_format($aBarColorText['scoring'], 1) > 66): ?>
-                                    <div class="pbMsg">On Your Way!</div>
-                                <?php endif; ?>
+                                    </div>-->
+                                <!--</div>-->
+                                <?php //if (number_format($aBarColorText['scoring'], 1) <= 33): ?>
+                                    <!--<div class="pbMsg">Need Changes!</div>-->
+                                <?php// elseif (number_format($aBarColorText['scoring'], 1) > 33 && number_format($aBarColorText['scoring'], 1) <= 66): ?>
+                                    <!--<div class="pbMsg">Almost There!</div>-->
+                                <?php// elseif (number_format($aBarColorText['scoring'], 1) > 66): ?>
+                                    <!--<div class="pbMsg">On Your Way!</div>-->
+                                <?php// endif; ?>
                                 <div class="label">
                                     <?php
                                     //echo $aBarColorText['arText'].
                                     echo "To update this analysis, save as draft or update and check this page again.";
-                                    ?>                </div>
+                                    ?>                
+                                </div>
                             </div>
                         </div><!--End resultsAreaInner-->
                                             <!-- Audience Elements -->
@@ -291,23 +313,7 @@ if ($test) {
                                         break;
                                 }
                                 ?>
-                                <!-- Title -->
-                                <li class="<?= $class; ?>"><div>
-                                        <?php if (strtolower($scoring->data->analysis->tm->state) !== 'green'): ?>
-                                            <a href="#so"><?= $scoring->data->analysis->tm->message; ?></a></div>
-                                        <ul class="details title-measure">
-                                            <?php
-                                            foreach ($scoring->data->analysis->tm->recomendations as $recomendation)
-                                                echo '<li><span class="soText">' . $recomendation . '</span></li>';
-                                            ?>
-                                             <p>Refer to our guide on how to create engaging titles <a href="http://hub.atomicreach.com/i/303939/" target="_blank" class="toggle-link ar-message-link"><span>here</span></a>.</p>
-                                        </ul>
-                                    <?php else: ?>
-                                        <?= $scoring->data->analysis->tm->message; ?>
-                                    <?php endif; ?>
-                                </li>
-
-                                <!-- Topics List -->
+                                   <!-- Topics List -->
                                 <?php $total_topics = $scoring->data->analysis->tg->total; ?>
                                             <?php if (strtolower($scoring->data->analysis->tg->state) === 'green'): ?>
                                                 <li class="ar_checkmarks_passed">
@@ -333,6 +339,23 @@ if ($test) {
                                                     <div>There are no identified topics.</div>
                                                 <?php endif; ?>
                                             </li>
+                                <!-- Title -->
+                                <li class="<?= $class; ?>"><div>
+                                        <?php if (strtolower($scoring->data->analysis->tm->state) !== 'green'): ?>
+                                            <a href="#so"><?= $scoring->data->analysis->tm->message; ?></a></div>
+                                        <ul class="details title-measure">
+                                            <?php
+                                            foreach ($scoring->data->analysis->tm->recomendations as $recomendation)
+                                                echo '<li><span class="soText">' . $recomendation . '</span></li>';
+                                            ?>
+                                             <p>Refer to our guide on how to create engaging titles <a href="http://hub.atomicreach.com/i/303939/" target="_blank" class="toggle-link ar-message-link"><span>here</span></a>.</p>
+                                        </ul>
+                                    <?php else: ?>
+                                        <?= $scoring->data->analysis->tm->message; ?>
+                                    <?php endif; ?>
+                                </li>
+
+                             
 
                                 <!-- Length vs. Recommended Length -->
                                 <?php
@@ -496,6 +519,7 @@ if ($test) {
 
 
                                 <!-- Level of repetition -->
+                                <?php if (strtolower($scoring->data->analysis->lr->state) !== 'green'){ ?>
             <?php if (strtolower($scoring->data->analysis->lr->state) === 'green'): ?>
                                     <li class="ar_checkmarks_passed">
                                 <?php elseif (strtolower($scoring->data->analysis->lr->state) === 'yellow'): ?>
@@ -505,26 +529,26 @@ if ($test) {
                                     <?php endif; ?>
                                     <div><?php echo $scoring->data->analysis->lr->detail; ?></div>
                                 </li>
-
+                                <?php }// if not green ?>
 
                             </ul>
                         </div><!-- end linguistic -->
                             
 
-                        <hr class="ar-uniquenness">
+<!--                        <hr class="ar-uniquenness">
                         <div id="ar_unique" class="arMeasureBlock">
                             <h3>Uniqueness</h3>
                             <ul class="ar_spritelist ar_noIcon" id="accordion">
-                                <!-- Surprise -->
-            <?php if (strtolower($scoring->data->analysis->su->state) === 'green'): ?>
-                                    <li class="ar_checkmarks_passed"><div><img src="<?php echo plugins_url('/', __FILE__); ?>thumbs_up.png" class="ar-thumbsUp"/><br />Your content is unique and will drive engagement, so share away!</div>
-                                <?php elseif (strtolower($scoring->data->analysis->su->state) === 'yellow'): ?>
+                                 Surprise 
+            <?php // if (strtolower($scoring->data->analysis->su->state) === 'green'): ?>
+                                    <li class="ar_checkmarks_passed"><div><img src="<?php // echo plugins_url('/', __FILE__); ?>thumbs_up.png" class="ar-thumbsUp"/><br />Your content is unique and will drive engagement, so share away!</div>
+                                <?php // elseif (strtolower($scoring->data->analysis->su->state) === 'yellow'): ?>
                                     <li class="ar_checkmarks_warning"><div class="arThumbsUp">Original content drives more engagement. We will alert you when your content is unique.</div>
-                                    <?php elseif (strtolower($scoring->data->analysis->su->state) === 'red'): ?>
+                                    <?php // elseif (strtolower($scoring->data->analysis->su->state) === 'red'): ?>
                                     <li class="ar_checkmarks_error"><div class="arThumbsUp">Original content drives more engagement. We will alert you when your content is unique.</div>
-                                    <?php endif; ?>
+                                    <?php // endif; ?>
                                     <div><?php //echo $scoring->data->analysis->su->detail;   ?></div>
-                                </li>
+                                </li>-->
 
             <?php
          //   Display similar articles
@@ -541,8 +565,8 @@ if ($test) {
                                 //        echo 'no similar article found!!';
                                  //   }
                                     ?>
-                            </ul><!-- end .ar_spritelist ar_noIcon -->
-                        </div><!-- END  ar_unique -->
+<!--                            </ul> end .ar_spritelist ar_noIcon 
+                        </div> END  ar_unique -->
                     </div>
         <?php endif; ?>
             </div>
