@@ -508,4 +508,4 @@ div#ar_score .scoreText{
     padding-right: 5px;
 }.emotion-details li strong {
     text-transform: capitalize;
-}
+}.ui-state-active{border: none !important;}

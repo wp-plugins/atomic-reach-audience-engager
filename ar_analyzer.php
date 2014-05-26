@@ -3,7 +3,7 @@
   Plugin Name: Atomic Engager
   Plugin URI: http://www.atomicreach.com
   Description: Optimizing content for your target audience has never been easier.
-  Version: 1.7.50
+  Version: 1.7.55
   Author URI: http://www.atomicreach.com
   Author: atomicreach
  */
@@ -21,12 +21,12 @@
    //define('API_HOST', 'http://api.arv3.local');
    //define('AR_URL', 'http://arv3.local'); 
   /* Staging */
-//   define('API_HOST', 'https://api.dev.arv3.atomicreach.com'); // with SSL
-//   define('AR_URL', 'http://dev.arv3.atomicreach.com');
+   define('API_HOST', 'https://api.dev.arv3.atomicreach.com'); // with SSL
+   define('AR_URL', 'http://dev.arv3.atomicreach.com');
   
   /* Production */
-  define('API_HOST', 'https://api.score.atomicreach.com'); // with SSL
-  define('AR_URL', 'http://score.atomicreach.com');    
+//  define('API_HOST', 'https://api.score.atomicreach.com'); // with SSL
+//  define('AR_URL', 'http://score.atomicreach.com');    
 
   // if( !class_exists( 'WP_Http' ) )
     // require_once( ABSPATH . WPINC . '/class-http.php' );
@@ -216,7 +216,7 @@
     wp_enqueue_script('ar_simple.modal_js', MY_PLUGIN_PATH . 'modal/js/jquery.simplemodal.js', array( 'jquery'));
     wp_enqueue_script('ar_modal.windows_js', MY_PLUGIN_PATH . 'modal/js/modal.windows.js', array( 'jquery'));
     wp_enqueue_style('ar_modal_css', MY_PLUGIN_PATH . '/modal/css/modal-windows.css');
-    add_menu_page("Atomic Engager Configuration", "Atomic Engager", 1, "ar-analyzer-admin", "aranalyzer_admin", plugin_dir_url( __FILE__ ) . "custom/ar-logo-icon.gif");
+    add_menu_page("Atomic Engager Configuration", "Atomic Engager", "manage_options", "ar-analyzer-admin", "aranalyzer_admin", plugin_dir_url( __FILE__ ) . "custom/ar-logo-icon.gif");
   }
   
   add_action('admin_menu', 'aranalyzer_admin_actions');

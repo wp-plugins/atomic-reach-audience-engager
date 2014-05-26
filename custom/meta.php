@@ -10,7 +10,6 @@ if ($test) {
 } else {
     ?>
     <div class="ar_meta_control">
-
         <?php if ($ar_enabled === ''): ?>
             <p>Check the box below to analyze your content. Make sure you select your target audience. Hit save draft to get your results.</p>
             <!--<p>Analyze and view the current score of this post’s content. Atomic Reach will also suggest how to improve your content.</p>-->
@@ -225,11 +224,11 @@ if ($test) {
                                                 <?php
                                                 $ul_so = '';
                                                 if ($scoring->data->analysis->so->detail === 'TOO SIMPLE') {
-                                                    $ar_message = '<strong>TIPS:</strong> consider elaborating on short sentences and/ or use more sophisticated language.';
+                                                    $ar_message = 'Your article is too simple for your audience. To get the most of your content, 85% of your paragraphs need to be a match. Consider revising some of your highlighted paragraphs by writing longer sentences and using sophisticated language.';
                                                 } elseif ($scoring->data->analysis->so->detail === 'TOO COMPLEX') {
-                                                    $ar_message = '<strong>TIPS:</strong> Write shorter sentences, use shorter words, break up paragraphs.';
+                                                    $ar_message = 'Your article is too complex for your audience. To get the most of your content, 85% of your paragraphs need to be a match. Consider revising some of your highlighted paragraphs by writing shorter sentences and simplifying your language.';
                                                 }
-                                                $ar_message .= '<br /><br />Utilize the article highlighting (<strong>Audience Mismatch</strong>) button above to see where you should modify your content to match your audience. <span style="color:' . $light_blue . ';">Blue highlights = Too simple.</span> <span style="color: ' . $light_orange . ';">Orange highlights = Too complex.</span>';
+                                                //$ar_message .= '<br /><br />Utilize the article highlighting (<strong>Audience Mismatch</strong>) button above to see where you should modify your content to match your audience. <span style="color:' . $light_blue . ';">Blue highlights = Too simple.</span> <span style="color: ' . $light_orange . ';">Orange highlights = Too complex.</span>';
                                                 $ul_so .= '<li style="background: none;">
                                     <p class="ar-message">' . $ar_message . '</p>
 						  		<br />
@@ -326,6 +325,7 @@ if ($test) {
                                                     <div><a href="#tg">Here <?php echo ($total_topics == 1) ? 'is ' : 'are '; ?> <?php echo $total_topics; ?> Keyword<?php echo ($total_topics == 1) ? '' : 's'; ?> in your post</a></div>
                                                     <div>
                                                         <ul class="details">
+                                                             <p style="font-weight: 600;">These are your post's keywords. Use 1-4 terms in your title to optimize it!</p>
                                                             <?php
                                                             $ul_tg = '';
                                                             foreach ($scoring->data->analysis->tg->detail as $key => $value) {
@@ -427,7 +427,7 @@ if ($test) {
                                         <div><a href="#sm">There are <?php echo $scoring->data->analysis->sm->total; ?> misspelled words.</a></div>
                                         <div>
                                             <ul class="details spelling-mistakes">
-                                                <li><p>Highlight these words below in your article.  Right click any of them to submit to your custom dictionary.</p></li>
+                                                <li><p>Hit the Spelling Mistakes button above to highlight these words in your article. Fix the ones that are incorrect or right click a word to add it to your custom dictionary.</p></li>
                                                 <?php
                                                 $ul_sm = '';
                                                 foreach ($scoring->data->analysis->sm->detail as $key => $value) {
@@ -477,6 +477,7 @@ if ($test) {
                                         <?php endif; ?>
                                         <div>
                                             <ul class="details grammar-mistakes">
+                                                <li><p>These grammatical recommendations will improve your post.</p></li>
                                                 <?php
                                                 $ul_gm = '';
                                                 foreach ($scoring->data->analysis->gm->detail as $key => $value) {
