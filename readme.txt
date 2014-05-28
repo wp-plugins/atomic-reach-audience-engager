@@ -4,7 +4,7 @@ Donate link: http://www.atomicreach.com
 Tags: seo, post, content, quality, optimization, optimize, audience, sophistication, engagement, atomic reach
 Requires at least: 3.4
 Tested up to: 3.9.x
-Stable tag: 1.7.55
+Stable tag: 1.7.56
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,9 @@ Feel free to [email us](http://www.atomicreach.com/contact-us/) anytime.
 3. screenshot-3.png
 
 == Changelog ==
+1.7.56 (2014.05.28)
+- Fixed login issue.
+
 1.7.55 (2014.05.26)
 - hide setting page from non-administrative users.
 - update messaging.
