@@ -3,7 +3,7 @@
   Plugin Name: Atomic Engager
   Plugin URI: http://www.atomicreach.com
   Description: Optimizing content for your target audience has never been easier.
-  Version: 1.7.56
+  Version: 1.7.60
   Author URI: http://www.atomicreach.com
   Author: atomicreach
  */
@@ -44,9 +44,16 @@
         
     // review the function reference for parameter details
     // http://codex.wordpress.org/Function_Reference/add_meta_box
- 
-    // add a meta box for each of the wordpress page types: posts and pages
-    foreach (array('post','page') as $type) 
+   // add a meta box for each of the wordpress page types: posts and pages and all custom ones
+        // get all the post types excluding default ones
+        $arg_post_types =  array(
+            'public'   => true,
+            '_builtin' => false
+        );
+        $post_types = get_post_types( $arg_post_types, 'names');
+        // add  post and pages as well.
+        array_push($post_types, 'post', 'page');
+    foreach ($post_types as $type)
     {
       add_meta_box('aranalyzer_metabox', 'Atomic Engager', 'aranalyzer_metabox_setup', $type, 'side', 'high');
     }
@@ -285,11 +292,13 @@ if( version_compare( $wp_version, '3.8', '<') ) {
         $_SESSION['_ar_api_error'] = false;
                 
         // Fix the special case when only one suggestion comes in the spelling options
-        foreach($scoringObj->data->analysis->sm->detail as $key => $value) {
-          if(!is_array($value->suggestions->option)) {
-            $value->suggestions->option = array($value->suggestions->option);
-          }
-        }
+        foreach ($scoringObj->data->analysis->sm->detail as $key => $value) {
+                if (isset($value->suggestions->option)) {
+                    if (!is_array($value->suggestions->option)) {
+                        $value->suggestions->option = array($value->suggestions->option);
+                    }
+                }
+            }
 
         // Fix the special case when only one suggestion comes in the grammar options
         foreach($scoringObj->data->analysis->gm->detail as $key => $value) {

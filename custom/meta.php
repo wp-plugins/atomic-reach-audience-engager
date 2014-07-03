@@ -322,10 +322,10 @@ if ($test) {
                                                 <li class="ar_checkmarks_error">
                                                 <?php endif; ?>
                                                 <?php if ($total_topics > 0): ?>
-                                                    <div><a href="#tg">Here <?php echo ($total_topics == 1) ? 'is ' : 'are '; ?> <?php echo $total_topics; ?> Keyword<?php echo ($total_topics == 1) ? '' : 's'; ?> in your post</a></div>
+                                                    <div><a href="#tg">Here <?php echo ($total_topics == 1) ? 'is ' : 'are '; ?> <?php echo $total_topics; ?> Topic<?php echo ($total_topics == 1) ? '' : 's'; ?> in your post</a></div>
                                                     <div>
                                                         <ul class="details">
-                                                             <p style="font-weight: 600;">These are your post's keywords. Use 1-4 terms in your title to optimize it!</p>
+                                                             <p style="font-weight: 600;">Are these the topics you intended to represent your article? If not, revise your post to better express your ideas. To optimize your title, use 1-4 topics below.</p>
                                                             <?php
                                                             $ul_tg = '';
                                                             foreach ($scoring->data->analysis->tg->detail as $key => $value) {
