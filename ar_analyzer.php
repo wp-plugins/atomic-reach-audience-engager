@@ -3,7 +3,7 @@
   Plugin Name: Atomic Engager
   Plugin URI: http://www.atomicreach.com
   Description: Optimizing content for your target audience has never been easier.
-  Version: 1.7.60
+  Version: 1.7.63
   Author URI: http://www.atomicreach.com
   Author: atomicreach
  */
@@ -18,7 +18,6 @@
   /* Development */
   // define('API_HOST', 'http://api.probar.atomicreach.com');
   // define('AR_URL', 'http://probar.atomicreach.com'); 
-   //define('API_HOST', 'http://api.arv3.local');
    //define('AR_URL', 'http://arv3.local'); 
   /* Staging */
  //  define('API_HOST', 'https://api.dev.arv3.atomicreach.com'); // with SSL
@@ -171,7 +170,6 @@
     $apiClient = New AR_Client($host, $consumerKey, $secretKey);
     $apiClient->init();
     $result = $apiClient->analyzePost($content, $title, $segmentId);
-    
     return $result;
   }
 
@@ -245,8 +243,19 @@ if( version_compare( $wp_version, '3.8', '<') ) {
     // Get post information
     $post_info = get_post($post_ID); 
     $title = $post_info->post_title;
+
+    /**
+     * We are removing the wptexturize before creating the content value to be send to api because it is changing single quotes
+     * with #8217 char and if makes the analysis fail.
+     * 
+     * check 
+     * http://codex.wordpress.org/Function_Reference/wptexturize
+     */
+    remove_filter('the_content', 'wptexturize');
     $content = apply_filters('the_content', $post_info->post_content);
-    $ar_api_status = true;
+	add_filter('the_content', 'wptexturize');
+    
+	$ar_api_status = true;
     $ar_api_error = "";
 
     // Save the analizer is active option
@@ -269,7 +278,6 @@ if( version_compare( $wp_version, '3.8', '<') ) {
       
       $title = htmlspecialchars_decode( htmlentities( $title, ENT_NOQUOTES, 'UTF-8', false ), ENT_NOQUOTES );
       $content = htmlspecialchars_decode( htmlentities( $content, ENT_NOQUOTES, 'UTF-8', false ), ENT_NOQUOTES );
-      
       // Call the API with the post contents.
       $consumerKey = get_option('aranalyzer_consumerkey');
       $secretKey = get_option('aranalyzer_secretkey');   

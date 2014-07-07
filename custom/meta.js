@@ -19,29 +19,25 @@ jQuery(document).ready(function($) {
    });
 
 
-   // Spelling Mistakes    
-   aSm = $("ul.spelling-mistakes li").find('span.smText').clone().not(":last").append("\\b|\\b").end().text();
-   var regexSm = new RegExp('(?:\\b|_)(' + aSm + ')(?:\\b|_)','ig');
-   
-   $("#highlight-sp").toggle(function(){        
-     $('#content_ifr').contents().highlightRegex(regexSm, {
-      tagType:   'span',
-      className: 'highlight-sp',
-      });
-      
-     $('#content_ifr').contents().find(".highlight-sp").css("border-bottom", "3px solid #fc0909"); // red
-     $(this).text("Clear Spelling Mistakes");
-   }, function(){
-     $('#content_ifr').contents().find(".highlight-sp").removeAttr("style");
-     $(this).text('Spelling Mistakes');
-   });
+   // Spelling Mistakes       
+   // $("#highlight-sp").toggle(function(){
+
+   //   $('#content_ifr').contents().highlightRegex(regexSm, {
+   //    tagType:   'span',
+   //    className: 'highlight-sp',
+   //   $('#content_ifr').contents().find(".highlight-sp").css("border-bottom", "3px solid #fc0909"); // red
+   //   $(this).text("Clear Spelling Mistakes");
+   // }, function(){
+   //   $('#content_ifr').contents().find(".highlight-sp").removeAttr("style");
+   //   $(this).text('Spelling Mistakes');
+   // });
    
      
-  $('#chksp, #chksp2').change(function() {    
+  $('#chksp, #chksp2').change(function() {
       if($(this).is(":checked")) {
-          
-          console.log("button clicked");
-          
+          var words = $.map($(this).data('words'), function(word, i) { return word.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"); });
+          var regexSm = new RegExp('(\\b[\\W]*'+words.join("[\\W]*\\b|\\b[\\W]*") +'[\\W]*\\b)','ig');
+          console.log(regexSm);
          $('#content_ifr').contents().highlightRegex(regexSm, {
           tagType:   'span',
           className: 'highlight-sp',
@@ -77,41 +73,16 @@ jQuery(document).ready(function($) {
   });  
 
 
-   // Grammar Mistakes    
-   aGm = $("ul.grammar-mistakes li").find('span.gmText').clone().not(":last").append("|").end().text();
-   
-   // Adding again words with different space code
-   $.each(aGm.split('|'), function(index, value) {
-	 if (value.indexOf(String.fromCharCode(32)) != -1) {
-		 aGm += '|' + value.split(String.fromCharCode(32)).join(String.fromCharCode(160));
-	 }
-   });
-   
-   var regexGm = new RegExp(aGm,'gi');
-
-   $("#highlight-gm").toggle(function(){        
-     $('#content_ifr').contents().highlightRegex(regexGm, {
-      tagType:   'span',
-      className: 'highlight-grm',
-      });
-    
-     $('#content_ifr').contents().find(".highlight-grm").css("border-bottom", "3px solid #3bd15e"); // green
-     $(this).text("Clear Grammar Mistakes");
-   }, function(){
-     $('#content_ifr').contents().find(".highlight-grm").removeAttr("style");    
-     $(this).text('Grammar Mistakes');
-   });
-   
-   
   $('#chkgm').change(function() {
       if($(this).is(":checked")) {
+         var words = $.map($(this).data('words'), function(word, i) { return word.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"); });
+         var regexGm = new RegExp('(\\b[\\W]*'+words.join("[\\W]*\\b|\\b[\\W]*") +'[\\W]*\\b)','g');
          $('#content_ifr').contents().highlightRegex(regexGm, {
-          tagType:   'span',
-          className: 'highlight-grm',
+        	 tagType:   'span',
+        	 className: 'highlight-grm',
           });
-        
          $('#content_ifr').contents().find(".highlight-grm").css("border-bottom", "3px solid #3bd15e"); // green
-      }else{
+      } else {
          $('#content_ifr').contents().find(".highlight-grm").removeAttr("style");    
       }
   });    

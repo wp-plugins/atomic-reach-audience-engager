@@ -75,9 +75,6 @@ if ($test) {
         <?php
         if ($scoring->data->analysis):
 
-//            echo "<pre>";
-//            print_r($scoring);
-//        echo "</pre>";
             ?>
 
             <!-- <ul id="hl-class">
@@ -131,13 +128,27 @@ if ($test) {
                             <input type="checkbox" id="chksp" name="chk" value="all">
                             <label for="chksp">Spelling Mistakes</label>
                         </li>
+                        <script>
+                            jQuery("#chksp").data('words', <?php 
+                                $words = array();
+                                foreach($scoring->data->analysis->sm->detail as $key => $value)
+                                    $words[] = $value->string;
+                                echo json_encode($words); ?>);
+						</script>
                     <?php endif; ?>
                     <?php if ($scoring->data->analysis->gm->total > 0): ?>
                         <li>
                             <input type="checkbox" id="chkgm" name="chk"value="false">
                             <label for="chkgm">Grammar Insights</label>
                         </li>
-                    <?php endif; ?>
+                        <script>
+                            jQuery("#chkgm").data('words', <?php 
+                                    $words = array();
+                                    foreach($scoring->data->analysis->gm->detail as $key => $value)
+                                        $words[] = $value->string;
+                                    echo json_encode($words); ?>);
+                         </script>
+                   <?php endif; ?>
                     <?php if ($scoring->data->analysis->lc->invalid > 0): ?>
                         <li>
                             <input type="checkbox" id="chkul" name="chk" value="true">
@@ -455,6 +466,8 @@ if ($test) {
 
                                             </ul>
                                         </div>
+                                        <script>
+                                        </script>
                                     <?php else: ?>
                                         <div>There are no spelling mistakes.</div>
                                     <?php endif; ?>
