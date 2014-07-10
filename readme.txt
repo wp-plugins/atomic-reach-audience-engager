@@ -4,7 +4,7 @@ Donate link: http://www.atomicreach.com
 Tags: seo, post, content, quality, optimization, optimize, audience, sophistication, engagement, atomic reach
 Requires at least: 3.4
 Tested up to: 3.9.x
-Stable tag: 1.7.63
+Stable tag: 1.7.64
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,9 @@ Feel free to [email us](http://www.atomicreach.com/contact-us/) anytime.
 3. screenshot-3.png
 
 == Changelog ==
+1.7.64 (2014.7.10)
+- Fixed spelling highlightig/add to dictionary issue
+
 1.7.63 (2014.7.7)
 - Fixed grammar insight issue.
 
