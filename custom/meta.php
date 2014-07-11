@@ -434,7 +434,7 @@ if ($test) {
                                     <?php elseif (strtolower($scoring->data->analysis->sm->state) === 'red'): ?>
                                     <li class="ar_checkmarks_error">
                                     <?php endif; ?>
-                                    <?php if ($scoring->data->analysis->sm->total > 0): ?>
+                                    <?php if ( count($scoring->data->analysis->sm->detail) > 0): ?>
                                         <div><a href="#sm">There are <?php echo $scoring->data->analysis->sm->total; ?> misspelled words.</a></div>
                                         <div>
                                             <ul class="details spelling-mistakes">

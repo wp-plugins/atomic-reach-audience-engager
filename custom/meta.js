@@ -78,7 +78,7 @@ jQuery(document).ready(function($) {
       if($(this).is(":checked")) {
          var words = $.map($(this).data('words'), function(word, i) { return word.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"); });
          //var regexGm = new RegExp('(\\b[\\W]*'+words.join("[\\W]*\\b|\\b[\\W]*") +'[\\W]*\\b)','g');
-		 var regexSm = new RegExp('(\\b'+words.join("?[\\x27]?[\\S]+\\b|\\b")+'?[\\x27]?[\\S]+\\b)','g');
+		 var regexGm = new RegExp('(\\b'+words.join("?[\\x27]?[\\S]+\\b|\\b")+'?[\\x27]?[\\S]+\\b)','g');
          $('#content_ifr').contents().highlightRegex(regexGm, {
         	 tagType:   'span',
         	 className: 'highlight-grm',
