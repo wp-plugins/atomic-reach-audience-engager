@@ -4,7 +4,7 @@ Donate link: http://www.atomicreach.com
 Tags: seo, post, content, quality, optimization, optimize, audience, sophistication, engagement, atomic reach
 Requires at least: 3.4
 Tested up to: 3.9.x
-Stable tag: 1.7.65
+Stable tag: 1.7.66
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,9 @@ Feel free to [email us](http://www.atomicreach.com/contact-us/) anytime.
 
 
 == Changelog ==
+1.7.66 (2014.08.26)
+- Fixed the case of spelling highlighting when there is square brackets.
+
 1.7.65 (2014.07.11)
 - Fixed grammar highlighting.
 

@@ -35,7 +35,10 @@ jQuery(document).ready(function($) {
      
   $('#chksp, #chksp2').change(function() {
       if($(this).is(":checked")) {
-          var words = $.map($(this).data('words'), function(word, i) { return word.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"); });
+          var words = $.map($(this).data('words'), function(word, i) { 
+		  //return word.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"); 
+		  return word.replace(/[\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "");
+		  });
           //var regexSm = new RegExp('(\\b[\\W]*'+words.join("[\\W]*\\b|\\b[\\W]*") +'[\\W]*\\b)','ig');
 		  var regexSm = new RegExp('(\\b'+words.join("?[\\x27]?[\\S]+\\b|\\b")+'?[\\x27]?[\\S]+\\b)','ig');
           console.log(regexSm);
