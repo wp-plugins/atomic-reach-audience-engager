@@ -3,7 +3,7 @@
 	  Plugin Name: Atomic Engager
 	  Plugin URI: http://www.atomicreach.com
 	  Description: Optimizing content for your target audience has never been easier.
-	  Version: 2.0.00
+	  Version: 2.0.01
 	  Author URI: http://www.atomicreach.com
 	  Author: atomicreach
 	 */
@@ -636,16 +636,9 @@
 
 		$wp_admin_bar->add_menu(array(
 			'parent' => 'atomicreach',
-			'id'     => 'atomicreach2',
-			'title'  => __('Beta Signup'),
-			'href'   => 'http://www.atomicreach.com/insights-beta/?utm_source=WP%20Plugin&utm_medium=' . get_option('home') . '&utm_campaign=WP%20PLUGIN%20ADMINBAR'
-		));
-
-		$wp_admin_bar->add_menu(array(
-			'parent' => 'atomicreach',
 			'id'     => 'atomicreach3',
 			'title'  => __('Contact us'),
-			'href'   => 'http://www.atomicreach.com/#beintouch?utm_source=WP%20Plugin&utm_medium=' . get_option('home') . '&utm_campaign=WP%20PLUGIN%20ADMINBAR',
+			'href'   => 'http://www.atomicreach.com/about-us/#contact?utm_source=WP%20Plugin&utm_medium=' . get_option('home') . '&utm_campaign=WP%20PLUGIN%20ADMINBAR',
 			'meta'   => array(
 				'title'  => __('Contact us'),
 				'target' => '_blank',

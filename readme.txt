@@ -4,7 +4,7 @@ Donate link: http://www.atomicreach.com
 Tags: seo, post, content, quality, optimization, optimize, audience, sophistication, engagement, atomic reach
 Requires at least: 3.4
 Tested up to: 3.9.x
-Stable tag: 2.0.00
+Stable tag: 2.0.01
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,7 +71,7 @@ Or Visit [help.atomicreach.com](http://help.atomicreach.com)
 3. screenshot-3.png
 
 == Changelog ==
-2.0.00 (2014.08.09)
+2.0.01 (2014.08.09)
 - Major new UI/UX update.
 - Add modern UI. No need to refresh whole page to rescore.
 - Easy to setup.
