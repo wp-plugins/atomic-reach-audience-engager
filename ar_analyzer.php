@@ -3,7 +3,7 @@
 	  Plugin Name: Atomic Engager
 	  Plugin URI: http://www.atomicreach.com
 	  Description: Optimizing content for your target audience has never been easier.
-	  Version: 2.0.01
+	  Version: 2.0.02
 	  Author URI: http://www.atomicreach.com
 	  Author: atomicreach
 	 */

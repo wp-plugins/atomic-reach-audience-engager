@@ -75,7 +75,9 @@
                                     $pieImg = 'AR-Match-Academic.png';
                                 } elseif ($targetAud == 'SPECIALIST') {
                                     $pieImg = 'AR-Match-Specialist.png';
-                                }
+                                } elseif ($targetAud == 'GENIUS') {
+										$pieImg = 'AR-Match-Genius.png';
+								}
                             }
                         ?>
                         <img src="<?php echo plugins_url('/', __FILE__) . $pieImg; ?>"

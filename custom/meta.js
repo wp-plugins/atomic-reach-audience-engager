@@ -159,6 +159,7 @@ jQuery(document).ready(function ($) {
     // clear all highlights
     function clearAllHighlights(){
         $('#content_ifr').contents().find(".highlight-so").contents().unwrap();
+        $('#content_ifr').contents().find(".highlight-pwd").contents().unwrap();
         $('#content_ifr').contents().find(".highlight-sp").removeAttr("style");
         $('#content_ifr').contents().highlightRegex(undefined, {
             tagType: 'span',
