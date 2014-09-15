@@ -48,7 +48,8 @@
 					</select>
 					<a class="ARinfoToolTip" href=""><img style="vertical-align: middle;"
 					                                      src="<?php echo plugins_url('/', __FILE__); ?>infoIcon.png"/>
-						<span>Choose the audience segment that you set up at score.atomicreach.com.</span>
+						<span><img src="<?php echo plugins_url('/', __FILE__); ?>AR-KnowledgeWheel-Words-0914-400.png"
+						           alt="atomic reach pie of sophistication"/></span>
 					</a>
 
 

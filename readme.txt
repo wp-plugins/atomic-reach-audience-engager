@@ -4,7 +4,7 @@ Donate link: http://www.atomicreach.com
 Tags: seo, post, content, quality, optimization, optimize, audience, sophistication, engagement, atomic reach
 Requires at least: 3.4
 Tested up to: 4.0.x
-Stable tag: 2.0.03
+Stable tag: 2.0.05
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ Optimizing content for your target audience has never been easier.
 
 Get your content scored to see how you can create remarkable content for your target audience. Sign up at [score.atomicreach.com](http://score.atomicreach.com) so that we can run your blog through our content optimization engine. Paired with this plugin, you will gain critical insights to help engage your target audience and amplify your content with every post. 
 = Note =
-This plugin creates an RSS feed that shows 150 articles in full content for the platform to analyze its audience data.
+This plugin creates an RSS feed that shows 300 articles in full content for the platform to analyze its audience data.
 The plugin sends data insights to your Atomic Reach account (at [score.atomicreach.com](http://score.atomicreach.com)) and helps you write relevant content targeted to your online audience(s), maximizing your performance for true engagement
 
 This is not your grandma's SEO tool. We leave the meta tagging to the SEO dinosaurs.

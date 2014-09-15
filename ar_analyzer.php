@@ -3,7 +3,7 @@
 	  Plugin Name: Atomic Engager
 	  Plugin URI: http://www.atomicreach.com
 	  Description: Optimizing content for your target audience has never been easier.
-	  Version: 2.0.03
+	  Version: 2.0.05
 	  Author URI: http://www.atomicreach.com
 	  Author: atomicreach
 	 */
@@ -668,7 +668,7 @@
 //		if ($arRSS == 1) {
 		global $more;
 		$more      = -1;
-		$postCount = 150; // The number of posts to show in the feed
+		$postCount = 300; // The number of posts to show in the feed
 		$posts     = query_posts('showposts=' . $postCount);
 		header('Content-Type: ' . feed_content_type('rss-http') . '; charset=' . get_option('blog_charset'), TRUE);
 		echo '<?xml version="1.0" encoding="' . get_option('blog_charset') . '"?' . '>' . PHP_EOL;

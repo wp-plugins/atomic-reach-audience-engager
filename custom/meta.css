@@ -933,7 +933,7 @@ a.ARinfoToolTip {
 
 a.ARinfoToolTip span {
     position: absolute;
-    width: 200px;
+    width: 420px;
     color: #FFFFFF;
     background: #000000;
     height: auto;
@@ -959,7 +959,7 @@ a.ARinfoToolTip span:after {
 
 a:hover.ARinfoToolTip span {
     visibility: visible;
-    opacity: 0.9;
+    opacity: 1;
     right: 100%;
     top: 50%;
     margin-top: -15px;
