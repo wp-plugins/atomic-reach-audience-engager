@@ -239,8 +239,8 @@ jQuery(document).ready(function ($) {
 
     $("#ARajaxData").on("click", "#AR-scoreBtn", function (e) {
         e.preventDefault();
-        /*var title = jQuery("#title").val();
-         var content = tinyMCE.activeEditor.getContent();*/
+        var title = jQuery("#title").val();
+        var content = tinyMCE.activeEditor.getContent();
         var segmentId = jQuery("#_ar_meta_audience_list").val();
 
         var query = window.location.search.substring(1);
@@ -256,7 +256,9 @@ jQuery(document).ready(function ($) {
         var data = {
             'action': 'aranalyzer_ajax',
             'postID': arPostID,
-            'segmentId': segmentId
+            'segmentId': segmentId,
+            'arTitle': title,
+            'arContent': content
         };
 
         // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php

@@ -3,7 +3,7 @@
 	  Plugin Name: Atomic Engager
 	  Plugin URI: http://www.atomicreach.com
 	  Description: Optimizing content for your target audience has never been easier.
-	  Version: 2.0.05
+	  Version: 2.0.09
 	  Author URI: http://www.atomicreach.com
 	  Author: atomicreach
 	 */
@@ -545,10 +545,13 @@
 
 	function aranalyzer_ajax_callback()
 	{
-		$postID = intval($_POST['postID']);
+		/*$postID = intval($_POST['postID']);
 
 		$post_info = get_post($postID);
-		$title     = $post_info->post_title;
+		$title     = $post_info->post_title;*/
+
+		$_title = $_POST['arTitle'];
+		$_content = $_POST['arContent'];
 
 		/**
 		 * We are removing the wptexturize before creating the content value to be send to api because it is changing single quotes
@@ -557,9 +560,9 @@
 		 * check
 		 * http://codex.wordpress.org/Function_Reference/wptexturize
 		 */
-		remove_filter('the_content', 'wptexturize');
+		/*remove_filter('the_content', 'wptexturize');
 		$content = apply_filters('the_content', $post_info->post_content);
-		add_filter('the_content', 'wptexturize');
+		add_filter('the_content', 'wptexturize');*/
 
 //		$ar_audience = get_post_meta($postID, '_ar_meta_audience_list', TRUE);
 
@@ -572,8 +575,8 @@
 		 * I found this combination that left HTML code without encoding and   *
 		 * all the other text formatted with HTML entities encoding            */
 
-		$title   = htmlspecialchars_decode(htmlentities($title, ENT_NOQUOTES, 'UTF-8', FALSE), ENT_NOQUOTES);
-		$content = htmlspecialchars_decode(htmlentities($content, ENT_NOQUOTES, 'UTF-8', FALSE), ENT_NOQUOTES);
+		$title   = htmlspecialchars_decode(htmlentities($_title, ENT_NOQUOTES, 'UTF-8', FALSE), ENT_NOQUOTES);
+		$content = htmlspecialchars_decode(htmlentities($_content, ENT_NOQUOTES, 'UTF-8', FALSE), ENT_NOQUOTES);
 		// Call the API with the post contents.
 		$consumerKey = get_option('aranalyzer_consumerkey');
 		$secretKey   = get_option('aranalyzer_secretkey');
@@ -668,7 +671,7 @@
 //		if ($arRSS == 1) {
 		global $more;
 		$more      = -1;
-		$postCount = 300; // The number of posts to show in the feed
+		$postCount = 150; // The number of posts to show in the feed
 		$posts     = query_posts('showposts=' . $postCount);
 		header('Content-Type: ' . feed_content_type('rss-http') . '; charset=' . get_option('blog_charset'), TRUE);
 		echo '<?xml version="1.0" encoding="' . get_option('blog_charset') . '"?' . '>' . PHP_EOL;

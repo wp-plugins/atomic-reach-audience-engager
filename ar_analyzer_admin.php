@@ -62,7 +62,7 @@
 
 			<?php if ((empty($consumerkey) || empty($secretkey)) || ($aranalyzer_state_keys === 'FALSE' || empty($aranalyzer_state_keys))): ?>
 
-				<a target="_blank" href="http://www.atomicreach.com/how-to-connect-wp-plugin/"><img src="<?php echo plugins_url('/',
+				<a target="_blank" href="http://www.atomicreach.com/how-to-connect-wp-plugin/?utm_source=WP%20Plugin&utm_medium=<?php echo get_option('home'); ?>&utm_campaign=WP%20PLUGIN%20CTA"><img src="<?php echo plugins_url('/',
 						__FILE__); ?>custom/AR-WP-CTA.png" alt="atomic engager cta"/></a>
 
 				<p><a href="#" class="ar_btn-login mw">Connect to <img src="<?php echo plugins_url('/', __FILE__); ?>custom/ar-logo.gif"/></a></p>
