@@ -310,7 +310,7 @@
                                             echo '<li><span class="soText">' . $recomendation . '</span></li>';
                                     ?>
                                     <p>Refer to our guide on how to create engaging titles <a
-                                            href="http://hub.atomicreach.com/i/303939/" target="_blank"
+                                            href="http://hub.atomicreach.com/i/341645/" target="_blank"
                                             class="toggle-link ar-message-link"><span>here</span></a>.</p>
                                 </ul>
                                 <?php else: ?>
