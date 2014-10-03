@@ -673,6 +673,7 @@
 						<p>To see your current results, press the rescore button below.</p>
 						<a href="http://help.atomicreach.com" target="_blank" class="ar-help">Help</a>
 						<a id="AR-scoreBtn" class="arScoreBtn" href="#">RESCORE</a>
+						<span style=" color: #666565; font-size: 11px;">Click “Save Draft” or "Update" to store all your edits for this article.</span>
 					</div>
 
 					</div>
