@@ -9,7 +9,13 @@
 	$test = FALSE;
 	if ($test) {
 		include('metabox-harcoded.php');
-	} else {
+	} else {?>
+		<a target="_blank" href="http://score.atomicreach.com?utm_source=WP%20Plugin&utm_medium=' <?php echo get_option('home') ; ?>
+				'&utm_campaign=WP%20PLUGIN%20CTA-editphp">
+				<img style=" display: block; margin: 0 auto;" src="<?php echo plugins_url('/', __FILE__); ?>ViewMyDashboard.png" alt="atomic
+				insights cta"/></a>
+
+		<?php
 		if (empty($cKey) || empty($sKey)) {
 			?>
 			<a href="<?php echo bloginfo('url'); ?>/wp-admin/admin.php?page=ar-analyzer-admin">
@@ -552,7 +558,7 @@
 											echo $ul_tg;
 										?>
 										<p class="AR-guide">Refer to our tips on how to write with emotion <a
-												href="http://hub.atomicreach.com/i/303948/" target="_blank"
+												href="//hub.atomicreach.com/i/303948/" target="_blank"
 												class="toggle-link ar-message-link"><span>here</span></a>.</p>
 									</ul>
 								</div>
@@ -657,7 +663,7 @@
 												echo $ul_gm;
 											?>
 											<p class="AR-guide">Refer to our guide on how to write with an active voice <a
-													href="http://hub.atomicreach.com/i/304278/" target="_blank"
+													href="//hub.atomicreach.com/i/304278/" target="_blank"
 													class="toggle-link ar-message-link"><span>here</span></a>.</p>
 										</ul>
 
@@ -671,7 +677,7 @@
 					</div>
 					<div class="AR-TabsFooter">
 						<p>To see your current results, press the rescore button below.</p>
-						<a href="http://help.atomicreach.com" target="_blank" class="ar-help">Help</a>
+						<a href="//help.atomicreach.com" target="_blank" class="ar-help">Help</a>
 						<a id="AR-scoreBtn" class="arScoreBtn" href="#">RESCORE</a>
 						<span style=" color: #666565; font-size: 11px;">Click “Save Draft” or "Update" to store all your edits for this article.</span>
 					</div>

@@ -4,7 +4,7 @@ Donate link: http://www.atomicreach.com
 Tags: seo, post, content, quality, optimization, optimize, audience, sophistication, engagement, atomic reach
 Requires at least: 3.4
 Tested up to: 4.0.x
-Stable tag: 2.0.11
+Stable tag: 2.0.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,11 @@ Or Visit [help.atomicreach.com](http://help.atomicreach.com)
 3. screenshot-3.png
 
 == Changelog ==
+2.0.12 (2014.10.14)
+- added a shortcut to insights.
+- now compatible with https: blogs
+- minor code fix.
+
 2.0.11 (2014.10.03)
 - added a message about saving article.
 2.0.09 (2014.09.17)

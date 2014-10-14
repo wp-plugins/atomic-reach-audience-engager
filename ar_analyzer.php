@@ -3,7 +3,7 @@
 	  Plugin Name: Atomic Engager
 	  Plugin URI: http://www.atomicreach.com
 	  Description: Optimizing content for your target audience has never been easier.
-	  Version: 2.0.11
+	  Version: 2.0.12
 	  Author URI: http://www.atomicreach.com
 	  Author: atomicreach
 	 */
@@ -25,7 +25,7 @@
 
 	/* Production */
 	define('API_HOST', 'https://api.score.atomicreach.com'); // with SSL
-	define('AR_URL', 'http://score.atomicreach.com');
+	define('AR_URL', '//score.atomicreach.com');
 
 	// if( !class_exists( 'WP_Http' ) )
 	// require_once( ABSPATH . WPINC . '/class-http.php' );
@@ -70,26 +70,26 @@
 	{
 
 
-			if ($_GET['mode'] == 'ar_callback' && isset($_GET['key']) && isset($_GET['secret'])) {
+		if ($_GET['mode'] == 'ar_callback' && isset($_GET['key']) && isset($_GET['secret'])) {
 
-				update_option('aranalyzer_secretkey', '');
-				update_option('aranalyzer_consumerkey', '');
+			update_option('aranalyzer_secretkey', '');
+			update_option('aranalyzer_consumerkey', '');
 
-				if (update_option('aranalyzer_secretkey', $_GET['secret']) && update_option('aranalyzer_consumerkey', $_GET['key'])) {
-					update_option('aranalyzer_state_keys', 'TRUE');
+			if (update_option('aranalyzer_secretkey', $_GET['secret']) && update_option('aranalyzer_consumerkey', $_GET['key'])) {
+				update_option('aranalyzer_state_keys', 'TRUE');
 
-					echo '<div style="background-color: #FFFFE0; border: 1px solid #E6DB55; padding: 0 0 0 6px;font-family:sans-serif; font-size:12px;">
+				echo '<div style="background-color: #FFFFE0; border: 1px solid #E6DB55; padding: 0 0 0 6px;font-family:sans-serif; font-size:12px;">
                    <p id="aranalizerOk">The secret key and consumer key have being updated.</p>
 					<p>Close this window to continue</p>
               </div>';
-				} else {
-					echo '<div style="background-color:#FFEBE8;; border: 1px solid #CC0000; padding: 0 0 0 6px;font-family:sans-serif; font-size:12px;">
+			} else {
+				echo '<div style="background-color:#FFEBE8;; border: 1px solid #CC0000; padding: 0 0 0 6px;font-family:sans-serif; font-size:12px;">
                 <p>The secret key and consumer key have not being updated.</p>
 				<p>Close this window to continue</p>
               </div>';
-				}
-				exit();
 			}
+			exit();
+		}
 
 	}
 
@@ -103,10 +103,10 @@
 	function aranalyzer_check_keys_callback()
 	{
 
-			if ($_POST['modekeys']) {
-				echo TRUE;
-				exit();
-			}
+		if ($_POST['modekeys']) {
+			echo TRUE;
+			exit();
+		}
 
 	}
 
@@ -151,7 +151,7 @@
 			}
 		}*/
 
-		foreach($audienceList->sophisticatonBands AS $SophBand){
+		foreach ($audienceList->sophisticatonBands AS $SophBand) {
 			if ($SophBand->id == $ar_audience) {
 				$targetAud = strtoupper(str_replace('* ', '', $SophBand->name));
 			}
@@ -550,7 +550,7 @@
 		$post_info = get_post($postID);
 		$title     = $post_info->post_title;*/
 
-		$_title = $_POST['arTitle'];
+		$_title   = $_POST['arTitle'];
 		$_content = $_POST['arContent'];
 
 		/**
@@ -585,7 +585,7 @@
 		$audienceList = aranalyzer_api_getsophisticationbandlist($consumerKey, $secretKey);
 
 //    Store user selected targetAudience to show the pie image. HZ
-		foreach($audienceList->sophisticatonBands AS $SophBand){
+		foreach ($audienceList->sophisticatonBands AS $SophBand) {
 			if ($SophBand->id == $segmentId) {
 				$targetAud = strtoupper(str_replace('* ', '', $SophBand->name));
 			}
@@ -634,7 +634,13 @@
 			'parent' => 'atomicreach',
 			'id'     => 'atomicreach1',
 			'title'  => __('Signup'),
-			'href'   => 'http://score.atomicreach.com?utm_source=WP%20Plugin&utm_medium=' . get_option('home') . '&utm_campaign=WP%20PLUGIN%20ADMINBAR'
+			'href'   => 'http://score.atomicreach.com?utm_source=WP%20Plugin&utm_medium=' . get_option('home') .
+				'&utm_campaign=WP%20PLUGIN%20ADMINBAR',
+			'meta'   => array(
+				'title'  => __('Signup'),
+				'target' => '_blank',
+				'class'  => 'ar_score'
+			),
 		));
 
 		$wp_admin_bar->add_menu(array(
