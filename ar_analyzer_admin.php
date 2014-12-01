@@ -50,11 +50,16 @@
 		$arRSS    = get_option('aranalyzer_RSS');
 	}
 ?>
+<?php
+	global $current_user;
+	get_currentuserinfo();
+?>
 
 <div class="wrap">
 	<?php echo "<h2>" . __('Atomic Engager Configuration', 'aranalyzer_trdom') . "</h2>"; ?>
 
-	<form name="aranalyzer_form" method="post" action="<?php echo str_replace('%7E', '~', $_SERVER['REQUEST_URI']); ?>">
+	<form id='hb-form' class='jotform-form' name='form_43305729254' id='43305729254' method="post" action="<?php echo str_replace('%7E', '~',
+		$_SERVER['REQUEST_URI']); ?>">
 		<input type="hidden" name="aranalyzer_saved" value="Y">
 		<?php echo "<h4>" . __('Atomic Engager Settings', 'aranalyzer_trdom') . "</h4>"; ?>
 
@@ -62,11 +67,69 @@
 
 			<?php if ((empty($consumerkey) || empty($secretkey)) || ($aranalyzer_state_keys === 'FALSE' || empty($aranalyzer_state_keys))): ?>
 
+
+
 				<a target="_blank" href="http://www.atomicreach.com/how-to-connect-wp-plugin/?utm_source=WP%20Plugin&utm_medium=<?php echo get_option('home'); ?>&utm_campaign=WP%20PLUGIN%20CTA"><img src="<?php echo plugins_url('/',
 						__FILE__); ?>custom/AR-WP-CTA.png" alt="atomic engager cta"/></a>
 
-				<p><a href="#" class="ar_btn-login mw">Connect to <img src="<?php echo plugins_url('/', __FILE__); ?>custom/ar-logo.gif"/></a></p>
-				<!--				<p>To get the secret and consumer keys click on the Connect to AR button</p>-->
+				<!--	Hatchbuck Form	-->
+				<script src='//app.hatchbuck.com/OnlineForm/js/cdn/jotform.js' type='text/javascript'></script>
+				<script type='text/javascript'>
+					var jsTime = setInterval(function(){try{JotForm.jsForm = true;
+						JotForm.init(function(){$('input_4').hint('ex: myname@example.com');JotForm.highlightInputs = false;});
+						clearInterval(jsTime); }catch(e){}}, 1000);
+
+					function submitHb() {
+						console.log('one');
+							var email_add = jQuery('#input_4').val();
+						if (email_add != '') {
+
+							console.log('here now');
+							document.form_43305729254.action = "https://app.hatchbuck.com/onlineForm/submit.php"
+							document.form_43305729254.target = "_blank";    // Open in a new window
+							document.form_43305729254.submit();             // Submit the page
+						return false;
+						} else {
+
+							console.log('here');
+							jQuery('.ar_errorMsg').show().delay(5000).fadeOut();
+//							return false;
+
+						}
+					}
+				</script>
+
+			<style type='text/css'>
+				.AR-loginBox {
+				border: 1px solid;
+				border-radius: 3px;
+				box-shadow: 0 0 10px #acacac;
+				margin: 45px 0;
+				max-width: 600px;
+				padding: 20px;
+				}
+				.AR-loginBox input#input_4{
+					border: 1px solid;
+				}
+			</style>
+				<input type='hidden' name='formID' value='43305729254' />
+
+				<div class="AR-loginBox">
+				<h2>Connect To Atomic Reach:</h2>
+					<p>In order to connect your account, and make sure you're not a robot, we need to know who you are</p>
+					<p class="ar_errorMsg" style="display: none; color: #ff0000;">Please provide an email address.</p>
+					<div>
+					<label id='label_4' for='input_4'>E-mail<span class='form-required'>*</span></label>
+					<input type='email' class='validate[required, Email]' id='input_4' name='q4_email' size='50' required />
+				</div>
+
+				<p><a href="#"  onclick="submitHb();" class="ar_btn-login mw">Connect to <img src="<?php echo plugins_url('/',
+							__FILE__); ?>custom/ar-logo.gif"/></a></p>
+
+					</div>
+				<input type='hidden' id='simple_spc' name='simple_spc' value='43305729254-43305729254'/>
+				<input type='hidden' id='enableServerValidation' name='enableServerValidation' value='1'/>
+				 <input type='hidden' id='enable303Redirect' name='enable303Redirect' value='0'/>
 			<?php else: ?>
 				<p><span class="ar_btn-connected">Connected</span></p>
 			<?php endif; ?>
@@ -96,26 +159,26 @@
 		<p class="submit">
 			<input class="button button-primary" type="submit" name="Submit" value="<?php _e('Update Options', 'aranalyzer_trdom') ?>"/>
 		</p>
+
 	</form>
 
 	<div class="aranalyzer-rightpanel">
 
 		<div id="aranalyzer-rightForm">
-			<?php
-				global $current_user;
-				get_currentuserinfo();
-			?>
-			<!-- Begin MailChimp Signup Form -->
-			<link href="//cdn-images.mailchimp.com/embedcode/classic-081711.css" rel="stylesheet" type="text/css">
+
+			<!-- Begin 1on1 Signup Form -->
+
 			<style type="text/css">
 				#mc_embed_signup {
 					clear: left;
 					width: 300px;
+					padding: 5px;
 				}
-
-				/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
-				   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+				#mc_embed_signup input{
+					max-width: 250px;
+				}
 				#mc_embed_signup .button {
+					margin-top: 5px ;
 					-moz-box-shadow: inset 0px 1px 0px 0px #f5978e;
 					-webkit-box-shadow: inset 0px 1px 0px 0px #f5978e;
 					box-shadow: inset 0px 1px 0px 0px #f5978e;
@@ -163,37 +226,24 @@
 				}
 			</style>
 			<div id="mc_embed_signup">
-				<form action="//atomicreach.us4.list-manage.com/subscribe/post?u=2a8048c104efa30d1b06df2a0&amp;id=dd2e84675a" method="post"
-				      id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-					<h2>Get one-on-one help!</h2>
 
-					<div class="mc-field-group">
-						<label for="mce-EMAIL">Email Address </label>
-						<input type="email" value="<?php echo $current_user->user_email; ?>" name="EMAIL" class="required email" id="mce-EMAIL">
+				<form id='hb-form' class='jotform-form' action='https://app.hatchbuck.com/onlineForm/submit.php' method='post' name='form_43345948285' id='43345948285' accept-charset='utf-8'>
+					<h2>Get one-on-one help!</h2>
+					<input type='hidden' name='formID' value='43345948285' />
+					<div>
+						<label id='label_4' for='input_4'>E-mail<span class='form-required'>*</span></label>
+						<input type='email' class='validate[required, Email]' id='input_4' value="<?php echo $current_user; ?>" name='q4_email'
+						       size='50' />
 					</div>
-					<div id="mce-responses" class="clear">
-						<div class="response" id="mce-error-response" style="display:none"></div>
-						<div class="response" id="mce-success-response" style="display:none"></div>
-					</div>
-					<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-					<div style="position: absolute; left: -5000px;"><input type="text" name="b_2a8048c104efa30d1b06df2a0_dd2e84675a" tabindex="-1"
-					                                                       value=""></div>
-					<div class="clear"><input type="submit" value="Submit" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+					<button id='input_2' type='submit' class='form-submit-button button'>Submit</button>
+					<input type='hidden' id='simple_spc' name='simple_spc' value='43345948285-43345948285'/>
+					<input type='hidden' id='enableServerValidation' name='enableServerValidation' value='1'/>
+					<input type='hidden' id='enable303Redirect' name='enable303Redirect' value='0'/>
 				</form>
+
+
 			</div>
-			<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
-			<script type='text/javascript'>(function ($) {
-					window.fnames = new Array();
-					window.ftypes = new Array();
-					fnames[0] = 'EMAIL';
-					ftypes[0] = 'email';
-					fnames[1] = 'FNAME';
-					ftypes[1] = 'text';
-					fnames[2] = 'LNAME';
-					ftypes[2] = 'text';
-				}(jQuery));
-				var $mcj = jQuery.noConflict(true);</script>
-			<!--End mc_embed_signup-->
+
 		</div>
 
 	</div>
@@ -201,20 +251,7 @@
 
 </div><!-- end wrap -->
 
-<!--<div class="aranalyzerCTA">
-	<a target="_blank"
-	   href="http://www.atomicreach.com/insights-beta/?utm_source=WP%20Plugin&utm_medium=<?php /*echo get_option('home'); */ ?>&utm_campaign=WP%20PLUGIN%20CTA"><img
-			src="<?php /*echo plugins_url('/', __FILE__); */ ?>custom/greatContent.png"></a><br>
 
-	<a target="_blank" href="http://atomicreach.us4.list-manage.com/subscribe?u=2a8048c104efa30d1b06df2a0&id=e8ff369a7f"><img
-			src="<?php /*echo plugins_url('/', __FILE__); */ ?>custom/getItNow.png"></a>&nbsp;&nbsp;&nbsp;<a target="_blank"
-	                                                                                                    href="http://www.atomicreach.com/#beintouch?utm_source=WP%20Plugin&utm_medium=<?php /*echo get_option('home'); */ ?>&utm_campaign=WP%20PLUGIN%20CTA"><img
-			src="<?php /*echo plugins_url('/', __FILE__); */ ?>custom/needHelp.png"></a>
-
-	<br><a target="_blank"
-	       href="http://blog.atomicreach.com?utm_source=WP%20Plugin&utm_medium=<?php /*echo get_option('home'); */ ?>&utm_campaign=WP%20PLUGIN%20CTA"><img
-			src="<?php /*echo plugins_url('/', __FILE__); */ ?>custom/readOurBlog.png"></a>
-</div>-->
 <?php
 	$qry = get_site_url();
 ?>

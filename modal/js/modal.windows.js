@@ -13,8 +13,9 @@ jQuery(function ($) {
 		container: null,
 		init: function () {
 			$("input.mw, a.mw").click(function (e) {
-				e.preventDefault();	
+				e.preventDefault();
 
+                    if (jQuery('#input_4').val() != '')
 				$("#mw-modal-content").modal({
 					overlayId: 'mw-overlay',
 					containerId: 'mw-container',
