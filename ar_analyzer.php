@@ -3,7 +3,7 @@
 	  Plugin Name: Atomic Engager
 	  Plugin URI: http://www.atomicreach.com
 	  Description: Optimizing content for your target audience has never been easier.
-	  Version: 2.0.15
+	  Version: 2.0.16
 	  Author URI: http://www.atomicreach.com
 	  Author: atomicreach
 	 */
@@ -20,8 +20,8 @@
 	// define('AR_URL', 'http://probar.atomicreach.com');
 	//define('AR_URL', 'http://arv3.local');
 	/* Staging */
-//	define('API_HOST', 'https://api.dev.arv3.atomicreach.com'); // with SSL
-//	define('AR_URL', 'http://dev.arv3.atomicreach.com');
+	//	define('API_HOST', 'https://api.dev.arv3.atomicreach.com'); // with SSL
+	//	define('AR_URL', 'http://dev.arv3.atomicreach.com');
 
 	/* Production */
 	define('API_HOST', 'https://api.score.atomicreach.com'); // with SSL

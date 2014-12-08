@@ -4,7 +4,7 @@ Donate link: http://www.atomicreach.com
 Tags: seo, post, content, quality, optimization, optimize, audience, sophistication, engagement, atomic reach
 Requires at least: 3.4
 Tested up to: 4.0
-Stable tag: 2.0.15
+Stable tag: 2.0.16
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Optimizing content for your target audience has never been easier.
 
 == Description ==
 
-Get your content scored to see how you can create remarkable content for your target audience. Sign up at [score.atomicreach.com](http://score.atomicreach.com) so that we can run your blog through our content optimization engine. Paired with this plugin, you will gain critical insights to help engage your target audience and amplify your content with every post. 
+Get your content scored to see how you can create remarkable content for your target audience. Sign up at [score.atomicreach.com](http://score.atomicreach.com) so that we can run your blog through our content optimization engine. Paired with this plugin, you will gain critical insights to help engage your target audience and amplify your content with every post.
 = Note =
 An email address is required to use the plugin. This plugin creates an RSS feed that shows 300 articles in full content for the platform to analyze its audience data.
 The plugin sends data insights to your Atomic Reach account (at [score.atomicreach.com](http://score.atomicreach.com)) and helps you write relevant content targeted to your online audience(s), maximizing your performance for true engagement
@@ -44,7 +44,7 @@ After the Analyze This Post’s Content box is checked, you must click the Save 
 
 No! We’ve developed an algorithm that can determine the performance of your content before it’s published. In order to get your content analyzed, simply save it as a draft. The plugin will then provide you with feedback to help optimize your content in realtime. To learn more about how to use the plugin [click here]( http://www.atomicreach.com/install-atomic-reach-wordpress-plugin-2/#slideshare).
 
-= Is there a way to highlight areas for improvement within the text? = 
+= Is there a way to highlight areas for improvement within the text? =
 
 Once your content has been analyzed, the plugin will display categories that you may select to highlight within the post. Click on one (or more) categories to view these areas of improvements within the post. Click again to hide the highlighting for that category.
 
@@ -54,7 +54,7 @@ You content is optimized when your score bar reaches green. After our analysis o
 
 = How do I improve my score? How do I know what to edit? =
 
-After your content is analyzed, the results box will indicate the strengths and weaknesses of your post. The plugin will provide suggestions to help you through the optimization process. Improving these weak areas will improve your content’s quality and increase your score. 
+After your content is analyzed, the results box will indicate the strengths and weaknesses of your post. The plugin will provide suggestions to help you through the optimization process. Improving these weak areas will improve your content’s quality and increase your score.
 
 =  I’ve made the changes based on the analysis, now what? =
 
@@ -71,6 +71,9 @@ Or Visit [help.atomicreach.com](http://help.atomicreach.com)
 3. screenshot-3.png
 
 == Changelog ==
+2.0.16 (2014.12.08)
+- Fixed sign up issue.
+
 2.0.15 (2014.12.01)
 - An email address is now required to connect.
 
@@ -121,7 +124,7 @@ Or Visit [help.atomicreach.com](http://help.atomicreach.com)
 -rearrange keyword measure.
 
 1.7.30 (2014.05.05)
--Fixed bugs 
+-Fixed bugs
 -Fixed WordPress 3.9 compatibility bugs (Editor)
 
 1.7.27 (2014.04.08)

@@ -10,7 +10,12 @@
 	if ($test) {
 		include('metabox-harcoded.php');
 	} else {?>
-				<?php
+		<a target="_blank" href="http://score.atomicreach.com?utm_source=WP%20Plugin&utm_medium=' <?php echo get_option('home') ; ?>
+				'&utm_campaign=WP%20PLUGIN%20CTA-editphp">
+				<img style=" display: block; margin: 0 auto;" src="<?php echo plugins_url('/', __FILE__); ?>ViewMyDashboard.png" alt="atomic
+				insights cta"/></a>
+
+		<?php
 		if (empty($cKey) || empty($sKey)) {
 			?>
 			<a href="<?php echo bloginfo('url'); ?>/wp-admin/admin.php?page=ar-analyzer-admin">
@@ -20,10 +25,6 @@
 			?>
 			<div class="ar_meta_control">
 			<?php if ($isAjax != 1): ?>
-			<a target="_blank" href="http://score.atomicreach.com?utm_source=WP%20Plugin&utm_medium=' <?php echo get_option('home') ; ?>
-				'&utm_campaign=WP%20PLUGIN%20CTA-editphp">
-				<img style=" display: block; margin: 0 auto;" src="<?php echo plugins_url('/', __FILE__); ?>ViewMyDashboard.png" alt="atomic
-				insights cta"/></a>
 				<?php if ($ar_enabled === ''): ?>
 					<p>Check the box below to analyze your content. Make sure you select your target audience. Hit save
 						draft to get your results.</p>

@@ -15,7 +15,10 @@ jQuery(function ($) {
 			$("input.mw, a.mw").click(function (e) {
 				e.preventDefault();
 
-                    if (jQuery('#input_4').val() != '')
+                    var email_add = jQuery('#input_4').val();
+                    if (email_add != '') {
+
+
 				$("#mw-modal-content").modal({
 					overlayId: 'mw-overlay',
 					containerId: 'mw-container',
@@ -28,8 +31,15 @@ jQuery(function ($) {
 					onOpen: MODALWINDOWS.open,
 					onClose: MODALWINDOWS.close,
 					maxWidth:810,
-					minWidth:810,
+					minWidth:810
 				});
+                    } else {
+
+                        console.log('here');
+                        jQuery('.ar_errorMsg').show().delay(5000).fadeOut();
+//							return false;
+
+                    }
 			});
 		},
 		open: function (d) {
@@ -75,11 +85,15 @@ jQuery(function ($) {
                      // console.log(response);
                       window.location = urlcb;
                    }
-             },
+             }
           });
 					self.close(); // or $.modal.close();
 				}
 			);
+
+            submitHb();
+
+
 		}
 	};
 
