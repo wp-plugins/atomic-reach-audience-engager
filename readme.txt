@@ -4,7 +4,7 @@ Donate link: http://www.atomicreach.com
 Tags: seo, post, content, quality, optimization, optimize, audience, sophistication, engagement, atomic reach
 Requires at least: 3.4
 Tested up to: 4.0
-Stable tag: 2.0.16
+Stable tag: 2.0.17
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,9 @@ Or Visit [help.atomicreach.com](http://help.atomicreach.com)
 3. screenshot-3.png
 
 == Changelog ==
+2.0.17 (2014.12.15)
+- Fixed shorthand PHP tags
+
 2.0.16 (2014.12.08)
 - Fixed sign up issue.
 

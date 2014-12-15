@@ -294,10 +294,10 @@
 										break;
 								}
 							?>
-							<li class="<?= $class; ?>">
+							<li class="<?php $class; ?>">
 								<div>
 									<?php if (strtolower($scoring->data->analysis->tm->state) !== 'green'): ?>
-									<a href="#so"><?= $scoring->data->analysis->tm->message; ?></a>
+									<a href="#so"><?php $scoring->data->analysis->tm->message; ?></a>
 								</div>
 								<ul class="details title-measure">
 									<?php
@@ -309,7 +309,7 @@
 											class="toggle-link ar-message-link"><span>here</span></a>.</p>
 								</ul>
 								<?php else: ?>
-									<?= $scoring->data->analysis->tm->message; ?>
+									<?php $scoring->data->analysis->tm->message; ?>
 								<?php
 									endif;
 								?>
@@ -353,10 +353,10 @@
 										break;
 								}
 								?>
-								<li class="<?= $class; ?>">
+								<li class="<?php $class; ?>">
 									<div>
 										<?php if (strtolower($scoring->data->analysis->so->state) !== 'green'): ?>
-										<a href="#so">Your content is <?= $scoring->data->analysis->so->detail; ?> for your
+										<a href="#so">Your content is <?php $scoring->data->analysis->so->detail; ?> for your
 											audience</a></div>
 									<ul class="details paragraph-sophistication">
 										<?php
@@ -376,7 +376,7 @@
 										?>
 									</ul>
 									<?php else: ?>
-										<?= $scoring->data->analysis->so->message; ?>
+										<?php $scoring->data->analysis->so->message; ?>
 									<?php
 										endif;
 									?>
