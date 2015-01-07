@@ -10,12 +10,7 @@
 	if ($test) {
 		include('metabox-harcoded.php');
 	} else {?>
-		<a target="_blank" href="http://score.atomicreach.com?utm_source=WP%20Plugin&utm_medium=' <?php echo get_option('home') ; ?>
-				'&utm_campaign=WP%20PLUGIN%20CTA-editphp">
-				<img style=" display: block; margin: 0 auto;" src="<?php echo plugins_url('/', __FILE__); ?>ViewMyDashboard.png" alt="atomic
-				insights cta"/></a>
-
-		<?php
+	<?php
 		if (empty($cKey) || empty($sKey)) {
 			?>
 			<a href="<?php echo bloginfo('url'); ?>/wp-admin/admin.php?page=ar-analyzer-admin">
@@ -34,6 +29,10 @@
 				<p class="enabledArea">
 					<?php
 						if ($ar_enabled === 'enabled') $ar_enabled = "checked"; ?>
+					<a target="_blank" href="http://score.atomicreach.com?utm_source=WP%20Plugin&utm_medium=' <?php echo get_option('home') ; ?>
+				'&utm_campaign=WP%20PLUGIN%20CTA-editphp">
+						<img style=" display: block; margin: 0 auto;" src="<?php echo plugins_url('/', __FILE__); ?>ViewMyDashboard.png" alt="atomic
+				insights cta"/></a>
 					<input name="_ar_meta_review_enabled" id="_ar_meta_review_enabled" type="checkbox"
 					       value="enabled" <?php echo $ar_enabled; ?> />
 					<span>Analyze This Post’s Content</span>
@@ -294,10 +293,10 @@
 										break;
 								}
 							?>
-							<li class="<?php $class; ?>">
+							<li class="<?php echo $class; ?>">
 								<div>
 									<?php if (strtolower($scoring->data->analysis->tm->state) !== 'green'): ?>
-									<a href="#so"><?php $scoring->data->analysis->tm->message; ?></a>
+									<a href="#so"><?php echo $scoring->data->analysis->tm->message; ?></a>
 								</div>
 								<ul class="details title-measure">
 									<?php
@@ -309,7 +308,7 @@
 											class="toggle-link ar-message-link"><span>here</span></a>.</p>
 								</ul>
 								<?php else: ?>
-									<?php $scoring->data->analysis->tm->message; ?>
+									<?php echo $scoring->data->analysis->tm->message; ?>
 								<?php
 									endif;
 								?>
@@ -353,7 +352,7 @@
 										break;
 								}
 								?>
-								<li class="<?php $class; ?>">
+								<li class="<?php echo $class; ?>">
 									<div>
 										<?php if (strtolower($scoring->data->analysis->so->state) !== 'green'): ?>
 										<a href="#so">Your content is <?php $scoring->data->analysis->so->detail; ?> for your
@@ -376,7 +375,7 @@
 										?>
 									</ul>
 									<?php else: ?>
-										<?php $scoring->data->analysis->so->message; ?>
+										<?php echo $scoring->data->analysis->so->message; ?>
 									<?php
 										endif;
 									?>
