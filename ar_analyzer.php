@@ -3,7 +3,7 @@
 	  Plugin Name: Atomic Engager
 	  Plugin URI: http://www.atomicreach.com
 	  Description: Optimizing content for your target audience has never been easier.
-	  Version: 2.0.18
+	  Version: 2.0.19
 	  Author URI: http://www.atomicreach.com
 	  Author: atomicreach
 	 */
@@ -69,15 +69,12 @@
 	function aranalyzer_oAuth_check()
 	{
 
-
-		if ($_GET['mode'] == 'ar_callback' && isset($_GET['key']) && isset($_GET['secret'])) {
-
+	if (isset($_GET['mode']) && isset($_GET['key']) && isset($_GET['secret'])) {
+		if ($_GET['mode'] == 'ar_callback' ) {
 			update_option('aranalyzer_secretkey', '');
 			update_option('aranalyzer_consumerkey', '');
-
 			if (update_option('aranalyzer_secretkey', $_GET['secret']) && update_option('aranalyzer_consumerkey', $_GET['key'])) {
 				update_option('aranalyzer_state_keys', 'TRUE');
-
 				echo '<div style="background-color: #FFFFE0; border: 1px solid #E6DB55; padding: 0 0 0 6px;font-family:sans-serif; font-size:12px;">
                    <p id="aranalizerOk">The secret key and consumer key have being updated.</p>
 					<p>Close this window to continue</p>
@@ -90,7 +87,7 @@
 			}
 			exit();
 		}
-
+		}
 	}
 
 	add_action('admin_init', 'aranalyzer_oAuth_check');
