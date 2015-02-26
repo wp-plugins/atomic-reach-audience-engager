@@ -18,11 +18,13 @@
 		var $authorize_url;
 		//this final call fetches an access token.
 		var $access_token_url;
+		var $ar_oauth_token;
+		var $ar_oauth_token_secret;
 
 		public function __construct($apiHost, $key, $secret){
 
-			$_SESSION['ar_oauth_token'] = '';
-			$_SESSION['ar_oauth_token_secret']= '';
+			$this->ar_oauth_token = "";
+			$this->ar_oauth_token_secret = "";
 
 			$this->sig_method = new ClientOAuthSignatureMethod_HMAC_SHA1();
 			$this->host = $apiHost;
@@ -53,7 +55,7 @@
 			//session_destroy();
 
 			$test_consumer = new ClientOAuthConsumer($this->key, $this->secret, NULL);
-			if(!$this->_isSession()){
+			//if(!$this->_isSession()){
 				//Reset tokens
 				$this->closeSession();
 
@@ -78,10 +80,10 @@
 				$output = $this->_getCurlResponse(null, $url_request_access_token, "GET");
 				parse_str($output, $oauth);
 				//var_dump($output);
-				$_SESSION['ar_oauth_token'] = $oauth['oauth_token'];
-				$_SESSION['ar_oauth_token_secret'] = $oauth['oauth_token_secret'];
+				$this->ar_oauth_token = $oauth['oauth_token'];
+				$this->ar_oauth_token_secret = $oauth['oauth_token_secret'];
 				return array($oauth['oauth_token'], $oauth['oauth_token_secret']);
-			}
+			//}
 		}
 
 		/**
@@ -93,7 +95,7 @@
 		public function doRequest($service, $data = array()) {
 			foreach ($data as $key => $value) $data[$key] = is_null($value) ? "" : urlencode($value);
 			$test_consumer = new ClientOAuthConsumer($this->key, $this->secret, NULL);
-			$token = new ClientOAuthConsumer($_SESSION['ar_oauth_token'], $_SESSION['ar_oauth_token_secret'], 1);
+			$token = new ClientOAuthConsumer($this->ar_oauth_token, $this->ar_oauth_token_secret, 1);
 			$endpoint = $this->host . $service;
 			$profileObj = ClientOAuthRequest::from_consumer_and_token($test_consumer, $token, "POST", $endpoint, $data);
 			$profileObj->sign_request($this->sig_method, $test_consumer, $token);
@@ -110,7 +112,7 @@
 			$A_header[] = $toHeader;
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $A_header);
-			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_URL, trim($url));
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 			if($method=="POST" OR $method=="PUT") {
