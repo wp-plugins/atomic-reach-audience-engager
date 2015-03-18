@@ -31,7 +31,7 @@ jQuery(document).ready(function ($) {
                 return word.replace(/[\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "");
             });
             //var regexSm = new RegExp('(\\b[\\W]*'+words.join("[\\W]*\\b|\\b[\\W]*") +'[\\W]*\\b)','ig');
-            var regexSm = new RegExp('(\\b' + words.join("?[\\x27]?[\\S]+\\b|\\b") + '?[\\x27]?[\\S]+\\b)', 'ig');
+            var regexSm = new RegExp('(\\b' + words.join("?[\\x27]?[\\S]?\\b|\\b") + '?[\\x27]?[\\S]?\\b)', 'g');
             $('#content_ifr').contents().highlightRegex(regexSm, {
                 tagType: 'span',
                 className: 'highlight-sp'

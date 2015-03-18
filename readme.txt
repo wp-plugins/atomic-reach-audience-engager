@@ -1,10 +1,10 @@
-===Atomic Engager===
+﻿===Atomic Engager===
 Contributors: atomicreach
 Donate link: http://www.atomicreach.com
 Tags: seo, post, content, quality, optimization, optimize, audience, sophistication, engagement, atomic reach
 Requires at least: 3.4
 Tested up to: 4.0
-Stable tag: 2.0.20
+Stable tag: 2.0.21
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,9 @@ Or Visit [help.atomicreach.com](http://help.atomicreach.com)
 3. screenshot-3.png
 
 == Changelog ==
+2.0.21 (2015.03.18)
+- Fixed RegEx issue with spelling mistakes.
+
 2.0.18 (2015.01.07)
 - Fixed missing echo statements
 - Fixed where CTA showed up twice.
