@@ -3,8 +3,8 @@ Contributors: atomicreach
 Donate link: http://www.atomicreach.com
 Tags: seo, post, content, quality, optimization, optimize, audience, sophistication, engagement, atomic reach
 Requires at least: 3.4
-Tested up to: 4.0
-Stable tag: 2.0.21
+Tested up to: 4.2
+Stable tag: 2.0.22
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

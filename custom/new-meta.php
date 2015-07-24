@@ -301,7 +301,7 @@
 								<ul class="details title-measure">
 									<?php
 										foreach ($scoring->data->analysis->tm->recomendations as $recomendation)
-											echo '<li><span class="soText">' . $recomendation . '</span></li>';
+											echo '<li><span class="soText">' . $recomendation[1] . '</span></li>';
 									?>
 									<p class="AR-guide">Refer to our guide on how to create engaging titles <a
 											href="http://hub.atomicreach.com/i/341645/" target="_blank"
