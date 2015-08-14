@@ -1,14 +1,14 @@
-﻿===Atomic Engager===
+﻿===Atomic Writer===
 Contributors: atomicreach
 Donate link: https://www.atomicreach.com
-Tags: seo, post, content, quality, optimization, optimize, audience, sophistication, engagement, atomic reach
+Tags: seo, post, content, quality, optimization, optimize, audience, sophistication, engagement, atomic reach, atomic writer
 Requires at least: 3.4
 Tested up to: 4.3
-Stable tag: 3.0.00
+Stable tag: 2.0.25
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Optimizing content for your target audience has never been easier.
+AtomicWriter will show you how to format and restructure your blog posts to get the best out of your writing.
 
 == Description ==
 
@@ -22,8 +22,10 @@ A specialist audience - People who are trained or have advanced knowledge of you
 An academic audience - People who are a master at your topic.
 A genius audience - People who are an expert at your topic.
 
-AtomicWriter will show you how to format and restructure your blog posts to get the best out of your writing. This allows bloggers to reach your target audience and keep them engaged.
-Now, you can save time editing and have confidence that your blog posts will engage your target audience(s).
+AtomicWriter will show you how to format and restructure your blog posts to get the best out of your writing. This allows you to reach your target
+audience and keep them engaged.
+Now, you can save time editing and have confidence that your blog posts will engage your readers.
+
 AtomicWriter is a lightweight editing WordPress plugin that runs off of our own hand-crafted API to ensure that the content analysis is accurate.
 
 = Note =
