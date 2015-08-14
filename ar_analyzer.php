@@ -3,7 +3,7 @@
 	  Plugin Name: Atomic Writer
 	  Plugin URI: http://www.atomicreach.com
 	  Description: AtomicWriter will show you how to format and restructure your blog posts to get the best out of your writing.
-	  Version: 3.0.00
+	  Version: 3.0.01
 	  Author URI: http://www.atomicreach.com
 	  Author: atomicreach
 	 */
