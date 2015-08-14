@@ -1,19 +1,20 @@
 <?php
 	/*
-	  Plugin Name: Atomic Engager
+	  Plugin Name: Atomic Writer
 	  Plugin URI: http://www.atomicreach.com
-	  Description: Optimizing content for your target audience has never been easier.
-	  Version: 2.0.22
+	  Description: AtomicWriter will show you how to format and restructure your blog posts to get the best out of your writing.
+	  Version: 3.0.00
 	  Author URI: http://www.atomicreach.com
 	  Author: atomicreach
 	 */
-	if (!session_id()) {
+	if ( ! session_id() ) {
 		session_start();
 	}
 
-	define('MY_WORDPRESS_FOLDER', $_SERVER['DOCUMENT_ROOT']);
-	define('MY_PLUGIN_FOLDER', str_replace("\\", '/', dirname(__FILE__)));
-	define('MY_PLUGIN_PATH', plugins_url('/', __FILE__));
+
+	define( 'MY_WORDPRESS_FOLDER', $_SERVER['DOCUMENT_ROOT'] );
+	define( 'MY_PLUGIN_FOLDER', str_replace( "\\", '/', dirname( __FILE__ ) ) );
+	define( 'MY_PLUGIN_PATH', plugins_url( '/', __FILE__ ) );
 
 	/* Development */
 	// define('API_HOST', 'http://api.probar.atomicreach.com');
@@ -24,8 +25,8 @@
 	//	define('AR_URL', 'http://dev.arv3.atomicreach.com');
 
 	/* Production */
-	define('API_HOST', 'https://api.score.atomicreach.com'); // with SSL
-	define('AR_URL', '//score.atomicreach.com');
+	define( 'API_HOST', 'https://app.atomicreach.com' ); // with SSL
+	define( 'AR_URL', '//score.atomicreach.com' );
 
 	// if( !class_exists( 'WP_Http' ) )
 	// require_once( ABSPATH . WPINC . '/class-http.php' );
@@ -34,11 +35,17 @@
 	/* Metabox functions */
 	/*********************/
 
-	function aranalyzer_metabox_init()
-	{
-		wp_enqueue_script('ar_meta_js', MY_PLUGIN_PATH . '/custom/meta.js', array('jquery'));
-		wp_enqueue_style('ar_meta_css', MY_PLUGIN_PATH . '/custom/meta.css');
-		wp_enqueue_script('ar_highlightRegex_js', MY_PLUGIN_PATH . '/highlightRegex/highlightRegex.js', array('jquery'));
+	function aranalyzer_metabox_init() {
+
+
+		wp_enqueue_script( 'ar_meta_js', MY_PLUGIN_PATH . '/custom/meta.js', array( 'jquery' ) );
+		wp_enqueue_script( 'ar_ftu_js', MY_PLUGIN_PATH . '/custom/js/writer.js', array( 'jquery' ) );
+		wp_enqueue_script( 'ar_tooltipsy_js', MY_PLUGIN_PATH . '/custom/js/tooltipsy.min.js', array( 'jquery' ) );
+		wp_enqueue_script( 'ar_atomic_editor_js', MY_PLUGIN_PATH . '/custom/js/atomicreach.js', array( 'jquery' ) );
+
+
+		wp_enqueue_style( 'ar_meta_css', MY_PLUGIN_PATH . '/custom/style/newMeta.css' );
+		wp_enqueue_script( 'ar_highlightRegex_js', MY_PLUGIN_PATH . '/highlightRegex/highlightRegex.js', array( 'jquery' ) );
 		//wp_enqueue_script('ar_customDictionaryContextMenu_js', MY_PLUGIN_PATH . '/customDictionaryContextMenu/editor_plugin.js', array('jquery'));
 
 		// review the function reference for parameter details
@@ -49,15 +56,16 @@
 			'public'   => TRUE,
 			'_builtin' => FALSE
 		);
-		$post_types     = get_post_types($arg_post_types, 'names');
+		$post_types     = get_post_types( $arg_post_types, 'names' );
 		// add  post and pages as well.
-		array_push($post_types, 'post', 'page');
-		foreach ($post_types as $type) {
-			add_meta_box('aranalyzer_metabox', 'Atomic Engager', 'aranalyzer_metabox_setup', $type, 'side', 'high');
+		array_push( $post_types, 'post', 'page' );
+		foreach ( $post_types as $type ) {
+			add_meta_box( 'aranalyzer_metabox', 'Atomic Writer', 'aranalyzer_metabox_setup', $type, 'side', 'high' );
 		}
+
 	}
 
-	add_action('admin_init', 'aranalyzer_metabox_init');
+	add_action( 'admin_init', 'aranalyzer_metabox_init' );
 
 
 	/* oAuth check: this function check if the secret and consumer keys were set.
@@ -66,58 +74,55 @@
 	 * after login to Atomic Reach site
 	 *
 	 * */
-	function aranalyzer_oAuth_check()
-	{
+	function aranalyzer_oAuth_check() {
 
-	if (isset($_GET['mode']) && isset($_GET['key']) && isset($_GET['secret'])) {
-		if ($_GET['mode'] == 'ar_callback' ) {
-			update_option('aranalyzer_secretkey', '');
-			update_option('aranalyzer_consumerkey', '');
-			if (update_option('aranalyzer_secretkey', $_GET['secret']) && update_option('aranalyzer_consumerkey', $_GET['key'])) {
-				update_option('aranalyzer_state_keys', 'TRUE');
-				echo '<div style="background-color: #FFFFE0; border: 1px solid #E6DB55; padding: 0 0 0 6px;font-family:sans-serif; font-size:12px;">
+		if ( isset( $_GET['mode'] ) && isset( $_GET['key'] ) && isset( $_GET['secret'] ) ) {
+			if ( $_GET['mode'] == 'ar_callback' ) {
+				update_option( 'aranalyzer_secretkey', '' );
+				update_option( 'aranalyzer_consumerkey', '' );
+				if ( update_option( 'aranalyzer_secretkey', $_GET['secret'] ) && update_option( 'aranalyzer_consumerkey', $_GET['key'] ) ) {
+					update_option( 'aranalyzer_state_keys', 'TRUE' );
+					echo '<div style="background-color: #FFFFE0; border: 1px solid #E6DB55; padding: 0 0 0 6px;font-family:sans-serif; font-size:12px;">
                    <p id="aranalizerOk">The secret key and consumer key have being updated.</p>
 					<p>Close this window to continue</p>
               </div>';
-			} else {
-				echo '<div style="background-color:#FFEBE8;; border: 1px solid #CC0000; padding: 0 0 0 6px;font-family:sans-serif; font-size:12px;">
+				} else {
+					echo '<div style="background-color:#FFEBE8;; border: 1px solid #CC0000; padding: 0 0 0 6px;font-family:sans-serif; font-size:12px;">
                 <p>The secret key and consumer key have not being updated.</p>
 				<p>Close this window to continue</p>
               </div>';
+				}
+				exit();
 			}
-			exit();
-		}
 		}
 	}
 
-	add_action('admin_init', 'aranalyzer_oAuth_check');
+	add_action( 'admin_init', 'aranalyzer_oAuth_check' );
 	/* End oAuth check */
 
 
 	/* oAuth Callback response from modal windows. This function will prevent reload the WP site inside
 	 * the modal windows.(see file modal/js/modal.windows.js)
 	 **/
-	function aranalyzer_check_keys_callback()
-	{
+	function aranalyzer_check_keys_callback() {
 
-		if ($_POST['modekeys']) {
+		if ( isset( $_POST['modekeys'] ) ) {
 			echo TRUE;
 			exit();
 		}
 
 	}
 
-	add_action('admin_init', 'aranalyzer_check_keys_callback');
+	add_action( 'admin_init', 'aranalyzer_check_keys_callback' );
 
 
-	function aranalyzer_metabox_setup()
-	{
+	function aranalyzer_metabox_setup() {
 		global $post;
 		// using an underscore, prevents the meta variable
 		// from showing up in the custom fields section
-		$scoring     = get_post_meta($post->ID, '_ar_scoring', TRUE);
-		$ar_enabled  = get_post_meta($post->ID, '_ar_meta_review_enabled', TRUE);
-		$ar_audience = get_post_meta($post->ID, '_ar_meta_audience_list', TRUE);
+		$scoring     = get_post_meta( $post->ID, '_ar_scoring', TRUE );
+		$ar_enabled  = get_post_meta( $post->ID, '_ar_meta_review_enabled', TRUE );
+		$ar_audience = get_post_meta( $post->ID, '_ar_meta_audience_list', TRUE );
 
 
 //      $custom_fields = get_post_custom($post->ID);
@@ -127,16 +132,16 @@
 //  }
 
 		// will return TRUE if the keys have been set correctly in AR Optimizer (modal windows login to AR)
-		$ar_state_keys = get_option('aranalyzer_state_keys');
+		$ar_state_keys = get_option( 'aranalyzer_state_keys' );
 
 		// if (!session_id()) {
 		//  session_start();
 		// }
-		$error = $_SESSION['_ar_api_error'];
+//		$error = $_SESSION['_ar_api_error'];
 
-		$consumerKey  = get_option('aranalyzer_consumerkey');
-		$secretKey    = get_option('aranalyzer_secretkey');
-		$audienceList = aranalyzer_api_getsophisticationbandlist($consumerKey, $secretKey);
+		$consumerKey = get_option( 'aranalyzer_consumerkey' );
+		$secretKey   = get_option( 'aranalyzer_secretkey' );
+//		$audienceList = aranalyzer_api_getsophisticationbandlist($consumerKey, $secretKey);
 
 
 //    Store user selected targetAudience to show the pie image. HZ
@@ -148,21 +153,34 @@
 			}
 		}*/
 
-		foreach ($audienceList->sophisticatonBands AS $SophBand) {
-			if ($SophBand->id == $ar_audience) {
-				$targetAud = strtoupper(str_replace('* ', '', $SophBand->name));
-			}
-		}
+		/*	foreach ($audienceList->sophisticatonBands AS $SophBand) {
+				if ($SophBand->id == $ar_audience) {
+					$targetAud = strtoupper(str_replace('* ', '', $SophBand->name));
+				}
+			}*/
 
 
-		$arView = get_option('aranalyzer_view');
+//		$arView = get_option( 'aranalyzer_view' );
 
 		// including the metabox php code
-		if ($arView == 1) {
-			require_once(MY_PLUGIN_FOLDER . '/custom/new-meta.php');
+//		if ( $arView == 1 ) {
+//			require_once( MY_PLUGIN_FOLDER . '/custom/new-meta.php' );
+//		} else {
+//			require_once( MY_PLUGIN_FOLDER . '/custom/meta.php' );
+//		}
+
+
+		if ( empty( $consumerKey ) && empty( $secretKey ) ) {
+			// grabs the HTML file to display the form.
+			$doc = new DOMDocument();
+			$doc->loadHTMLFile( plugin_dir_path( __FILE__ ) . "custom/html/ftu.html" );
+			echo $doc->saveHTML();
 		} else {
-			require_once(MY_PLUGIN_FOLDER . '/custom/meta.php');
+			$doc = new DOMDocument();
+			$doc->loadHTMLFile( plugin_dir_path( __FILE__ ) . "custom/html/audSlider-score.html" );
+			echo $doc->saveHTML();
 		}
+
 
 	}
 
@@ -174,38 +192,35 @@
 	/*    API Interaction    */
 	/*************************/
 
-	function aranalyzer_api_getmetadata($consumerKey, $secretKey, $title, $content, $segmentId)
-	{
+	function aranalyzer_api_getmetadata( $consumerKey, $secretKey, $title, $content, $segmentId ) {
 
-		require_once(MY_PLUGIN_FOLDER . '/includes/ARClient.php');
+		require_once( MY_PLUGIN_FOLDER . '/includes/ARClient.php' );
 
 		$host      = API_HOST;
-		$apiClient = New AR_Client($host, $consumerKey, $secretKey);
+		$apiClient = New AR_Client( $host, $consumerKey, $secretKey );
 		$apiClient->init();
-		$result = $apiClient->analyzePost($content, $title, $segmentId);
+		$result = $apiClient->analyzePost( $content, $title, $segmentId );
 
 		return $result;
 	}
 
 	// get 5 bands.
-	function aranalyzer_api_getsophisticationbandlist($consumerKey, $secretKey)
-	{
-		require_once(MY_PLUGIN_FOLDER . '/includes/ARClient.php');
+	function aranalyzer_api_getsophisticationbandlist( $consumerKey, $secretKey ) {
+		require_once( MY_PLUGIN_FOLDER . '/includes/ARClient.php' );
 		$host      = API_HOST;
-		$apiClient = New AR_Client($host, $consumerKey, $secretKey);
+		$apiClient = New AR_Client( $host, $consumerKey, $secretKey );
 		$apiClient->init();
 		$result = $apiClient->getSophisticationBandList();
 
 		return $result;
 	}
 
-	function aranalyzer_api_getaudiencelist($consumerKey, $secretKey)
-	{
+	function aranalyzer_api_getaudiencelist( $consumerKey, $secretKey ) {
 
-		require_once(MY_PLUGIN_FOLDER . '/includes/ARClient.php');
+		require_once( MY_PLUGIN_FOLDER . '/includes/ARClient.php' );
 
 		$host      = API_HOST;
-		$apiClient = New AR_Client($host, $consumerKey, $secretKey);
+		$apiClient = New AR_Client( $host, $consumerKey, $secretKey );
 		$apiClient->init();
 
 		$result = $apiClient->getAudienceList();
@@ -213,63 +228,64 @@
 		return $result;
 	}
 
-	function ar_analyzer_custom_dictionary()
-	{
+	function ar_analyzer_custom_dictionary() {
 		$success = FALSE;
 		$word    = $_GET['word'];
-		if ($word) {
-			require_once(MY_PLUGIN_FOLDER . '/includes/ARClient.php');
+		if ( $word ) {
+			require_once( MY_PLUGIN_FOLDER . '/includes/ARClient.php' );
 
 			$host        = API_HOST;
-			$consumerKey = get_option('aranalyzer_consumerkey');
-			$secretKey   = get_option('aranalyzer_secretkey');
-			$apiClient   = New AR_Client($host, $consumerKey, $secretKey);
+			$consumerKey = get_option( 'aranalyzer_consumerkey' );
+			$secretKey   = get_option( 'aranalyzer_secretkey' );
+			$apiClient   = New AR_Client( $host, $consumerKey, $secretKey );
 			$apiClient->init();
 
-			$result = $apiClient->addDictionary($word);
+			$result = $apiClient->addDictionary( $word );
 
-			if ($result->status == AR_Client::STATUS_OK) {
+			if ( $result->status == AR_Client::STATUS_OK ) {
 				$success = TRUE;
 			}
 		}
+
+
+
+
+
 		echo $success ? 'OK' : 'ERROR';
 		exit();
 	}
 
-	add_action('wp_ajax_ar_analyzer_custom_dictionary', 'ar_analyzer_custom_dictionary');
+	add_action( 'wp_ajax_ar_analyzer_custom_dictionary', 'ar_analyzer_custom_dictionary' );
 
-	function aranalyzer_admin()
-	{
+	function aranalyzer_admin() {
 		// this option will have the state of the keys in case of error will set to FALSE
-		$ar_state_keys = get_option('ar_state_keys');
-		require_once('ar_analyzer_admin.php');
+		$ar_state_keys = get_option( 'ar_state_keys' );
+		require_once( 'ar_analyzer_admin.php' );
 
 	}
 
-	function aranalyzer_admin_actions()
-	{
-		wp_enqueue_script('ar_simple.modal_js', MY_PLUGIN_PATH . 'modal/js/jquery.simplemodal.js', array('jquery'));
-		wp_enqueue_script('ar_modal.windows_js', MY_PLUGIN_PATH . 'modal/js/modal.windows.js', array('jquery'));
-		wp_enqueue_style('ar_modal_css', MY_PLUGIN_PATH . '/modal/css/modal-windows.css');
-		add_menu_page("Atomic Engager Configuration", "Atomic Engager", "manage_options", "ar-analyzer-admin", "aranalyzer_admin",
-			plugin_dir_url(__FILE__) . "custom/ar-logo-icon.png");
+	function aranalyzer_admin_actions() {
+		wp_enqueue_script( 'ar_simple.modal_js', MY_PLUGIN_PATH . 'modal/js/jquery.simplemodal.js', array( 'jquery' ) );
+		wp_enqueue_script( 'ar_modal.windows_js', MY_PLUGIN_PATH . 'modal/js/modal.windows.js', array( 'jquery' ) );
+		wp_enqueue_style( 'ar_modal_css', MY_PLUGIN_PATH . '/modal/css/modal-windows.css' );
+//		add_menu_page( "Atomic Writer Configuration", "Atomic Writer", "manage_options", "ar-analyzer-admin", "aranalyzer_admin",
+//			plugin_dir_url( __FILE__ ) . "custom/ar-logo-icon.png" );
 	}
 
-	add_action('admin_menu', 'aranalyzer_admin_actions');
+	add_action( 'admin_menu', 'aranalyzer_admin_actions' );
 
-	function aranalyzer_review($post_ID = 0)
-	{
+	function aranalyzer_review( $post_ID = 0 ) {
 
-		if ($post_ID == 0) {
-			$post_ID = intval($_POST['postID']);
+		if ( $post_ID == 0 ) {
+			$post_ID = intval( $_POST['postID'] );
 			$arajax  = 1;
 		}
 
 		// code by Sergio
 		global $wp_version;
-		if (version_compare($wp_version, '3.8', '<')) {
+		if ( version_compare( $wp_version, '3.8', '<' ) ) {
 			global $flag;
-			if ($flag != 1) {
+			if ( $flag != 1 ) {
 				$flag = 1;
 
 				return;
@@ -280,7 +296,7 @@
 		// session_start();
 		// }
 		// Get post information
-		$post_info = get_post($post_ID);
+		$post_info = get_post( $post_ID );
 		$title     = $post_info->post_title;
 
 		/**
@@ -290,105 +306,108 @@
 		 * check
 		 * http://codex.wordpress.org/Function_Reference/wptexturize
 		 */
-		remove_filter('the_content', 'wptexturize');
-		$content = apply_filters('the_content', $post_info->post_content);
-		add_filter('the_content', 'wptexturize');
+		remove_filter( 'the_content', 'wptexturize' );
+		$content = apply_filters( 'the_content', $post_info->post_content );
+		add_filter( 'the_content', 'wptexturize' );
 
 		$ar_api_status = TRUE;
 		$ar_api_error  = "";
 
 		// Save the analizer is active option
 		$meta_key = '_ar_meta_review_enabled';
-		$value    = (isset($_POST[$meta_key]) ? $_POST[$meta_key] : '');
-		delete_post_meta($post_ID, $meta_key);
-		add_post_meta($post_ID, $meta_key, $value, TRUE);
-		if ($value === "enabled") $analyzer_active = TRUE;
+		$value    = ( isset( $_POST[ $meta_key ] ) ? $_POST[ $meta_key ] : '' );
+		delete_post_meta( $post_ID, $meta_key );
+		add_post_meta( $post_ID, $meta_key, $value, TRUE );
+		if ( $value === "enabled" ) {
+			$analyzer_active = TRUE;
+		}
 
 		// Save the audience list option selected
 		$meta_key  = '_ar_meta_audience_list';
-		$segmentId = $value = (isset($_POST[$meta_key]) ? $_POST[$meta_key] : '');
-		delete_post_meta($post_ID, $meta_key);
-		add_post_meta($post_ID, $meta_key, $value, TRUE);
+		$segmentId = $value = ( isset( $_POST[ $meta_key ] ) ? $_POST[ $meta_key ] : '' );
+		delete_post_meta( $post_ID, $meta_key );
+		add_post_meta( $post_ID, $meta_key, $value, TRUE );
 
-		if ($analyzer_active) {
-			/* After a long time looking through formatting functions              *
-			 * I found this combination that left HTML code without encoding and   *
-			 * all the other text formatted with HTML entities encoding            */
+		if ( isset( $analyzer_active ) ) {
+			if ( $analyzer_active ) {
+				/* After a long time looking through formatting functions              *
+				 * I found this combination that left HTML code without encoding and   *
+				 * all the other text formatted with HTML entities encoding            */
 
-			$title   = htmlspecialchars_decode(htmlentities($title, ENT_NOQUOTES, 'UTF-8', FALSE), ENT_NOQUOTES);
-			$content = htmlspecialchars_decode(htmlentities($content, ENT_NOQUOTES, 'UTF-8', FALSE), ENT_NOQUOTES);
-			// Call the API with the post contents.
-			$consumerKey = get_option('aranalyzer_consumerkey');
-			$secretKey   = get_option('aranalyzer_secretkey');
-			$scoringObj  = aranalyzer_api_getmetadata($consumerKey, $secretKey, $title, $content, $segmentId);
+				$title   = htmlspecialchars_decode( htmlentities( $title, ENT_NOQUOTES, 'UTF-8', FALSE ), ENT_NOQUOTES );
+				$content = htmlspecialchars_decode( htmlentities( $content, ENT_NOQUOTES, 'UTF-8', FALSE ), ENT_NOQUOTES );
+				// Call the API with the post contents.
+				$consumerKey = get_option( 'aranalyzer_consumerkey' );
+				$secretKey   = get_option( 'aranalyzer_secretkey' );
+				$scoringObj  = aranalyzer_api_getmetadata( $consumerKey, $secretKey, $title, $content, $segmentId );
 
-			if ($arajax == 1) {
-				echo $scoringObj;
-			}
+				if ( $arajax == 1 ) {
+					echo $scoringObj;
+				}
 
-			// delete_post_meta($post_ID, '_ar_api_status');
-			update_option('aranalyzer_state_keys', 'TRUE');
+				// delete_post_meta($post_ID, '_ar_api_status');
+				update_option( 'aranalyzer_state_keys', 'TRUE' );
 
-			if (isset($scoringObj->error)) {
-				// delete_post_meta($post_ID, '_ar_api_error');
-				// add_post_meta($post_ID,'_ar_api_error', $scoringObj->error, TRUE);
-				// add_post_meta($post_ID,'_ar_api_status', 'FALSE', TRUE);
-				update_option('aranalyzer_state_keys', 'FALSE');
+				if ( isset( $scoringObj->error ) ) {
+					// delete_post_meta($post_ID, '_ar_api_error');
+					// add_post_meta($post_ID,'_ar_api_error', $scoringObj->error, TRUE);
+					// add_post_meta($post_ID,'_ar_api_status', 'FALSE', TRUE);
+					update_option( 'aranalyzer_state_keys', 'FALSE' );
 
-				$_SESSION['_ar_api_error'] = $scoringObj->error;
+					$_SESSION['_ar_api_error'] = $scoringObj->error;
+				} else {
+
+					$_SESSION['_ar_api_error'] = FALSE;
+
+					// Fix the special case when only one suggestion comes in the spelling options
+					foreach ( $scoringObj->data->analysis->sm->detail as $key => $value ) {
+						if ( isset( $value->suggestions->option ) ) {
+							if ( ! is_array( $value->suggestions->option ) ) {
+								$value->suggestions->option = array( $value->suggestions->option );
+							}
+						}
+					}
+
+					// Fix the special case when only one suggestion comes in the grammar options
+					foreach ( $scoringObj->data->analysis->gm->detail as $key => $value ) {
+						if ( isset( $value->suggestions->option ) ) {
+							if ( ! is_array( $value->suggestions->option ) ) {
+								$value->suggestions->option = array( $value->suggestions->option );
+							}
+						}
+					}
+
+					delete_post_meta( $post_ID, '_ar_scoring' );
+					// Update metadata and recover it again to update the UI.
+					$current_data = get_post_meta( $post_ID, '_ar_scoring', TRUE );
+					if ( $current_data ) {
+						update_post_meta( $post_ID, '_ar_scoring', $scoringObj );
+					} elseif ( ! is_null( $scoringObj ) ) {
+						add_post_meta( $post_ID, '_ar_scoring', $scoringObj, TRUE );
+					}
+				}
 			} else {
-
-				$_SESSION['_ar_api_error'] = FALSE;
-
-				// Fix the special case when only one suggestion comes in the spelling options
-				foreach ($scoringObj->data->analysis->sm->detail as $key => $value) {
-					if (isset($value->suggestions->option)) {
-						if (!is_array($value->suggestions->option)) {
-							$value->suggestions->option = array($value->suggestions->option);
-						}
-					}
-				}
-
-				// Fix the special case when only one suggestion comes in the grammar options
-				foreach ($scoringObj->data->analysis->gm->detail as $key => $value) {
-					if (isset($value->suggestions->option)) {
-						if (!is_array($value->suggestions->option)) {
-							$value->suggestions->option = array($value->suggestions->option);
-						}
-					}
-				}
-
-				delete_post_meta($post_ID, '_ar_scoring');
-				// Update metadata and recover it again to update the UI.
-				$current_data = get_post_meta($post_ID, '_ar_scoring', TRUE);
-				if ($current_data) {
-					update_post_meta($post_ID, '_ar_scoring', $scoringObj);
-				} elseif (!is_null($scoringObj)) {
-					add_post_meta($post_ID, '_ar_scoring', $scoringObj, TRUE);
-				}
+				delete_post_meta( $post_ID, '_ar_scoring' );
 			}
-		} else {
-			delete_post_meta($post_ID, '_ar_scoring');
 		}
 	}
 
 	/* hook when click on update */
-	add_action('publish_post', 'aranalyzer_review');
+	add_action( 'publish_post', 'aranalyzer_review' );
 
 	/* hook when save draft post */
-	add_action('save_post', 'aranalyzer_review');
+	add_action( 'save_post', 'aranalyzer_review' );
 
 	/**
 	 * Used to load the required files on the plugins_loaded hook, instead of immediately.
 	 *
 	 */
-	function aranalyzer_tracking_admin_init()
-	{
-		$opt_in = get_option('aranalyzer_tracking');
+	function aranalyzer_tracking_admin_init() {
+		$opt_in = get_option( 'aranalyzer_tracking' );
 
-		if (isset($opt_in) && $opt_in) {
-			require_once(MY_PLUGIN_FOLDER . '/includes/ARTracking.php');
-			$ar_tracking = new AR_Tracking(API_HOST);
+		if ( isset( $opt_in ) && $opt_in ) {
+			require_once( MY_PLUGIN_FOLDER . '/includes/ARTracking.php' );
+			$ar_tracking = new AR_Tracking( API_HOST );
 		}
 	}
 
@@ -397,18 +416,17 @@
 	 * checks if the Dashboard or the administration panel is attempting to be displayed
 	 * http://codex.wordpress.org/Function_Reference/is_admin
 	 */
-	if (is_admin()) {
-		add_action('plugins_loaded', 'aranalyzer_tracking_admin_init');
+	if ( is_admin() ) {
+		add_action( 'plugins_loaded', 'aranalyzer_tracking_admin_init' );
 	}
 
 	/**
 	 * Used to get the state to be display in scoring list comparing recommended words against sentences
 	 *
 	 */
-	function aranalyzer_get_state($dpObject)
-	{
+	function aranalyzer_get_state( $dpObject ) {
 
-		if (!isset($dpObject->scoring)) {
+		if ( ! isset( $dpObject->scoring ) ) {
 			$scoring = 40; // add text in case there is not a value
 		} else {
 			$scoring = $dpObject->scoring;
@@ -418,14 +436,14 @@
 
 		$aColorText = array();
 
-		if ($scoring <= 33) {
+		if ( $scoring <= 33 ) {
 			$aColorText = array(
 				'arBarColor' => 'red',
 				'arText'     => 'Content edits are needed',
 				'scoring'    => $scoring,
 			);
 
-		} elseif ($scoring > 33 && $scoring <= 66) {
+		} elseif ( $scoring > 33 && $scoring <= 66 ) {
 			$aColorText = array(
 				'arBarColor' => 'yellow',
 				'arText'     => 'Content edits are recommended',
@@ -447,53 +465,50 @@
 	/* TinyMCE custom functions */
 	/*********************/
 
-	function tiny_mce_custom_plugins()
-	{
+	function tiny_mce_custom_plugins() {
 		global $wp_version;
-		if (version_compare($wp_version, '3.9', '<')) {
-			return array('customdictionarycontextmenu' => MY_PLUGIN_PATH . '/customDictionaryContextMenu/editor_plugin.js');
+		if ( version_compare( $wp_version, '3.9', '<' ) ) {
+			return array( 'customdictionarycontextmenu' => MY_PLUGIN_PATH . '/customDictionaryContextMenu/editor_plugin.js' );
 		} else {
-			return array('customdictionarycontextmenu' => MY_PLUGIN_PATH . '/customDictionaryContextMenu/plugin.js');
+			return array( 'customdictionarycontextmenu' => MY_PLUGIN_PATH . '/customDictionaryContextMenu/plugin.js' );
 		}
 	}
 
-	add_filter('mce_external_plugins', 'tiny_mce_custom_plugins');
+	add_filter( 'mce_external_plugins', 'tiny_mce_custom_plugins' );
 
 	/** plugin Tour * */
 
 	/**
 	 * Adds a simple WordPress pointer to Settings menu
 	 */
-	function ar_enqueue_pointer_script_style($hook_suffix)
-	{
+	function ar_enqueue_pointer_script_style( $hook_suffix ) {
 
 		// Assume pointer shouldn't be shown
 		$enqueue_pointer_script_style = FALSE;
 
 		// Get array list of dismissed pointers for current user and convert it to array
-		$dismissed_pointers = explode(',', get_user_meta(get_current_user_id(), 'dismissed_wp_pointers', TRUE));
+		$dismissed_pointers = explode( ',', get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', TRUE ) );
 
 		// Check if our pointer is not among dismissed ones
-		if (!in_array('ar_settings_pointer', $dismissed_pointers)) {
+		if ( ! in_array( 'ar_settings_pointer', $dismissed_pointers ) ) {
 			$enqueue_pointer_script_style = TRUE;
 
 			// Add footer scripts using callback function
-			add_action('admin_print_footer_scripts', 'ar_pointer_print_scripts');
+			add_action( 'admin_print_footer_scripts', 'ar_pointer_print_scripts' );
 		}
 
 		// Enqueue pointer CSS and JS files, if needed
-		if ($enqueue_pointer_script_style) {
-			wp_enqueue_style('wp-pointer');
-			wp_enqueue_script('wp-pointer');
+		if ( $enqueue_pointer_script_style ) {
+			wp_enqueue_style( 'wp-pointer' );
+			wp_enqueue_script( 'wp-pointer' );
 		}
 	}
 
-	add_action('admin_enqueue_scripts', 'ar_enqueue_pointer_script_style');
+	add_action( 'admin_enqueue_scripts', 'ar_enqueue_pointer_script_style' );
 
-	function ar_pointer_print_scripts()
-	{
+	function ar_pointer_print_scripts() {
 
-		$pointer_content = "<h3>Atomic Engager!</h3>";
+		$pointer_content = "<h3>Atomic Writer!</h3>";
 		$pointer_content .= "<p>Click here to connect your plugin to the Atomic Reach Scoring Engine.</p>";
 		?>
 
@@ -518,30 +533,135 @@
 			//]]>
 		</script>
 
-	<?php
+		<?php
 	}
 
 	/** plugin Tour * */
 	/**
 	 * Add action links in Plugins table
 	 */
-	add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'atomicreach_plugin_action_links');
+//	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'atomicreach_plugin_action_links' );
+//
+//	function atomicreach_plugin_action_links( $links ) {
+//
+//		return array_merge(
+//			array(
+//				'settings' => '<a href="' . admin_url( 'admin.php?page=ar-analyzer-admin' ) . '">' . __( 'Settings', 'atomicreach' ) . '</a>'
+//			), $links
+//		);
+//	}
 
-	function atomicreach_plugin_action_links($links)
-	{
 
-		return array_merge(
-			array(
-				'settings' => '<a href="' . admin_url('admin.php?page=ar-analyzer-admin') . '">' . __('Settings', 'atomicreach') . '</a>'
-			), $links
-		);
+	add_action( 'wp_ajax_aranalyzer_ajax', 'aranalyzer_ajax_callback' );
+	add_action( 'wp_ajax_awSignUpEmail_ajax', 'awSignUpEmail_ajax_callback' );
+	add_action( 'wp_ajax_awSignInEmail_ajax', 'awSignInEmail_ajax_callback' );
+
+	function  awSignInEmail_ajax_callback() {
+
+		if ( isset( $_POST['email'] ) ) {
+			$email = $_POST['email'];
+		}
+		if ( isset( $_POST['pass'] ) ) {
+			$pass = $_POST['pass'];
+		}
+
+		if ( isset( $email ) && isset( $pass ) ) {
+
+
+
+			$host = API_HOST;
+
+			require_once( MY_PLUGIN_FOLDER . '/includes/ARClient.php' );
+			$apiClient = New AR_Client( $host, '', '', $email, $pass );
+
+
+			if ( $apiClient->key != "" && $apiClient->secret != "" ) {
+
+				update_option('aranalyzer_consumerkey', $apiClient->key);
+				update_option('aranalyzer_secretkey', $apiClient->secret);
+
+				echo "ok";
+
+				aranalyzer_hatchbuckIntegration( $email );
+				die();
+			} else {
+				echo $apiClient->errorMessage;
+			}
+		} else {
+
+			die( "error" );
+		}
+
+
 	}
 
+	function  awSignUpEmail_ajax_callback() {
 
-	add_action('wp_ajax_aranalyzer_ajax', 'aranalyzer_ajax_callback');
 
-	function aranalyzer_ajax_callback()
-	{
+
+		if ( isset( $_POST['email'] ) ) {
+			$email = $_POST['email'];
+		}
+		if ( isset( $_POST['pass'] ) ) {
+			$pass = $_POST['pass'];
+		}
+
+		if ( isset( $email ) && isset( $pass ) ) {
+			require_once( MY_PLUGIN_FOLDER . '/includes/ARClient.php' );
+			$apiClient = New AR_Client( API_HOST, "", "", "", "" );
+			$res       = $apiClient->createAccount( $email, $pass );
+
+
+			if ( $res->status == 10 ) {
+
+				update_option( 'aranalyzer_consumerkey', $res->data->consumerKey );
+				update_option( 'aranalyzer_secretkey', $res->data->consumerSecret );
+
+				echo "ok";
+
+				aranalyzer_hatchbuckIntegration( $email );
+				die();
+			} else {
+				echo json_encode( $res );
+				die();
+			}
+
+
+		} else {
+			die( "error" );
+		}
+
+	}
+
+	function aranalyzer_hatchbuckIntegration( $email ) {
+
+		require_once( MY_PLUGIN_FOLDER . '/custom/class/Hatchbuck.php' );
+		$hb = new Hatchbuck();
+		$r  = $hb->search( $email );
+		if ( ! $r ) {
+
+			$data = '{
+					"emails": [ { "address": "' . $email . '" ,
+		                        "type": "Work"}],
+                     "status":{"id": "R000dFZxWHdUSDhFT3d5TGp4UXUzSmg3cEVuS2Iwa1ZyMFpIOHktNm1WbzE1"}
+
+					}';
+
+			$addUser = $hb->addNewUser( $data );
+
+			if ( $addUser ) {
+				$tag = '{"id": "RkNBVkhGcWtoTUt1a1RXM1lzVXlyTG9hNlNIY0FDOUIzWWVscWVRb1RMWTE1"}';
+				$hb->addTag( $email, $tag );
+			}
+
+		} else {
+
+			$tag = '{"id": "RkNBVkhGcWtoTUt1a1RXM1lzVXlyTG9hNlNIY0FDOUIzWWVscWVRb1RMWTE1"}';
+			$hb->addTag( $email, $tag );
+		}
+	}
+
+	function aranalyzer_ajax_callback() {
 		/*$postID = intval($_POST['postID']);
 
 		$post_info = get_post($postID);
@@ -572,112 +692,136 @@
 		 * I found this combination that left HTML code without encoding and   *
 		 * all the other text formatted with HTML entities encoding            */
 
-		$title   = htmlspecialchars_decode(htmlentities($_title, ENT_NOQUOTES, 'UTF-8', FALSE), ENT_NOQUOTES);
-		$content = htmlspecialchars_decode(htmlentities($_content, ENT_NOQUOTES, 'UTF-8', FALSE), ENT_NOQUOTES);
+		$title   = htmlspecialchars_decode( htmlentities( $_title, ENT_NOQUOTES, 'UTF-8', FALSE ), ENT_NOQUOTES );
+		$content = htmlspecialchars_decode( htmlentities( $_content, ENT_NOQUOTES, 'UTF-8', FALSE ), ENT_NOQUOTES );
 		// Call the API with the post contents.
-		$consumerKey = get_option('aranalyzer_consumerkey');
-		$secretKey   = get_option('aranalyzer_secretkey');
-		$segmentId   = intval($_POST['segmentId']);
-
-		$audienceList = aranalyzer_api_getsophisticationbandlist($consumerKey, $secretKey);
-
-//    Store user selected targetAudience to show the pie image. HZ
-		foreach ($audienceList->sophisticatonBands AS $SophBand) {
-			if ($SophBand->id == $segmentId) {
-				$targetAud = strtoupper(str_replace('* ', '', $SophBand->name));
-			}
-		}
+		$consumerKey = get_option( 'aranalyzer_consumerkey' );
+		$secretKey   = get_option( 'aranalyzer_secretkey' );
+		$segmentId   = $_POST['segmentId'];
 
 
 		$host = API_HOST;
-
-		require_once(MY_PLUGIN_FOLDER . '/includes/ARClient.php');
-		$apiClient = New AR_Client($host, $consumerKey, $secretKey);
+		require_once( MY_PLUGIN_FOLDER . '/includes/ARClient.php' );
+		$apiClient = New AR_Client( $host, $consumerKey, $secretKey );
 		$apiClient->init();
-
-		$scoring = $apiClient->analyzePost($content, $title, $segmentId);
-
-		$isAjax = 1;
-
-		$audienceList = aranalyzer_api_getsophisticationbandlist($consumerKey, $secretKey);
-
-		ob_start();
-		require_once(MY_PLUGIN_FOLDER . '/custom/new-meta.php');
-		$data = ob_get_clean();
-
-		echo $data;
+		$scoring = $apiClient->analyzePost( $content, $title, NULL, NULL, $segmentId );
 
 
-		die(); // this is required to return a proper result
+		$output = get_score( $scoring, $segmentId ); //call get_score
+		// Return the String
+		die( $output );
+
+	}
+
+	function get_score( $result, $segmentId ) {
+
+		if ( $result->status == AR_Client::STATUS_OK ) {
+			include( MY_PLUGIN_FOLDER . '/custom/class/meta.php' );
+			include( MY_PLUGIN_FOLDER . '/custom/html/popups.html' );
+
+			$Output = NEW meta( $result, $segmentId );
+			$score  = '';
+			// Display Score card.
+			$score .= '<div class="score-card">';
+			$score .= $Output->displayScore();
+			$score .= '</div>';
+			$score .= '<ul class="AR-tabs">
+                                        <li><a class="AR-tabsButton" href="#arTabTitle">Title</a></li>
+                                        <li><a class="AR-tabsButton" href="#arTab1Audience">Format</a></li>
+                                        <li style="margin-right:2px !important;"><a class="AR-tabsButton" href="#arTabStructure">Readability</a></li>
+                                                                        </ul>';
+			$score .= '<div id="arTabContent">';
+			$score .= '<div id="arTabTitle" class="AR-tabBlock">';
+			$score .= '<div class="ac-container">';
+			$score .= $Output->titleOptimization();
+			$score .= '</div></div>';
+
+			$score .= '<div id="arTab1Audience" class="AR-tabBlock">';
+			$score .= '<div class="ac-container">';
+			$score .= $Output->contentSophistication();
+			$score .= '</div></div>';
+
+			$score .= '<div id="arTabStructure" class="AR-tabBlock">';
+			$score .= '<div class="ac-container">';
+			$score .= $Output->readability();
+			$score .= '</div></div>';
+
+
+			$score .= '</div>';
+
+			$score .= '</div>';
+
+			return $score;
+		} else {
+			return "Error Message: " . $result->error . "  Status Code: [" . $result->status . "]";
+		}
 	}
 
 
 	// Add admin bar menu
-	add_action('wp_before_admin_bar_render', 'aranalyzer_admin_bar_render');
+	add_action( 'wp_before_admin_bar_render', 'aranalyzer_admin_bar_render' );
 
-	function aranalyzer_admin_bar_render()
-	{
+	function aranalyzer_admin_bar_render() {
 		global $wp_admin_bar;
 		// we can add a submenu item too
-		$wp_admin_bar->add_menu(array(
+		$wp_admin_bar->add_menu( array(
 			'parent' => '',
 			'id'     => 'atomicreach',
-			'title'  => __('<img src="' . plugin_dir_url(__FILE__) . 'custom/ar-logo-icon.png"  style="vertical-align:middle;margin-right:5px"
-			alt="Atomic Reach" title="Atomic Reach" />Atomic Engager'),
-			'href'   => 'http://www.atomicreach.com?utm_source=WP%20Plugin&utm_medium=' . get_option('home') . '&utm_campaign=WP%20PLUGIN%20ADMINBAR'
-		));
+			'title'  => __( '<img src="' . plugin_dir_url( __FILE__ ) . 'custom/imgs/ar-logo-icon.png"  style="vertical-align:middle;margin-right:5px"
+			alt="Atomic Reach" title="Atomic Reach" />Atomic Writer' ),
+			'href'   => 'http://www.atomicreach.com?utm_source=WP%20Plugin&utm_medium=' . get_option( 'home' ) . '&utm_campaign=WP%20PLUGIN%20ADMINBAR'
+		) );
 
-		$wp_admin_bar->add_menu(array(
+		$wp_admin_bar->add_menu( array(
 			'parent' => 'atomicreach',
 			'id'     => 'atomicreach1',
-			'title'  => __('Signup'),
-			'href'   => 'http://score.atomicreach.com?utm_source=WP%20Plugin&utm_medium=' . get_option('home') .
-				'&utm_campaign=WP%20PLUGIN%20ADMINBAR',
+			'title'  => __( 'Signup' ),
+			'href'   => 'http://score.atomicreach.com?utm_source=WP%20Plugin&utm_medium=' . get_option( 'home' ) .
+			            '&utm_campaign=WP%20PLUGIN%20ADMINBAR',
 			'meta'   => array(
-				'title'  => __('Signup'),
+				'title'  => __( 'Signup' ),
 				'target' => '_blank',
 				'class'  => 'ar_score'
 			),
-		));
+		) );
 
-		$wp_admin_bar->add_menu(array(
+		$wp_admin_bar->add_menu( array(
 			'parent' => 'atomicreach',
 			'id'     => 'atomicreach3',
-			'title'  => __('Contact us'),
-			'href'   => 'http://www.atomicreach.com/about-us/#contact?utm_source=WP%20Plugin&utm_medium=' . get_option('home') . '&utm_campaign=WP%20PLUGIN%20ADMINBAR',
+			'title'  => __( 'Contact us' ),
+			'href'   => 'http://www.atomicreach.com/about-us/#contact?utm_source=WP%20Plugin&utm_medium=' . get_option( 'home' ) . '&utm_campaign=WP%20PLUGIN%20ADMINBAR',
 			'meta'   => array(
-				'title'  => __('Contact us'),
+				'title'  => __( 'Contact us' ),
 				'target' => '_blank',
 				'class'  => 'ar_contact_us'
 			),
-		));
+		) );
 
 
 	}
 
 
 	/*** EXTRA FEED ***/
-	add_action('init', 'arfeed');
+	add_action( 'init', 'arfeed' );
 
-	function arfeed()
-	{
-		$arRSS = get_option('aranalyzer_RSS');
-		if ($arRSS == 1)
-			add_feed('arfeed', 'arcustomRSS');
+	function arfeed() {
+		$arRSS = get_option( 'aranalyzer_RSS' );
+		if ( $arRSS == 1 ) {
+			add_feed( 'arfeed', 'arcustomRSS' );
+		}
 	}
 
-	function arcustomRSS()
-	{
-		$arRSS = get_option('aranalyzer_RSS');
+	function arcustomRSS() {
+		$arRSS = get_option( 'aranalyzer_RSS' );
 //		get_template_part('feed', 'two');
 
 //		if ($arRSS == 1) {
 		global $more;
-		$more      = -1;
+		$more      = - 1;
 		$postCount = 150; // The number of posts to show in the feed
-		$posts     = query_posts('showposts=' . $postCount);
-		header('Content-Type: ' . feed_content_type('rss-http') . '; charset=' . get_option('blog_charset'), TRUE);
-		echo '<?xml version="1.0" encoding="' . get_option('blog_charset') . '"?' . '>' . PHP_EOL;
+		$posts     = query_posts( 'showposts=' . $postCount );
+		header( 'Content-Type: ' . feed_content_type( 'rss-http' ) . '; charset=' . get_option( 'blog_charset' ), TRUE );
+		echo '<?xml version="1.0" encoding="' . get_option( 'blog_charset' ) . '"?' . '>' . PHP_EOL;
 		echo '<rss version="2.0"
      xmlns:content="http://purl.org/rss/1.0/modules/content/"
      xmlns:wfw="http://wellformedweb.org/CommentAPI/"
@@ -685,27 +829,27 @@
      xmlns:atom="http://www.w3.org/2005/Atom"
      xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
      xmlns:slash="http://purl.org/rss/1.0/modules/slash/"' . PHP_EOL;
-		do_action('rss2_ns');
+		do_action( 'rss2_ns' );
 		echo '>' . PHP_EOL;
 		echo '<channel>' . PHP_EOL;
 		echo '<title>';
-		bloginfo_rss('name');
+		bloginfo_rss( 'name' );
 		echo ' - Feed</title>' . PHP_EOL;
 		echo '<atom:link href="';
 		self_link();
 		echo '" rel="self" type="application/rss+xml" />' . PHP_EOL;
 		echo '<link>';
-		bloginfo_rss('url');
+		bloginfo_rss( 'url' );
 		echo '</link>' . PHP_EOL;
 		echo '<description>';
-		bloginfo_rss('description');
+		bloginfo_rss( 'description' );
 		echo '</description>' . PHP_EOL;
-		echo '<lastBuildDate>' . mysql2date('D, d M Y H:i:s +0000', get_lastpostmodified('GMT'), FALSE) . '</lastBuildDate>' . PHP_EOL;
-		echo '<language>' . get_option('rss_language') . '</language>' . PHP_EOL;
-		echo '<sy:updatePeriod>' . apply_filters('rss_update_period', 'hourly') . '</sy:updatePeriod>' . PHP_EOL;
-		echo '<sy:updateFrequency>' . apply_filters('rss_update_frequency', '1') . '</sy:updateFrequency>' . PHP_EOL;
-		do_action('rss2_head');
-		while (have_posts()) : the_post();
+		echo '<lastBuildDate>' . mysql2date( 'D, d M Y H:i:s +0000', get_lastpostmodified( 'GMT' ), FALSE ) . '</lastBuildDate>' . PHP_EOL;
+		echo '<language>' . get_option( 'rss_language' ) . '</language>' . PHP_EOL;
+		echo '<sy:updatePeriod>' . apply_filters( 'rss_update_period', 'hourly' ) . '</sy:updatePeriod>' . PHP_EOL;
+		echo '<sy:updateFrequency>' . apply_filters( 'rss_update_frequency', '1' ) . '</sy:updateFrequency>' . PHP_EOL;
+		do_action( 'rss2_head' );
+		while ( have_posts() ) : the_post();
 			echo '<item>';
 			echo '<title>';
 			the_title_rss();
@@ -713,7 +857,7 @@
 			echo '<link>';
 			the_permalink_rss();
 			echo '</link>' . PHP_EOL;
-			echo '<pubDate>' . mysql2date('D, d M Y H:i:s +0000', get_post_time('Y-m-d H:i:s', TRUE), FALSE) . '</pubDate>' . PHP_EOL;
+			echo '<pubDate>' . mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', TRUE ), FALSE ) . '</pubDate>' . PHP_EOL;
 			echo '<dc:creator>';
 			the_author();
 			echo '</dc:creator>' . PHP_EOL;
@@ -727,7 +871,7 @@
 			the_content();
 			echo ']]></content:encoded>' . PHP_EOL;
 			rss_enclosure();
-			do_action('rss2_item');
+			do_action( 'rss2_item' );
 			echo '</item>' . PHP_EOL;
 		endwhile;
 		echo '</channel>' . PHP_EOL;
@@ -739,47 +883,44 @@
 
 
 	// TOP banner
-	function aranalyzer_admin_user_area_notice()
-	{
+	function aranalyzer_admin_user_area_notice() {
 		$screen = get_current_screen();
 
-		if (current_user_can('manage_options')) {
-			$consumerkey           = get_option('aranalyzer_consumerkey');
-			$secretkey             = get_option('aranalyzer_secretkey');
-			$aranalyzer_state_keys = get_option('aranalyzer_state_keys');
-			if ($screen->id !== 'toplevel_page_ar-analyzer-admin') {
-				if ((empty($consumerkey) || empty($secretkey)) || ($aranalyzer_state_keys === 'FALSE' || empty($aranalyzer_state_keys))) {
-					echo ' <div class="update-nag">
-                 <img src="' . plugin_dir_url(__FILE__) . 'custom/ar-logo.gif" /><p>&nbsp;&nbsp;&nbsp;<strong>Almost Done!<strong>
-                 <a href="' . admin_url('admin.php?page=ar-analyzer-admin') . '">Click Here</a> to setup the Atomic Engager plugin.</p>
+		if ( current_user_can( 'manage_options' ) ) {
+			$consumerkey           = get_option( 'aranalyzer_consumerkey' );
+			$secretkey             = get_option( 'aranalyzer_secretkey' );
+			$aranalyzer_state_keys = get_option( 'aranalyzer_state_keys' );
+			if ( $screen->id !== 'toplevel_page_ar-analyzer-admin' ) {
+				if ( ( empty( $consumerkey ) || empty( $secretkey ) ) || ( $aranalyzer_state_keys === 'FALSE' || empty( $aranalyzer_state_keys ) ) ) {
+					echo ' <div id="aw-atomicAdminNotice" class="update-nag">
+                 <img id="awLogoNoticeArea" src="' . plugin_dir_url( __FILE__ ) . 'custom/imgs/AW_logo_icon_80px.png" />
+                 <h2>Let\'s go use AtomicWriter! <a href="' . admin_url( 'edit.php' ) . '">Edit</a> some articles now.</h2>
           </div>';
 				}
 			}
 		}
 	}
 
-	add_action('admin_notices', 'aranalyzer_admin_user_area_notice');
+	add_action( 'admin_notices', 'aranalyzer_admin_user_area_notice' );
 
 
-	function atomic_engager_activate()
-	{
+	function atomic_engager_activate() {
 // custom feed
-		update_option('aranalyzer_RSS', 1);
-		update_option('aranalyzer_view', 1);
+		update_option( 'aranalyzer_RSS', 1 );
+		update_option( 'aranalyzer_view', 1 );
 		arfeed();
 		flush_rewrite_rules();
 	}
 
-	register_activation_hook(__FILE__, 'atomic_engager_activate');
+	register_activation_hook( __FILE__, 'atomic_engager_activate' );
 
-	function atomic_engager_deactivation()
-	{
+	function atomic_engager_deactivation() {
 		flush_rewrite_rules();
 
-		delete_option('aranalyzer_tracking');
-		delete_option('aranalyzer_view');
-		delete_option('aranalyzer_RSS');
+		delete_option( 'aranalyzer_tracking' );
+		delete_option( 'aranalyzer_view' );
+		delete_option( 'aranalyzer_RSS' );
 	}
 
-	register_deactivation_hook(__FILE__, 'atomic_engager_deactivation');
+	register_deactivation_hook( __FILE__, 'atomic_engager_deactivation' );
 ?>

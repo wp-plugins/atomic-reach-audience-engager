@@ -1,9 +1,12 @@
 <?php
+
+
 	//Normal page display
 	$consumerkey = get_option('aranalyzer_consumerkey');
 	$secretkey = get_option('aranalyzer_secretkey');
 	$aranalyzer_state_keys = get_option('aranalyzer_state_keys');
 
+	if (isset($_POST['aranalyzer_saved']))
 	if ($_POST['aranalyzer_saved'] == 'Y') {
 
 		if (empty($consumerkey) && empty($secretkey)) {
