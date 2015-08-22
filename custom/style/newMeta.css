@@ -18,9 +18,9 @@ img#awLogoNoticeArea {
     margin-left: 60px;
 }
 
-#aranalyzer_metabox:hover .handlediv {
-    background: transparent url(../arrows.png) no-repeat 6px 15px !important;
-}
+/*#aranalyzer_metabox:hover .handlediv {*/
+    /*background: transparent url(../arrows.png) no-repeat 6px 15px !important;*/
+/*}*/
 
 #aranalyzer_metabox .inside {
     padding: 0;
@@ -1364,4 +1364,13 @@ img#aud_info_WP {
 }
 #aranalyzer_metabox button{
     cursor: pointer;
+}
+#ar-WCbtn .writer_fixes-labels > span{
+    margin-left: 120px;
+    background-color: #00bfe7;
+    width: 45px;
+    color: #fff;
+    opacity: 0.7;
+    padding: 2px 7px;
+    border-radius: 16px;
 }

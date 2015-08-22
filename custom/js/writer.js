@@ -188,6 +188,7 @@ jQuery(document).ready(function ($) {
                 clearAllhighlighting();
             },
             success: function (response) {
+
                 $("#right-score").html(response).hide();
                 ARTabs();
                 ar_tips();

@@ -2,66 +2,57 @@ jQuery(document).ready(function ($) {
     $("#aranalyzer_metabox").on("change", ".onoffswitch > input[type=checkbox]", function(e){
         jQuery(".onoffswitch > input[type=checkbox]").not($(this)).prop('checked', false);
     })
-    function unwrapAllHighlighting() {
+
+
+    function clearAllhighlighting() {
         var element = $('#content_ifr').contents().find('body');
 
         if ($(element).find("span.arSMhighlight").length > 0) {
+            $(element).find("span.arSMhighlight").removeAttr('style');
             $(element).find("span.arSMhighlight").contents().unwrap();
         }
 
         if ($(element).find("span.arGMhighlight").length > 0) {
-            $(element).find("span.arGMhighlight").contents().unwrap();
-        }
-
-        if ($(element).find("span.SenCompHighlight").length > 0) {
-            $(element).find("span.SenCompHighlight").contents().unwrap();
-        }
-        if ($(element).find("span.WordCompHighlight").length > 0) {
-            $(element).find("span.WordCompHighlight").contents().unwrap();
-        }
-        if ($(element).find("span.arWChighlight").length > 0) {
-            $(element).find("span.arWChighlight").contents().unwrap();
-        }
-        if ($(element).find("span.pwdHighlight").length > 0) {
-            $(element).find("span.pwdHighlight").contents().unwrap();
-        }
-        if ($(element).find("span.arLNhighlight").length > 0) {
-            $(element).find("span.arLNhighlight").contents().unwrap();
-        }
-
-
-    }
-
-    function clearAllhighlighting() {
-        var element = $('#content_ifr').contents().find('body');
-        if ($(element).find("span.arSMhighlight").length > 0) {
-            $(element).find("span.arSMhighlight").removeAttr('style');
-        }
-
-        if ($(element).find("span.arGMhighlight").length > 0) {
             $(element).find("span.arGMhighlight").removeAttr('style');
+            $(element).find("span.arGMhighlight").contents().unwrap();
         }
         if ($(element).find("span.SenCompHighlight").length > 0) {
             $(element).find("span.SenCompHighlight").removeAttr('style');
+            $(element).find("span.SenCompHighlight").contents().unwrap();
         }
-        if ($(element).find("span.WordCompHighlight").length > 0) {
-            $(element).find("span.WordCompHighlight").contents().unwrap();
-        }
-        if ($(element).find("span.arWChighlight").length > 0) {
-            $(element).find("span.arWChighlight").contents().unwrap();
-        }
+
         if ($(element).find("span.pwdHighlight").length > 0) {
             $(element).find("span.pwdHighlight").removeAttr('style');
+            $(element).find("span.pwdHighlight").contents().unwrap();
         }
         if ($(element).find("span.arLNhighlight").length > 0) {
             $(element).find("span.arLNhighlight").removeAttr('style');
+            $(element).find("span.arLNhighlight").contents().unwrap();
         }
 
-        unwrapAllHighlighting();
+        if ($(element).find(".writer_wordComplexity").length > 0)
+            $(element).find(".writer_wordComplexity").addClass("writer-hide");
+
+
+
+
+
+
+
+        if ($(element).find("span.arWChighlight").length > 0) {
+            $(element).find("span.arWChighlight").removeAttr('style');
+            $(element).removeHighlight('.arWChighlight');
+            if ($(element).find("span.WordCompHighlight").length > 0)
+                $(element).removeHighlight('.WordCompHighlight');
+        }
+
+
+
     }
 
     $(document).ajaxComplete(function (event, xhr, settings) {
-        if (settings.url.match("admin-ajax.php").length == 1) {
+        var settingsURL = settings.url.match("admin-ajax.php");
+        if (settingsURL) {
 
 
             if (typeof spellHL != "undefined")
@@ -81,7 +72,7 @@ jQuery(document).ready(function ($) {
 
                                 if ($('span.arSMhighlight:contains(' + spellHL.detail[i].string + ')').length == 0) {
 
-                                    contentWrapper.highlightRegex(spellHL.detail[i].string, {'className': 'arSMhighlight'});
+                                    contentWrapper.highlightRegex('\\b'+spellHL.detail[i].string+'\\b', {'className': 'arSMhighlight'});
 
                                     thisSMword = $(contentWrapper).find('span.arSMhighlight');
                                     thisSMword.css({'background-color': 'rgba(234, 129, 142, 0.7)', 'position': 'relative', 'display': 'inline'});
@@ -366,41 +357,24 @@ jQuery(document).ready(function ($) {
                 var contentWrapper = $('#content_ifr').contents().find('body');
 
                 if ($("#writer_ParaDensity").is(":checked")) {
+                    var p = pwdHL.detail.paragraphs;
+                    $.each($(contentWrapper).find('p'), function(ind, val){
+                       if (p[ind] != "length_hit" &&  p[ind] != "" && typeof p[ind] != "undefined"){
 
-                    $.map(pwdHL.detail.paragraphTeasers, function (val, index) {
-                        teaser = val.substring(0, val.length - 3);
-                        data = pwdHL.detail.paragraphDOM;
-                        var finalElement;
-                        var allowedElements = data.split(",");
-                        $.map(allowedElements, function (ele, i) {
-                            element = $(contentWrapper).find(ele + ":contains('" + teaser + "')");
-                            if (element.length == 1) {
-                                $.map(element, function (v, h) {
-                                    finalElement = v;
-                                });
-                                return false;
-                            }
-                        });
-                        var data1 = null;
-                        $.map(pwdHL.detail.paragraphDetails, function (v1, i1) {
-                            if (v1.index == index && v1.matchResult != "length_hit") {
-                                data1 = v1;
-                            }
-                        });
-                        if (data1 != null) {
-                            $(contentWrapper).find(finalElement).data("value", data1);
-                            $.map($(contentWrapper).find(finalElement).contents(), function (n, m) {
-                                if (n.nodeType == 3) {
-                                    contentWrapper.highlight(n.textContent, "pwdHighlight");
-                                    $(contentWrapper).find('span.pwdHighlight').css({
-                                        'background-color': 'rgba(220, 220, 244, 0.7)',
-                                        'position': 'relative',
-                                        'display': 'inline'
-                                    });
-                                }
-                            });
-                        }
+
+
+
+                           //$(this).highlight($(val).prop('innerText'), "pwdHighlight");
+                           $(this).wrapInner( "<span class='pwdHighlight'></span>");
+                           $(this).find('span.pwdHighlight').css({
+                               'background-color': 'rgba(220, 220, 244, 0.7)',
+                               'position': 'relative',
+                               'display': 'inline'
+                           });
+                           $(this).data("value", p[ind]);
+                       }
                     });
+
                     var contentWrapper = $('#content_ifr').contents().find('body');
                     $(contentWrapper).find("span.pwdHighlight").hover(function (e) {
 
@@ -465,45 +439,33 @@ jQuery(document).ready(function ($) {
             $("#writer_SenComp").change(function () {
                 clearAllhighlighting();
                 if ($("#writer_SenComp").is(":checked")) {
-                    $.map(soHL.paragraphTeasers, function (val, index) {
-                        teaser = val.substring(0, val.length - 3);
-                        data = soHL.paragraphDOM;
-                        var finalElement;
-                        var allowedElements = data.split(",");
 
-                        var contentWrapper = $('#content_ifr').contents().find('body');
 
-                        $.map(allowedElements, function (ele, i) {
-                            element = $(contentWrapper).find(ele + ":contains('" + teaser + "')");
-                            if (element.length == 1) {
-                                $.map(element, function (v, h) {
-                                    finalElement = v;
-                                });
-                                return false;
-                            }
-                        });
-                        var data1 = null;
-                        $.map(soHL.paragraphDetails, function (v1, i1) {
-                            if (v1.index == index) {
-                                data1 = v1;
-                            }
-                        });
-                        if (data1 != null) {
-                            var contentWrapper = $('#content_ifr').contents().find('body');
 
-                            $(contentWrapper).find(finalElement).data("value", data1);
+                    var contentWrapper = $('#content_ifr').contents().find('body');
 
-                            $.map($(contentWrapper).find(finalElement).contents(), function (n, m) {
-                                if (n.nodeType == 3 || 1) {
-                                    $(contentWrapper).removeClass("noun").highlight(n.textContent, "SenCompHighlight");
-                                    var sentenceSO = $(contentWrapper).find('span.SenCompHighlight');
-                                    sentenceSO.css({"background-color": 'rgba(246, 197, 164, 0.70)', "position": "relative", "display": "inline"});
+
+                    $.each($(contentWrapper).find('p'), function(i,v) {
+                        if (typeof soHL.sentences[i] != "undefined"){
+                            var sent = $(v).prop('innerText').split(/[\?\.\!]\n|[\?\.\!]\s/);
+
+                            for (var x = 0; x < sent.length; x++) {
+                                if (soHL.sentences[i][x] != "UNAVAILABLE") {
+                                    $(this).highlight(sent[x].trim(), "SenCompHighlight");
+                                    //$(this).wrapInner('<span class="SenCompHighlight"></span>');
+                                     $(this).find("span.SenCompHighlight").css({
+                                         "background-color": 'rgba(246, 197, 164, 0.70)',
+                                         "position": "relative",
+                                         "display": "inline"});
+                                    $(this).data("value", soHL.sentences[i][x])
+
                                 }
-                            });
+
+                            }
                         }
+
                     });
 
-                    //$(contentWrapper).removeClass("noun").highlight('overladen');
                     var contentWrapper = $('#content_ifr').contents().find('body');
 
 
@@ -536,10 +498,10 @@ jQuery(document).ready(function ($) {
                         $(contentWrapper).find("#load_SenComp-popup").load("../wp-content/plugins/atomic-reach-audience-engager/custom/html/popups.html .writer-sentence_Complexity", function () {
                             //$( $(".writer-word_Complexity")[0] ).text(responseData.value.matchResult);
 
-                            if (responseData.value.matchResult == "TOO COMPLEX") {
+                            if (responseData.value == "TOO COMPLEX") {
 
                                 $(contentWrapper).find('.writer-sentence_Complexity .ar-tooComplex').show();
-                            } else if (responseData.value.matchResult == "TOO SIMPLE") {
+                            } else if (responseData.value == "TOO SIMPLE") {
                                 $(contentWrapper).find('.writer-sentence_Complexity .ar-tooSimple').show();
                             }
 
@@ -552,7 +514,7 @@ jQuery(document).ready(function ($) {
                 } else {
                     var contentWrapper = $('#content_ifr').contents().find('body');
                     if ($(contentWrapper).find("span.SenCompHighlight").length > 0) {
-                        $(contentWrapper).find("span.SenCompHighlight").contents().unwrap();
+                        contentWrapper.removeHighlight(".SenCompHighlight");
                         $(contentWrapper).find(".writer-sentence_Complexity").addClass("writer-hide");
                     }
                 }
@@ -560,68 +522,80 @@ jQuery(document).ready(function ($) {
 
 
             // +++++++++++++ WORD COMPLEXITY +++++++++++++++++++
-            /*$("#writer_WordComp").change(function () {
-                //clearAllhighlighting();
+            $("#writer_WordComp").change(function () {
                 if ($("#writer_WordComp").is(":checked")) {
+                clearAllhighlighting();
                     var so = soHL;
-                    $.map(so.paragraphTeasers, function (val, index) {
 
-                        teaser = val.substring(0, val.length - 3);
-
-                        data = so.paragraphDOM;
-                        var finalElement;
-                        var allowedElements = data.split(",");
-                        var contentWrapper = $('#content_ifr').contents().find('body');
-
-                        var sugg = [];
-                        $.map(so.synonyms, function (v1, i1) {
-                            if (i1 == index) {
-                                $.map(allowedElements, function (ele, i) {
-                                    element = $(contentWrapper).find(ele + ":contains('" + teaser + "')");
-                                    if (element.length == 1) {
-                                        var x = $(element).prop('innerText').split(/[\?\.\!]/); //store sentences from the paragraphs.
-                                        //iterate through the sentences and wrap around span.WordCompHighlight tag
-                                        $.map(x, function (v, h) {
-                                            var s = v.replace(/^\s+/, '');
-                                            $(contentWrapper).highlight(s, "WordCompHighlight");
-                                        });
-                                        return false;
-                                    }
-                                });
-                                $.map(v1, function (v2, i2) {
-                                    $.each(v2, function (v3, i3) {
-                                        if ($(contentWrapper).find('span.WordCompHighlight > span.arWChighlight:contains(' + v3 + ')').length == 0) {
-                                            $(contentWrapper).find("span.WordCompHighlight").highlightRegex(v3, {'className': 'arWChighlight'});
-                                            thisWDword = $(contentWrapper).find('span.WordCompHighlight > span.arWChighlight');
-                                            thisWDword.css({
-                                                'background-color': 'rgba(255, 222, 137, 0.7)',
-                                                'position': 'relative',
-                                                'display': 'inline'
-                                            });
-
-                                            sugg = []; //reset variable
-                                            for (var k = 0; k < i3.length; k++) {
-                                                sugg.push(i3[k]);
-                                            }
-                                            $(contentWrapper).find('span.arWChighlight:contains(' + v3 + ')').data('suggestions', sugg);
-                                        }
-
-                                    })
-                                });
-                            }
-                        });
-                    });
                     var contentWrapper = $('#content_ifr').contents().find('body');
+                    //var pArray = new Array();
+
+                    var sugg = [];
+
+                    $.each($(contentWrapper).find('p'), function(i,v) {
+
+                        if (typeof so.synonyms[i] != "undefined") {
+
+                            //pArray[i] = new Array();
+                        var sent = $(v).prop('innerText').split(/[\?\.\!]\n|[\?\.\!]\s/);
+
+                        for (var x = 0; x < sent.length; x++) {
+                            //pArray[i][x] = sent[x].trim();
+
+
+                            if (typeof so.synonyms[i][x] !== "undefined") {
+
+                                //$(this).highlight(sent[x].trim(), "WordCompHighlight");
+                                $(this).wrapInner("<span class='WordCompHighlight'></span>");
+                                    var _this = $(this);
+
+
+                                $.each(so.synonyms[i][x], function(i2, v2) {
+
+
+                                    //if ($(_this).find('span.arWChighlight:contains(' + i2 + ')').length == 0) {
+
+
+                                    $(_this).find("span.WordCompHighlight").highlightRegex('\\b'+i2+'\\b', {'className': 'arWChighlight'});
+
+
+                                    thisWDword = $(contentWrapper).find('span.WordCompHighlight > span.arWChighlight');
+                                    thisWDword.css({
+                                        'background-color': 'rgba(255, 222, 137, 0.7)',
+                                        'position': 'relative',
+                                        'display': 'inline'
+                                    });
+
+
+
+                                    sugg = []; //reset variable
+                                    for (var k = 0; k < v2.length; k++) {
+                                        sugg.push(v2[k]);
+
+                                    }
+
+                                    $(_this).find('span.arWChighlight:contains(' + i2 + ')').data('suggestions', sugg);
+                                //}
+                                //    return false;
+                                });
+
+                            }
+                        }
+                    }
+                    });
+
+                    var contentWrapper = $('#content_ifr').contents().find('body');
+                    var topbottom;
                     $(thisWDword).hover(function (e) {
+
                         var thisword = $(this).text();
-                        if (e.pageX > $(contentWrapper).width() - 200) {
+                       if (e.pageX > $(contentWrapper).width() - 200) {
                             var left = -180;
                         } else {
                             var left = 0;
                         }
-                        if (e.pageY > $(contentWrapper).height() - 180) {
-                            var top = -115;
-                        }
+
+
 
                         var p;
                         if (typeof p === 'undefined')
@@ -633,10 +607,7 @@ jQuery(document).ready(function ($) {
                             $(this).append('<div id="load_wordComplexity-popup"></div>');
                             $(contentWrapper).find("#load_wordComplexity-popup").css({
                                 "position": "absolute",
-                                "bottom": "0px",
-                                "left": left + "px",
-                                "top": top + "px",
-                                "display": "inline"
+                                "display": "inline",
                             });
 
 
@@ -657,26 +628,64 @@ jQuery(document).ready(function ($) {
                                     for (var key in p) {
                                         if (p.hasOwnProperty(key)) {
                                             var words = '';
-                                            for (var a = 0; a < p[key].length; a++) {
-                                                if (!$.isArray(p[key][a])) {
-                                                    if (typeof p[key][a] == "string")
-                                                        $(contentWrapper).find('.writer_wordComplexity .wordCompright').append("<p style=\"margin: 0;" +
-                                                            "padding: 0\" class=\"word-complexity-def\">" + p[key][a]) + "</p>";
-                                                } else {
-                                                    for (var x = 0; x < p[key][a].length; x++) {
-                                                        if (typeof p[key][a][x][0] != "undefined")
-                                                            words += "<span style='display: inline; text-transform: capitalize;' class='ar-synonym'>" + p[key][a][x][0] + "</span>, ";
+
+
+
+
+                                            //for (var a = 0; a < p[key].length; a++) {
+
+                                                //if (!$.isArray(p[key][a])) {
+                                                    for (var x = 0; x < p[key][1].length; x++) {
+                                                        if (typeof p[key][1][x][0] != "undefined")
+                                                            words += "<span style='display: inline; text-transform: capitalize;'" +
+                                                                " class='ar-synonym'>" + p[key][1][x][0].replace("_", " ") + "</span>, ";
                                                     }
                                                     if (typeof words != 'undefined')
                                                         $(contentWrapper).find('.writer_wordComplexity .wordCompright').append('<p style="margin: 0;' +
-                                                            ' padding: 0; border-bottom: 1px solid #fff;" class="word-complexity-sug"><strong>' + words.replace(/,\s*$/, "") + "</strong></p>");
-                                                }
-                                            }
+                                                            ' padding: 0; " class="word-complexity-sug"><strong>' + words.replace(/,\s*$/, "") +
+                                                            "</strong>&nbsp;<span style='background-color: #5a5a5a;border-radius:" +
+                                                            " 32px;width: 14px;height: 14px;display: inline-block;line-height: 10px;'><i style='color:" +
+                                                            "#fff;padding: 6px;text-align: center;font-size: 11px;font-style: normal;font-weight: 600;'>i</i></span></p>");
+
+
+                                                    if (typeof p[key][0] == "string")
+                                                        $(contentWrapper).find('.writer_wordComplexity .wordCompright').append("<p style=\"margin: 0;" +
+                                                            "padding: 0; border-top: 1px solid #fff; display: none;\"" +
+                                                            " class=\"word-complexity-def\">" + p[key][0]) + "</p>";
+                                                //} else {
+                                                //
+                                                //}
+                                            //}
                                         }
                                     }
+
+
+                                    if (e.pageY < $(contentWrapper).find("#load_wordComplexity-popup > div").outerHeight()+10) {
+                                        var bottom = "-"+$(contentWrapper).find("#load_wordComplexity-popup > div").outerHeight()+"px";
+                                        var top = null;
+                                    }else{
+                                        var bottom = null;
+                                        var top = 0;
+                                    }
+                                    $(contentWrapper).find("#load_wordComplexity-popup").css({
+                                        "left": "0",
+                                        "top": top,
+                                        "bottom": bottom
+                                    });
+
+                                    $(contentWrapper).find('.writer_wordComplexity .wordCompright .word-complexity-sug').unbind( "click").bind( "click", function(e){
+
+                                        /*if ($(this).next(".word-complexity-def").is(':visible')) {
+                                            $(this).next(".word-complexity-def").slideUp(function(){
+                                                $(this).next(".word-complexity-def").slideToggle();
+                                            });
+                                        }else{*/
+                                            $(this).next(".word-complexity-def").slideToggle();
+                                        //}
+                                    });
+
                                 } else {
 
-                                    //$(contentWrapper).find('.writer_wordComplexity').prepend('<p style="display:inline">' + p + '</p>');
                                 }
 
                             });//end .load
@@ -698,14 +707,15 @@ jQuery(document).ready(function ($) {
                         contentWrapper.removeClass("noun").removeHighlight('.arWChighlight');
                     }
                     if ($(contentWrapper).find("span.WordCompHighlight").length > 0) {
-                        $(contentWrapper).find("span.WordCompHighlight").contents().unwrap();
+                        contentWrapper.removeClass("noun").removeHighlight('.WordCompHighlight');
+                        //$(contentWrapper).find("span.WordCompHighlight").contents().unwrap();
                     }
 
                     if ($(contentWrapper).find(".writer_wordComplexity").length > 0)
                         $(contentWrapper).find(".writer_wordComplexity").addClass("writer-hide");
                 }
 
-            });*/
+            });
 
             $("#aw_moretips_WP p").unbind('click').bind('click', function(e){
                 e.preventDefault();

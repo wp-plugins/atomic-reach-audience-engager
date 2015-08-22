@@ -256,9 +256,9 @@
 			$out .= '<p id="ar-so"><input id="so" name="so" type="checkbox" />' . PHP_EOL;
 			$out .= '<label style="font-size:19px !important;" class="ar_info" for="so" id="ar-' . $so->state . '">&nbsp;&nbsp;&nbsp;Sentence Complexity</label><p>' . PHP_EOL;
 
-			/*$out .= '<p id="ar-wc"><input id="wc" name="wc" type="checkbox" />' . PHP_EOL;
+			$out .= '<p id="ar-wc"><input id="wc" name="wc" type="checkbox" />' . PHP_EOL;
 			$out .= '<label style="font-size:19px !important;" class="ar_info" for="wc" id="ar-' . $so->state . '">&nbsp;&nbsp;&nbsp;Word
-			Complexity</label><p>' . PHP_EOL;*/
+			Complexity</label><p>' . PHP_EOL;
 
 			$out .= '</div>';
 
@@ -289,7 +289,7 @@
 				$out .= '<p class="writer_fixes-labels"> &nbsp;&nbsp;&nbsp;Sentence Complexity</p>';
 				$out .= '</div>';
 
-				/*$out .= '<hr>';
+				$out .= '<hr>';
 				$out .= '<div id="ar-WCbtn" style="margin-bottom: 7px !important;margin-left: -19px;">';
 				$out .= '<div class="onoffswitch">';
 				$out .= '<input type="checkbox" style="visibility: hidden !important;display: none !important;" name="onoffswitch" class="onoffswitch-checkbox"
@@ -299,8 +299,8 @@
 				$out .= '<span class="onoffswitch-switch-word"></span>';
 				$out .= '</label>';
 				$out .= '</div>';
-				$out .= '<p class="writer_fixes-labels"> &nbsp;&nbsp;&nbsp;Word Complexity</p>';
-				$out .= '</div>';*/
+				$out .= '<p class="writer_fixes-labels"> &nbsp;&nbsp;&nbsp;Word Complexity <span>beta</span></p>';
+				$out .= '</div>';
 			}
 
 			$out .= '</article>' . PHP_EOL;
