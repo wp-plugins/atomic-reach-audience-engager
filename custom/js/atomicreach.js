@@ -121,9 +121,9 @@ jQuery(document).ready(function ($) {
                                             "position": "absolute",
                                             "display": "inline",
                                             "z-index": "999999",
-                                            "width": "180px",
+                                            "width": "260px",
                                             "text-align": "center",
-                                            "border": "1.5px solid #666666",
+                                            "border": "2px solid #666666",
                                             "background-color": "#EA818E",
                                             "border-radius": "7px"
                                         });
@@ -250,7 +250,7 @@ jQuery(document).ready(function ($) {
                                                 "z-index": "99999",
                                                 "width": "260px",
                                                 "text-align": "center",
-                                                "border": "1.5px solid #666666",
+                                                "border": "2px solid #666666",
                                                 "background-color": "#96EDA4",
                                                 "border-radius": "7px"
                                             });
@@ -390,7 +390,7 @@ jQuery(document).ready(function ($) {
                             var bottom = 0;
                         }
 
-                        var responseData = $(this).parent().data();
+                        var responseData = $(this).parents('p').data();
 
                         if ($(contentWrapper).find("#load_ParaComp-popup").length == 0) {
                             $(this).append('<div id="load_ParaComp-popup"></div>');
@@ -450,6 +450,9 @@ jQuery(document).ready(function ($) {
                             var sent = $(v).prop('innerText').split(/[\?\.\!]\n|[\?\.\!]\s/);
 
                             for (var x = 0; x < sent.length; x++) {
+
+                                //console.log("------"+sent[x].trim()+" -- "+soHL.sentences[i][x] + $(this));
+
                                 if (soHL.sentences[i][x] != "UNAVAILABLE") {
                                     $(this).highlight(sent[x].trim(), "SenCompHighlight");
                                     //$(this).wrapInner('<span class="SenCompHighlight"></span>');
@@ -470,7 +473,7 @@ jQuery(document).ready(function ($) {
 
 
                     $(contentWrapper).find("span.SenCompHighlight").hover(function (e) {
-
+                        console.log($(this));
                         $(this).click(function () {
                             $(this).children("#load_SenComp-popup").remove();
                             $(this).unbind('hover');
@@ -482,7 +485,7 @@ jQuery(document).ready(function ($) {
                             var bottom = 0;
                         }
 
-                        var responseData = $(this).parent().data();
+                        var responseData = $(this).parents('p').data();
 
                         if ($(contentWrapper).find("#load_SenComp-popup").length == 0)
                             $(this).append('<div id="load_SenComp-popup"></div>');
@@ -491,13 +494,15 @@ jQuery(document).ready(function ($) {
                             'bottom': bottom + 'px',
                             'top': top + 'px',
                             'z-index': '99999',
+                            'font-weight': "normal",
+                            'text-decoration': "none",
                             'position': 'absolute',
                             'display': 'inline'
                         });
 
                         $(contentWrapper).find("#load_SenComp-popup").load("../wp-content/plugins/atomic-reach-audience-engager/custom/html/popups.html .writer-sentence_Complexity", function () {
                             //$( $(".writer-word_Complexity")[0] ).text(responseData.value.matchResult);
-
+                            console.log(responseData.value);
                             if (responseData.value == "TOO COMPLEX") {
 
                                 $(contentWrapper).find('.writer-sentence_Complexity .ar-tooComplex').show();
@@ -508,7 +513,9 @@ jQuery(document).ready(function ($) {
                             $(contentWrapper).find('.writer-sentence_Complexity').removeClass("writer-hide");
                         });
                     }, function () {
-                        $(contentWrapper).find("#load_SenComp-popup").remove();
+
+                            $(contentWrapper).find("#load_SenComp-popup").remove();
+
                     })
 
                 } else {
@@ -615,11 +622,13 @@ jQuery(document).ready(function ($) {
                                 $(contentWrapper).find(".writer_wordComplexity").removeClass("writer-hide").css({
                                     "position": "absolute",
                                     "display": "inline",
+                                    "font-weight": "normal",
+                                    "text-decoration": "none",
                                     "z-index": "999",
                                     "width": "480px",
                                     "text-align": "center",
-                                    "color": "#000000",
-                                    "border": "1.5px solid rgb(255, 222, 137)",
+                                    "color": "#666666",
+                                    "border": "2px solid #666666",
                                     "background-color": "rgb(255, 222, 137)",
                                     "border-radius": "7px"
                                 });
@@ -629,12 +638,6 @@ jQuery(document).ready(function ($) {
                                         if (p.hasOwnProperty(key)) {
                                             var words = '';
 
-
-
-
-                                            //for (var a = 0; a < p[key].length; a++) {
-
-                                                //if (!$.isArray(p[key][a])) {
                                                     for (var x = 0; x < p[key][1].length; x++) {
                                                         if (typeof p[key][1][x][0] != "undefined")
                                                             words += "<span style='display: inline; text-transform: capitalize;'" +
@@ -652,15 +655,12 @@ jQuery(document).ready(function ($) {
                                                         $(contentWrapper).find('.writer_wordComplexity .wordCompright').append("<p style=\"margin: 0;" +
                                                             "padding: 0; border-top: 1px solid #fff; display: none;\"" +
                                                             " class=\"word-complexity-def\">" + p[key][0]) + "</p>";
-                                                //} else {
-                                                //
-                                                //}
-                                            //}
+
                                         }
                                     }
 
 
-                                    if (e.pageY < $(contentWrapper).find("#load_wordComplexity-popup > div").outerHeight()+10) {
+                                    if (e.pageY < $(contentWrapper).find("#load_wordComplexity-popup > div").outerHeight()+20) {
                                         var bottom = "-"+$(contentWrapper).find("#load_wordComplexity-popup > div").outerHeight()+"px";
                                         var top = null;
                                     }else{

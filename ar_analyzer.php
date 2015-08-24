@@ -3,7 +3,7 @@
 	  Plugin Name: Atomic Writer
 	  Plugin URI: http://www.atomicreach.com
 	  Description: AtomicWriter will show you how to format and restructure your blog posts to get the best out of your writing.
-	  Version: 3.0.02
+	  Version: 3.0.03
 	  Author URI: http://www.atomicreach.com
 	  Author: atomicreach
 	 */
@@ -246,11 +246,6 @@
 				$success = TRUE;
 			}
 		}
-
-
-
-
-
 		echo $success ? 'OK' : 'ERROR';
 		exit();
 	}
@@ -393,10 +388,10 @@
 	}
 
 	/* hook when click on update */
-	add_action( 'publish_post', 'aranalyzer_review' );
+//	add_action( 'publish_post', 'aranalyzer_review' );
 
 	/* hook when save draft post */
-	add_action( 'save_post', 'aranalyzer_review' );
+//	add_action( 'save_post', 'aranalyzer_review' );
 
 	/**
 	 * Used to load the required files on the plugins_loaded hook, instead of immediately.
