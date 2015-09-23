@@ -36,7 +36,10 @@
     margin-bottom: 0 !important;
     padding-left: 0 !important;
     word-wrap: break-word;
-     font-family:'Roboto', sans-serif !important;">
+    font-family:'Roboto', sans-serif !important;
+    color: #666666;
+    overflow-y: scroll;
+    max-height: 62px">
 
         </ul>
         <button id="add_dictionary" style="border: none !important;
@@ -129,5 +132,29 @@
     <div style="font-weight: 900; color: #666666; padding: 2px 0; border-bottom: 1px solid #fff; text-align: left; padding-left: 20px;"
          class="wordCompWord"></div>
     <!--<div style="width: 20%;float: left;" class="wordCompLeft"><p>Options</p></div>-->
-    <div style="text-align: left; background-color: #ffffff; padding-left: 30px;" class="wordCompright"></div>
+    <div style="text-align: left; background-color: #ffffff; color: #666666; padding-left: 30px; max-height: 85px; overflow-y: scroll;" class="wordCompright"></div>
 </div>
+
+
+<!-- Emotion -->
+<div class="writer-emotion_fix writer-hide" style="width: 450px;
+    text-align: center;
+    border: 2px solid #666666 !important;
+    position: absolute! important;
+    border-radius: 7px !important;">
+
+    <p style="display: none;
+     font-family:'Roboto', sans-serif !important;
+     margin-bottom: 0 !important; color: #666666 !important;
+    font-weight: bold !important; background-color: rgb(125, 208, 255);" class="suggestions_header-em ar-emRED"><b></b></p>
+    <p style="display: none;  margin-bottom: 0 !important;background-color: #FFFFFF;color: #666666;font-family: 'Roboto', sans-serif"
+       class="suggestions_content ar-emRED">Words that are low in emotional value are highlighted in blue.<br> Try a more emotional word.</p>
+    <p style="display: none; color: #666666 !important;
+    font-weight: bold !important;
+      font-family:'Roboto', sans-serif !important;margin-bottom: 0 !important;  background-color: #FFF380"
+       class="suggestions_header-em ar-emGREEN"><b></b></p>
+    <p style="display: none;color: #666666;
+     font-family:'Roboto', sans-serif !important;
+    background-color: #FFFFFF;  margin-bottom: 0 !important;" class="suggestions_content ar-emGREEN">Take note of these words highlighted in yellow, they are <br>high in emotional value.</p>
+</div>
+<!-- Emotion -->

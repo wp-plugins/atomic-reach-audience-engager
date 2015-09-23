@@ -120,7 +120,7 @@
 			$ln = $this->result->data->analysis->ln;
 
 			$out .= '<p id="ar-ln"><input id="ln" name="ln" type="checkbox" />' . PHP_EOL;
-			$out .= '<label class="ar_info" style="font-size: 20px !important;" for="ln" id="ar-' . $ln->state . '">&nbsp;&nbsp;&nbsp;Length</label><p>' . PHP_EOL;
+			$out .= '<label class="ar_info" style="font-size: 20px !important;" for="ln" id="ar-' . $ln->state . '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Length<small>+</small></label><p>' . PHP_EOL;
 
 			$sm = $this->result->data->analysis->sm;
 			$out .= '<script> var spellState = ' . json_encode( $this->result->data->analysis->sm->state ) . '; </script>';
@@ -128,16 +128,42 @@
 
 
 			$spellState = $this->result->data->analysis->sm->state;
+			$out .= '<div class="arMeasureWrapper">' . PHP_EOL;
 			$out .= '<p id="ar-sm"><input id="sm" name="sm" type="checkbox" />' . PHP_EOL;
-			$out .= '<label class="ar_info" style="font-size: 20px !important;" for="sm" id="ar-' . $sm->state . '"> &nbsp;&nbsp;&nbsp;Spelling</label><p>' . PHP_EOL;
-
+			$out .= '<label class="ar_info" style="font-size: 20px !important;" for="sm" id="ar-' . $sm->state . '"> &nbsp;&nbsp;&nbsp;
+			Spelling<small>+</small></label></p>' . PHP_EOL;
+			if ( strtolower( $spellState ) != "green" ) {
+				$out .= '<div id="ar-spellingHighlightButton" class="arInlineButton">';
+				$out .= '<div class="onoffswitch">
+                <input type="checkbox" id="writer_Spelling" style="visibility: hidden !important;display: none !important;" name="onoffswitch" class="onoffswitch-checkbox" >
+                 <label class="onoffswitch-label" for="writer_Spelling">
+                    <span class="onoffswitch-inner"></span>
+                     <span class="onoffswitch-switch-spellings"></span>
+                        </label>
+                            </div>';
+				$out .= '</div>';
+			}
+			$out .= '</div>' . PHP_EOL;
 
 			$out .= '<script> var grammarState = ' . json_encode( $this->result->data->analysis->gm->state ) . '; </script>';
 			$out .= '<script> var grammarHL = ' . json_encode( $this->result->data->analysis->gm ) . '; </script>';
 
 			$gm = $this->result->data->analysis->gm;
+			$out .= '<div class="arMeasureWrapper">' . PHP_EOL;
 			$out .= '<p id="ar-gm"><input id="gm" name="gm" type="checkbox" />' . PHP_EOL;
-			$out .= '<label class="ar_info" style="font-size: 20px !important;" for="gm" id="ar-' . $gm->state . '"> &nbsp;&nbsp;&nbsp;Grammar</label><p>' . PHP_EOL;
+			$out .= '<label class="ar_info" style="font-size: 20px !important;" for="gm" id="ar-' . $gm->state . '"> &nbsp;&nbsp;&nbsp;	Grammar<small>+</small></label></p>';
+			if ( strtolower( $gm->state ) != "green" ) {
+				$out .= '<div id="ar-grammarHighlightButton" class="arInlineButton">';
+				$out .= '<div class="onoffswitch">';
+				$out .= '<input type="checkbox" style="visibility: hidden !important;display: none !important;" name="onoffswitch" class="onoffswitch-checkbox" id="writer_Grammar">';
+				$out .= '<label class="onoffswitch-label" for="writer_Grammar">';
+				$out .= '<span class="onoffswitch-inner"></span>';
+				$out .= '<span class="onoffswitch-switch-grammar"></span>';
+				$out .= '</label>';
+				$out .= '</div>';
+				$out .= '</div>';
+			}
+			$out .= '</div>' . PHP_EOL;
 
 
 			$linkState = $this->result->data->analysis->lc->state;
@@ -146,8 +172,23 @@
 
 
 			$lc = $this->result->data->analysis->lc;
+			$out .= '<div class="arMeasureWrapper">' . PHP_EOL;
 			$out .= '<p id="ar-lc"><input id="lc" name="lc" type="checkbox" />' . PHP_EOL;
-			$out .= '<label class="ar_info" style="font-size: 20px !important;" for="lc" id="ar-' . $lc->state . '"> &nbsp;&nbsp;&nbsp;Links</label><p>' . PHP_EOL;
+			$out .= '<label class="ar_info" style="font-size: 20px !important;" for="lc" id="ar-' . $lc->state . '"> &nbsp;&nbsp;&nbsp;	Links<small>+</small></label></p>';
+			if ( strtolower( $lc->state ) != "green" ) {
+				$out .= '<div id="ar-linksHighlightButton" class="arInlineButton">';
+				$out .= '<div class="onoffswitch">';
+				$out .= '<input type="checkbox" style="visibility: hidden !important;display: none !important;" name="onoffswitch" class="onoffswitch-checkbox" id="writer_Links">';
+				$out .= '<label class="onoffswitch-label" for="writer_Links">';
+				$out .= '<span class="onoffswitch-inner"></span>';
+				$out .= '<span class="onoffswitch-switch-links"></span>';
+				$out .= '</label>';
+				$out .= '</div>';
+//				$out .= '<p class="writer_fixes-labels">&nbsp;&nbsp;&nbsp;Links</p>';
+
+				$out .= '</div>';
+			}
+			$out .= '</div>' . PHP_EOL;
 			$out .= '</div>';
 			$out .= '<hr/>';
 
@@ -165,45 +206,9 @@
 			$out .= '</div>';
 			$out .= '<hr/>';
 
-			if ( strtolower( $spellState ) != "green" ) {
-				$out .= '<div id="ar-spellingHighlightButton" style="margin-bottom: 7px !important;    margin-left: -19px;">';
-				$out .= '<div class="onoffswitch">
-                <input type="checkbox" id="writer_Spelling" style="visibility: hidden !important;display: none !important;" name="onoffswitch" class="onoffswitch-checkbox" >
-                 <label class="onoffswitch-label" for="writer_Spelling">
-                    <span class="onoffswitch-inner"></span>
-                     <span class="onoffswitch-switch-spellings"></span>
-                        </label>
-                            </div>';
-				$out .= '<p class="writer_fixes-labels">&nbsp;&nbsp;&nbsp;Spelling</p>';
-				$out .= '</div>';
-			}
-			if ( strtolower( $gm->state ) != "green" ) {
-				$out .= '<hr>';
-				$out .= '<div id="ar-grammarHighlightButton" style="margin-bottom: 7px !important;margin-left: -19px;">';
-				$out .= '<div class="onoffswitch">';
-				$out .= '<input type="checkbox" style="visibility: hidden !important;display: none !important;" name="onoffswitch" class="onoffswitch-checkbox" id="writer_Grammar">';
-				$out .= '<label class="onoffswitch-label" for="writer_Grammar">';
-				$out .= '<span class="onoffswitch-inner"></span>';
-				$out .= '<span class="onoffswitch-switch-grammar"></span>';
-				$out .= '</label>';
-				$out .= '</div>';
-				$out .= '<p class="writer_fixes-labels">&nbsp;&nbsp;&nbsp;Grammar</p>';
-				$out .= '</div>';
-				$out .= '<hr>';
-			}
-			if ( strtolower( $lc->state ) != "green" ) {
-				$out .= '<div id="ar-linksHighlightButton" style="margin-bottom: 7px !important;    margin-left: -19px;">';
-				$out .= '<div class="onoffswitch">';
-				$out .= '<input type="checkbox" style="visibility: hidden !important;display: none !important;" name="onoffswitch" class="onoffswitch-checkbox" id="writer_Links">';
-				$out .= '<label class="onoffswitch-label" for="writer_Links">';
-				$out .= '<span class="onoffswitch-inner"></span>';
-				$out .= '<span class="onoffswitch-switch-links"></span>';
-				$out .= '</label>';
-				$out .= '</div>';
-				$out .= '<p class="writer_fixes-labels">&nbsp;&nbsp;&nbsp;Links</p>';
 
-				$out .= '</div>';
-			}
+
+
 
 			$out .= '</article>' . PHP_EOL;
 
@@ -234,38 +239,20 @@
 			$out .= '<article class="ac-large soBox">' . PHP_EOL;
 
 			$out .= '<div>';
-			$em = $this->result->data->analysis->em;
-			$out .= '<script> var emState = ' . json_encode( $this->result->data->analysis->em->state ) . '; </script>';
 
 
-			$out .= '<p id="ar-em"><input id="em" name="em" type="checkbox" />' . PHP_EOL;
-			$out .= '<label style="font-size:20px !important;" class="ar_info" for="em" id="ar-' . $em->state . '">&nbsp;&nbsp;&nbsp;Emotion</label><p>' . PHP_EOL;
 
+			//			PWD
 			$out .= '<script> var pwdState = ' . json_encode( $this->result->data->analysis->pwd->state ) . '; </script>';
 			$out .= '<script> var pwdHL = ' . json_encode( $this->result->data->analysis->pwd ) . '; </script>';
 
 
 			$pwd = $this->result->data->analysis->pwd;
+			$out .= '<div class="arMeasureWrapper arDoubleLN">' . PHP_EOL;
 			$out .= '<p id="ar-pwd"><input id="pwd" name="pwd" type="checkbox" />' . PHP_EOL;
-			$out .= '<label style="font-size:20px !important;"  class="ar_info" for="pwd" id="ar-' . $pwd->state . '">&nbsp;&nbsp;&nbsp;Paragraph Density</label><p>' . PHP_EOL;
-
-			$out .= '<script> var senState = ' . json_encode( $this->result->data->analysis->so->state ) . '; </script>';
-			$out .= '<script> var soHL = ' . json_encode( $this->result->data->analysis->so ) . '; </script>';
-
-			$so = $this->result->data->analysis->so;
-			$out .= '<p id="ar-so"><input id="so" name="so" type="checkbox" />' . PHP_EOL;
-			$out .= '<label style="font-size:19px !important;" class="ar_info" for="so" id="ar-' . $so->state . '">&nbsp;&nbsp;&nbsp;Sentence Complexity</label><p>' . PHP_EOL;
-
-			$out .= '<p id="ar-wc"><input id="wc" name="wc" type="checkbox" />' . PHP_EOL;
-			$out .= '<label style="font-size:19px !important;" class="ar_info" for="wc" id="ar-' . $so->state . '">&nbsp;&nbsp;&nbsp;Word
-			Complexity</label><p>' . PHP_EOL;
-
-			$out .= '</div>';
-
-
+			$out .= '<label style="font-size:20px !important;"  class="ar_info" for="pwd" id="ar-' . $pwd->state . '">&nbsp;&nbsp;&nbsp;Paragraph <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Density<small>+</small></label></p>';
 			if ( strtolower( $pwd->state ) != 'green' ) {
-				$out .= '<hr>';
-				$out .= '<div id="ar-PWDbtn" style="margin-bottom: 7px !important;    margin-left: -19px;">';
+				$out .= '<div id="ar-PWDbtn" class="arInlineButton">';
 				$out .= '<div class="onoffswitch">';
 				$out .= '<input type="checkbox" style="visibility: hidden !important;display: none !important;" name="onoffswitch" class="onoffswitch-checkbox" id="writer_ParaDensity">';
 				$out .= '<label class="onoffswitch-label" for="writer_ParaDensity">';
@@ -273,12 +260,18 @@
 				$out .= '<span class="onoffswitch-switch-paragraph"></span>';
 				$out .= '</label>';
 				$out .= '</div>';
-				$out .= '<p class="writer_fixes-labels">&nbsp;&nbsp;&nbsp;Paragraph Density</p>';
 				$out .= '</div>';
 			}
+			$out .= '</div>' . PHP_EOL;
+//          PWD END
+
+//			Sentence Complexity
+			$so = $this->result->data->analysis->so;
+			$out .= '<div class="arMeasureWrapper arDoubleLN">' . PHP_EOL;
+			$out .= '<p id="ar-so"><input id="so" name="so" type="checkbox" />' . PHP_EOL;
+			$out .= '<label style="font-size:19px !important;" class="ar_info" for="so" id="ar-' . $so->state . '">&nbsp;&nbsp;&nbsp;Sentence <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Complexity<small>+</small></label></p>';
 			if ( strtolower( $so->state ) != 'green' ) {
-				$out .= '<hr>';
-				$out .= '<div id="ar-SObtn" style="margin-bottom: 7px !important;margin-left: -19px;">';
+				$out .= '<div id="ar-SObtn" class="arInlineButton">';
 				$out .= '<div class="onoffswitch">';
 				$out .= '<input type="checkbox" style="visibility: hidden !important;display: none !important;" name="onoffswitch" class="onoffswitch-checkbox" id="writer_SenComp">';
 				$out .= '<label class="onoffswitch-label" for="writer_SenComp">';
@@ -286,11 +279,21 @@
 				$out .= '<span class="onoffswitch-switch-sentence"></span>';
 				$out .= '</label>';
 				$out .= '</div>';
-				$out .= '<p class="writer_fixes-labels"> &nbsp;&nbsp;&nbsp;Sentence Complexity</p>';
 				$out .= '</div>';
+			}
+			$out .= '</div>' . PHP_EOL;
+//			Sentence Complexity Ends
 
-				$out .= '<hr>';
-				$out .= '<div id="ar-WCbtn" style="margin-bottom: 7px !important;margin-left: -19px;">';
+//			Word Complexity
+			$out .= '<script> var senState = ' . json_encode( $this->result->data->analysis->so->state ) . '; </script>';
+			$out .= '<script> var soHL = ' . json_encode( $this->result->data->analysis->so ) . '; </script>';
+
+
+			$out .= '<div class="arMeasureWrapper arDoubleLN">' . PHP_EOL;
+			$out .= '<p id="ar-wc"><input id="wc" name="wc" type="checkbox" />' . PHP_EOL;
+			$out .= '<label style="font-size:19px !important;" class="ar_info" for="wc" id="ar-' . $so->state . '">&nbsp;&nbsp;&nbsp;Word <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Complexity<small>+</small></label></p>';
+			if ( strtolower( $so->state ) != 'green' ) {
+				$out .= '<div id="ar-WCbtn" class="arInlineButton">';
 				$out .= '<div class="onoffswitch">';
 				$out .= '<input type="checkbox" style="visibility: hidden !important;display: none !important;" name="onoffswitch" class="onoffswitch-checkbox"
 					id="writer_WordComp">';
@@ -299,16 +302,37 @@
 				$out .= '<span class="onoffswitch-switch-word"></span>';
 				$out .= '</label>';
 				$out .= '</div>';
-				$out .= '<p class="writer_fixes-labels"> &nbsp;&nbsp;&nbsp;Word Complexity <span>beta</span></p>';
 				$out .= '</div>';
 			}
+			$out .= '</div>' . PHP_EOL;
+//			Word Complexity ENDS
 
+
+//			EMOTION
+			$em = $this->result->data->analysis->em;
+			$out .= '<script> var emState = ' . json_encode( $this->result->data->analysis->em->state ) . '; </script>';
+			$out .= '<script> var emState = ' . json_encode( $this->result->data->analysis->em->state ) . '; </script>';
+			$out .= '<script> var emWords = ' . json_encode( $this->result->data->analysis->em->words ) . '; </script>';
+			$out .= '<div class="arMeasureWrapper">' . PHP_EOL;
+			$out .= '<p id="ar-em"><input id="em" name="em" type="checkbox" />' . PHP_EOL;
+			$out .= '<label style="font-size:20px !important;" class="ar_info" for="em" id="ar-' . $em->state . '">&nbsp;&nbsp;&nbsp;Emotion<small>+</small> <span class="arBetaTag">beta</span></label></p>'. PHP_EOL;
+			if ( strtolower( $em->state ) != 'green' ) {
+				$out .= '<div id="ar-EMbtn" class="arInlineButton">'. PHP_EOL;
+				$out .= '<div class="onoffswitch">'. PHP_EOL;
+				$out .= '<input type="checkbox" style="visibility: hidden !important;display: none !important;" name="onoffswitch" class="onoffswitch-checkbox" id="writer_EM">'. PHP_EOL;
+				$out .= '<label class="onoffswitch-label" for="writer_EM">'. PHP_EOL;
+				$out .= '<span class="onoffswitch-inner"></span>'. PHP_EOL;
+				$out .= '<span class="onoffswitch-switch-emotion"></span>'. PHP_EOL;
+				$out .= '</label>'. PHP_EOL;
+				$out .= '</div>'. PHP_EOL;
+				$out .= '</div>'. PHP_EOL;
+			}
+			$out .= '</div>' . PHP_EOL;
+//			EMOTION END
+			$out .= '</div>';
 			$out .= '</article>' . PHP_EOL;
 
-
 			return $out;
-
-
 		}
 
 

@@ -3,7 +3,7 @@
 	  Plugin Name: Atomic Writer
 	  Plugin URI: http://www.atomicreach.com
 	  Description: AtomicWriter will show you how to format and restructure your blog posts to get the best out of your writing.
-	  Version: 3.0.03
+	  Version: 3.0.04
 	  Author URI: http://www.atomicreach.com
 	  Author: atomicreach
 	 */
@@ -611,8 +611,9 @@
 
 				update_option( 'aranalyzer_consumerkey', $res->data->consumerKey );
 				update_option( 'aranalyzer_secretkey', $res->data->consumerSecret );
+				update_option( 'aranalyzer_accountId', $res->data->accountId );
 
-				echo "ok";
+				echo "ok-".$res->data->accountId;
 
 				aranalyzer_hatchbuckIntegration( $email );
 				die();
@@ -720,6 +721,8 @@
 			$score .= '<div class="score-card">';
 			$score .= $Output->displayScore();
 			$score .= '</div>';
+			$score .= '<p style="background-color: #64C1DD;margin: 0;text-align: center;color: #ffffff;">Click Any Button To Start Editing.</p>';
+
 			$score .= '<ul class="AR-tabs">
                                         <li><a class="AR-tabsButton" href="#arTabTitle">Title</a></li>
                                         <li><a class="AR-tabsButton" href="#arTab1Audience">Format</a></li>

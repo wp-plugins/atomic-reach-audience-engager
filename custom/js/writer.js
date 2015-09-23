@@ -44,7 +44,9 @@ jQuery(document).ready(function ($) {
             'pass': pass
         };
         $.post(ajaxurl, data, function (response) {
-            if (response != 'ok') {
+            console.log(response);
+
+            if(! response.match(/ok/g) ){
                 var value = JSON.parse(response);
 
                 if (typeof value.data.email !== 'undefined') {
@@ -63,7 +65,14 @@ jQuery(document).ready(function ($) {
                 $("#aw-API-Error").show().delay(5000).fadeOut("slow", function () {
                     $(this).empty()
                 });
-            } else if (response == 'ok') {
+            } else {
+
+
+                //var x = response.split("-");
+                //var s = '<img src="https://shareasale.com/sale.cfm?amount=0.00&tracking='+x[1]+'&transtype=lead&merchantID=61405" width="1" height="1">';
+                //$('body').append(s);
+
+
                 $("#aw-atomicAdminNotice").fadeOut();
                 $("#AW-StandBy").load("../wp-content/plugins/atomic-reach-audience-engager/custom/html/audSlider-score.html", function () {
                     $("#AW-notLoggedIn").slideUp("slow", function () {
@@ -224,7 +233,8 @@ jQuery(document).ready(function ($) {
 
             // If the location.hash matches one of the links, use that as the active tab.
             // If no match is found, use the first link as the initial active tab.
-            $active = $($links.filter('[href="' + location.hash + '"]')[0] || $links[0]);
+
+            $active = $($links.filter('[href="' + location.hash + '"]')[0] || $links[2]);
             $active.addClass('active');
             $content = $($active[0].hash);
 
@@ -259,20 +269,7 @@ jQuery(document).ready(function ($) {
 
             $("#ar-kword").tooltipsy({
                 offset: [-10, 0],
-                css: {
-                    'padding': '10px',
-                    'width': 'auto',
-                    'color': 'white',
-                    'background-color': '#64C1DD',
-                    'border': '1px solid #E6E6E6',
-                    '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'text-shadow': 'none',
-                    'text-align': 'left'
-
-
-                },
+                className: 'arTooltipsy',
                 content: '<b>Your Keywords:</b> <br><p>' + tgKeywords + '</p>'
             });
 
@@ -282,38 +279,14 @@ jQuery(document).ready(function ($) {
 
             $("#ar-ln").tooltipsy({
                 offset: [-10, 0],
-                css: {
-                    'padding': '10px',
-                    'max-width': '200px',
-                    'color': 'white',
-                    'background-color': '#64C1DD',
-                    'border': '1px solid #E6E6E6',
-                    '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'text-shadow': 'none',
-                    'text-align': 'left'
-                },
+                className: 'arTooltipsy',
                 content: '<b>Tip:</b> <br>You have <span>' + lengthCount + '</span> sentences. Hit the ideal mark of 26-75 sentences to increase readability.'
             });
         } else if (lengthState == 'green') {
 
             $("#ar-ln").tooltipsy({
                 offset: [-10, 0],
-                css: {
-                    'padding': '10px',
-                    'max-width': '200px',
-                    'color': 'white',
-                    'background-color': '#64C1DD',
-                    'border': '1px solid #E6E6E6',
-                    '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'text-shadow': 'none',
-                    'text-align': 'left'
-
-
-                },
+                className: 'arTooltipsy',
                 content: '<b>Tip:</b> <br>Length of article is <span>' + lengthCount + ' </span>sentences. You are good to go!'
             });
         }
@@ -322,20 +295,7 @@ jQuery(document).ready(function ($) {
 
             $("#ar-gm").tooltipsy({
                 offset: [-10, 0],
-                css: {
-                    'padding': '10px',
-                    'max-width': '200px',
-                    'color': 'white',
-                    'background-color': '#64C1DD',
-                    'border': '1px solid #E6E6E6',
-                    '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'text-shadow': 'none',
-                    'text-align': 'left'
-
-
-                },
+                className: 'arTooltipsy',
                 content: '<b>Tip:</b><br>' +
                 'Whoa, you are good!'
             });
@@ -343,20 +303,7 @@ jQuery(document).ready(function ($) {
 
             $("#ar-gm").tooltipsy({
                 offset: [-10, 0],
-                css: {
-                    'padding': '10px',
-                    'max-width': '200px',
-                    'color': 'white',
-                    'background-color': '#64C1DD',
-                    'border': '1px solid #E6E6E6',
-                    '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'text-shadow': 'none',
-                    'text-align': 'left'
-
-
-                },
+                className: 'arTooltipsy',
                 content: '<b>Tip:</b><br>' +
                 ' Turn on the highlight feature to identify grammar issues.'
             });
@@ -366,20 +313,7 @@ jQuery(document).ready(function ($) {
 
             $("#ar-sm").tooltipsy({
                 offset: [-10, 0],
-                css: {
-                    'padding': '10px',
-                    'max-width': '200px',
-                    'color': 'white',
-                    'background-color': '#64C1DD',
-                    'border': '1px solid #E6E6E6',
-                    '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'text-shadow': 'none',
-                    'text-align': 'left'
-
-
-                },
+                className: 'arTooltipsy',
                 content: '<b>Tip:</b><br>' +
                 'You are a great speller!'
             });
@@ -387,20 +321,7 @@ jQuery(document).ready(function ($) {
 
             $("#ar-sm").tooltipsy({
                 offset: [-10, 0],
-                css: {
-                    'padding': '10px',
-                    'max-width': '200px',
-                    'color': 'white',
-                    'background-color': '#64C1DD',
-                    'border': '1px solid #E6E6E6',
-                    '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'text-shadow': 'none',
-                    'text-align': 'left'
-
-
-                },
+                className: 'arTooltipsy',
                 content: '<b>Tip:</b><br>' +
                 'Turn on the hightlight feature to fix or add words to dictionary.'
             });
@@ -412,18 +333,7 @@ jQuery(document).ready(function ($) {
 
             $("#ar-lc").tooltipsy({
                 offset: [-10, 0],
-                css: {
-                    'padding': '10px',
-                    'max-width': '200px',
-                    'color': 'white',
-                    'background-color': '#64C1DD',
-                    'border': '1px solid #E6E6E6',
-                    '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'text-shadow': 'none',
-                    'text-align': 'left'
-                },
+                className: 'arTooltipsy',
                 content: '<b>Tip:</b><br>' +
                 'Your links are valid. Phew!'
             });
@@ -433,18 +343,7 @@ jQuery(document).ready(function ($) {
 
             $("#ar-lc").tooltipsy({
                 offset: [-10, 0],
-                css: {
-                    'padding': '10px',
-                    'max-width': '200px',
-                    'color': 'white',
-                    'background-color': '#64C1DD',
-                    'border': '1px solid #E6E6E6',
-                    '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'text-shadow': 'none',
-                    'text-align': 'left'
-                },
+                className: 'arTooltipsy',
                 content: '<b>Tip:</b><br> Link is broken or slow-to-load.'
             });
         }
@@ -455,18 +354,7 @@ jQuery(document).ready(function ($) {
 
             $("#ar-em").tooltipsy({
                 offset: [-10, 0],
-                css: {
-                    'padding': '10px',
-                    'max-width': '200px',
-                    'color': 'white',
-                    'background-color': '#64C1DD',
-                    'border': '1px solid #E6E6E6',
-                    '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'text-shadow': 'none',
-                    'text-align': 'left'
-                },
+                className: 'arTooltipsy',
                 content: '<b>Tip:</b><br> Connect with your readers using a positive or negative emotion.'
             });
         }
@@ -475,19 +363,8 @@ jQuery(document).ready(function ($) {
 
             $("#ar-em").tooltipsy({
                 offset: [-10, 0],
-                css: {
-                    'padding': '10px',
-                    'max-width': '200px',
-                    'color': 'white',
-                    'background-color': '#64C1DD',
-                    'border': '1px solid #E6E6E6',
-                    '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'text-shadow': 'none',
-                    'text-align': 'left'
-                },
-                content: '<b>Tip:</b><br> Connect with your readers using a positive or negative emotion.'
+                className: 'arTooltipsy',
+                content: '<b>Tip:</b><br> Turn on highlighting to see how you are emotionally connecting with your readers.'
             })
         }
 
@@ -497,18 +374,7 @@ jQuery(document).ready(function ($) {
 
             $("#ar-pwd").tooltipsy({
                 offset: [-10, 0],
-                css: {
-                    'padding': '10px',
-                    'max-width': '200px',
-                    'color': 'white',
-                    'background-color': '#64C1DD',
-                    'border': '1px solid #E6E6E6',
-                    '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'text-shadow': 'none',
-                    'text-align': 'left'
-                },
+                className: 'arTooltipsy',
                 content: '<b>Tip:</b><br> Paragraph density is great, making reading a breeze!'
             });
         }
@@ -517,18 +383,7 @@ jQuery(document).ready(function ($) {
 
             $("#ar-pwd").tooltipsy({
                 offset: [-10, 0],
-                css: {
-                    'padding': '10px',
-                    'max-width': '200px',
-                    'color': 'white',
-                    'background-color': '#64C1DD',
-                    'border': '1px solid #E6E6E6',
-                    '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'text-shadow': 'none',
-                    'text-align': 'left'
-                },
+                className: 'arTooltipsy',
                 content: '<b>Tip:</b><br>Turn on the highlight feature and revise those sections.'
             })
         }
@@ -537,79 +392,35 @@ jQuery(document).ready(function ($) {
             $('#ar-SObtn').remove();
             $("#ar-so").tooltipsy({
                 offset: [-10, 0],
-                css: {
-                    'padding': '10px',
-                    'max-width': '200px',
-                    'color': 'white',
-                    'background-color': '#64C1DD',
-                    'border': '1px solid #E6E6E6',
-                    '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'text-shadow': 'none',
-                    'text-align': 'left'
-                },
+                className: 'arTooltipsy',
                 content: '<b>Tip:</b><br> Sentence density matches audience readability.'
             });
             $("#ar-wc").tooltipsy({
                 offset: [-10, 0],
-                css: {
-                    'padding': '10px',
-                    'max-width': '200px',
-                    'color': 'white',
-                    'background-color': '#64C1DD',
-                    'border': '1px solid #E6E6E6',
-                    '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'text-shadow': 'none',
-                    'text-align': 'left'
-                },
+                className: 'arTooltipsy',
                 content: '<b>Tip:</b><br> Word complexity matches audience readability.'
             });
         }
         else if (senState == 'red' || 'yellow') {
 
             if (soHL.detail == "TOO COMPLEX") {
-                var contentWC = "Turn on this feature to find words that are too complicated for your audience.";
+                var contentWC = "Turn on highlighting and replace some of the words that are too complicated for your audience.";
                 var contentSO = "";
             }
             if (soHL.detail == "TOO SIMPLE") {
-                var contentWC = "Turn on this feature to find words that are too simple for your audience.   ";
+                var contentWC = "Turn on highlighting and replace some of the words that are too simple for your audience.   ";
                 var contentSO = "";
             }
 
             $("#ar-so").tooltipsy({
                 offset: [-10, 0],
-                css: {
-                    'padding': '10px',
-                    'max-width': '200px',
-                    'color': 'white',
-                    'background-color': '#64C1DD',
-                    'border': '1px solid #E6E6E6',
-                    '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'text-shadow': 'none',
-                    'text-align': 'left'
-                },
-                content: '<b>Tip:</b><br>  Turn on the highlight feature and revise those sections.'
+                className: 'arTooltipsy',
+                content: '<b>Tip:</b><br>  Turn on highlighting and revise most of these sections.'
             });
 
             $("#ar-wc").tooltipsy({
                 offset: [-10, 0],
-                css: {
-                    'padding': '10px',
-                    'max-width': '200px',
-                    'color': 'white',
-                    'background-color': '#64C1DD',
-                    'border': '1px solid #E6E6E6',
-                    '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-                    'text-shadow': 'none',
-                    'text-align': 'left'
-                },
+                className: 'arTooltipsy',
                 content: '<b>Tip:</b><br>'+contentWC
             })
         }
@@ -623,33 +434,49 @@ jQuery(document).ready(function ($) {
         return true;
     });
 
-    function unwrapAllHighlighting() {
-        var element = $('#content_ifr').contents().find('body');
-
-        $(element).find("span.arSMhighlight").contents().unwrap();
-        $(element).find("span.arGMhighlight").contents().unwrap();
-        $(element).find("span.SenCompHighlight").contents().unwrap();
-        $(element).find("span.WordCompHighlight").contents().unwrap();
-        $(element).find("span.arWChighlight").contents().unwrap();
-        $(element).find("span.pwdHighlight").contents().unwrap();
-        $(element).find("span.arLNhighlight").contents().unwrap();
-
-
-    }
-
     function clearAllhighlighting() {
         var element = $('#content_ifr').contents().find('body');
 
-        $(element).find("span.arSMhighlight").removeAttr('style');
-        $(element).find("span.arGMhighlight").removeAttr('style');
-        $(element).find("span.SenCompHighlight").removeAttr('style');
-        $(element).find("span.WordCompHighlight").contents().unwrap();
-        $(element).find("span.arWChighlight").contents().unwrap();
-        $(element).find("span.pwdHighlight").removeAttr('style');
-        $(element).find("span.arLNhighlight").removeAttr('style');
-        $(element).parent().css('border', 'none');
+        if ($(element).find("span.arSMhighlight").length > 0) {
+            $(element).find("span.arSMhighlight").removeAttr('style');
+            $(element).find("span.arSMhighlight").contents().unwrap();
+        }
+        if ($(element).find("span.arEMhighlight").length > 0) {
+            $(element).find("span.arEMhighlight").removeAttr('style');
+            $(element).find("span.arEMhighlight").contents().unwrap();
+        }
 
-        unwrapAllHighlighting();
+
+        if ($(element).find("span.arGMhighlight").length > 0) {
+            $(element).find("span.arGMhighlight").removeAttr('style');
+            $(element).find("span.arGMhighlight").contents().unwrap();
+        }
+        if ($(element).find("span.SenCompHighlight").length > 0) {
+            $(element).find("span.SenCompHighlight").removeAttr('style');
+            $(element).find("span.SenCompHighlight").contents().unwrap();
+        }
+
+        if ($(element).find("span.pwdHighlight").length > 0) {
+            $(element).find("span.pwdHighlight").removeAttr('style');
+            $(element).find("span.pwdHighlight").contents().unwrap();
+        }
+        if ($(element).find("span.arLNhighlight").length > 0) {
+            $(element).find("span.arLNhighlight").removeAttr('style');
+            $(element).find("span.arLNhighlight").contents().unwrap();
+        }
+
+        if ($(element).find(".writer_wordComplexity").length > 0)
+            $(element).find(".writer_wordComplexity").addClass("writer-hide");
+
+        if ($(element).find("span.arWChighlight").length > 0) {
+            $(element).find("span.arWChighlight").removeAttr('style');
+            $(element).removeHighlight('.arWChighlight');
+            if ($(element).find("span.WordCompHighlight").length > 0)
+                $(element).removeHighlight('.WordCompHighlight');
+        }
+
+
+
     }
 
 
@@ -671,18 +498,7 @@ function createTooltipsyForTheI(){
 
     jQuery("#aud_info_WP").tooltipsy({
         offset: [-10, 0],
-        css: {
-            'padding': '10px',
-            'width': 'auto',
-            'color': 'white',
-            'background-color': '#64C1DD',
-            'border': '1px solid #E6E6E6',
-            '-moz-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-            '-webkit-box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-            'box-shadow': '0 0 10px rgba(0, 0, 0, .5)',
-            'text-shadow': 'none',
-            'text-align': 'left'
-        },
+        className: 'arTooltipsy',
         content: "<p><strong>The knowledge levels to choose from are:</strong><br>" +
         "<strong>General</strong> - your audience has a basic understanding of the content topic or theme.<br>" +
         "<strong>Knowledgeable</strong> - your audience has an advanced understanding of content or theme.<br>" +
