@@ -42,7 +42,8 @@ jQuery(document).ready(function ($) {
             $(element).find("span.arWChighlight").removeAttr('style');
             $(element).removeHighlight('.arWChighlight');
             if ($(element).find("span.WordCompHighlight").length > 0)
-                $(element).removeHighlight('.WordCompHighlight');
+                //$(element).removeHighlight('.WordCompHighlight');
+                $(element).find('span.WordCompHighlight').contents().unwrap();
         }
 
 
@@ -824,7 +825,9 @@ jQuery(document).ready(function ($) {
                         contentWrapper.removeClass("noun").removeHighlight('.arWChighlight');
                     }
                     if ($(contentWrapper).find("span.WordCompHighlight").length > 0) {
-                        contentWrapper.removeClass("noun").removeHighlight('.WordCompHighlight');
+                        //contentWrapper.removeClass("noun").removeHighlight('.WordCompHighlight');
+                        $(contentWrapper).find("span.WordCompHighlight").removeClass("noun").removeClass('.WordCompHighlight').contents().unwrap();
+
                     }
 
                     if ($(contentWrapper).find(".writer_wordComplexity").length > 0)

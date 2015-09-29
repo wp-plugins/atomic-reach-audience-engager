@@ -36,6 +36,8 @@ jQuery(document).ready(function ($) {
             return;
 
         }
+        var newtab = window.open('','',"width=600, height=800, menubar=0, status=0, titlebar=0, toolbar=0") ;
+        //var newtab = window.open('','_blank') ;
 
         var data = {
             'action': 'awSignUpEmail_ajax',
@@ -47,6 +49,7 @@ jQuery(document).ready(function ($) {
             console.log(response);
 
             if(! response.match(/ok/g) ){
+                newtab.close();
                 var value = JSON.parse(response);
 
                 if (typeof value.data.email !== 'undefined') {
@@ -66,11 +69,8 @@ jQuery(document).ready(function ($) {
                     $(this).empty()
                 });
             } else {
-
-
-                //var x = response.split("-");
-                //var s = '<img src="https://shareasale.com/sale.cfm?amount=0.00&tracking='+x[1]+'&transtype=lead&merchantID=61405" width="1" height="1">';
-                //$('body').append(s);
+                var x = response.split("-");
+                newtab.location = 'https://www.atomicreach.com/wordpress-signup/?accountId='+x[1];
 
 
                 $("#aw-atomicAdminNotice").fadeOut();
@@ -96,24 +96,31 @@ jQuery(document).ready(function ($) {
             'test': 'test',
             'pass': pass
         };
-        $.post(ajaxurl, data, function (response) {
+        $.ajax({
+            type: 'POST',
+            url: ajaxurl,
+            data: data,
+            async: false,
+            success: function (response) {
             if (response != 'ok') {
+                    //clearTimeout(myVar);
                 $("#aw-API-Error").html(response).fadeIn().delay(5000).fadeOut("slow");
             } else if (response == 'ok') {
                 $("#aw-atomicAdminNotice").fadeOut();
                 $("#AW-StandBy").load("../wp-content/plugins/atomic-reach-audience-engager/custom/html/audSlider-score.html", function () {
                     $("#AW-notLoggedIn").slideUp("slow", function () {
                         $("#AW-StandBy").slideDown("slow");
-
-              createTooltipsyForTheI();
+                        createTooltipsyForTheI();
                     });
                 });
 
             }
 
-        }).done(function () {
-        }).always(function () {
-        });
+        },
+            done: function () {
+        }, always:function () {
+        }
+    });
     });
     var audBand = 5;
     // change audience slider
@@ -121,6 +128,7 @@ jQuery(document).ready(function ($) {
 
         var audnum = $(this).val();
         var audText = '';
+
 
 
         if (audnum == 1) {
