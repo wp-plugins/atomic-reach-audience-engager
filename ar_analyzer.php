@@ -3,7 +3,7 @@
 	  Plugin Name: Atomic Writer
 	  Plugin URI: http://www.atomicreach.com
 	  Description: AtomicWriter will show you how to format and restructure your blog posts to get the best out of your writing.
-	  Version: 3.0.05
+	  Version: 3.0.07
 	  Author URI: http://www.atomicreach.com
 	  Author: atomicreach
 	 */
@@ -21,8 +21,8 @@
 	// define('AR_URL', 'http://probar.atomicreach.com');
 	//define('AR_URL', 'http://arv3.local');
 	/* Staging */
-	//	define('API_HOST', 'https://api.dev.arv3.atomicreach.com'); // with SSL
-	//	define('AR_URL', 'http://dev.arv3.atomicreach.com');
+//		define('API_HOST', 'https://api.dev.arv3.atomicreach.com'); // with SSL
+//		define('AR_URL', 'http://dev.arv3.atomicreach.com');
 
 	/* Production */
 	define( 'API_HOST', 'https://app.atomicreach.com' ); // with SSL
@@ -260,6 +260,7 @@
 	}
 
 	function aranalyzer_admin_actions() {
+
 		wp_enqueue_script( 'ar_simple.modal_js', MY_PLUGIN_PATH . 'modal/js/jquery.simplemodal.js', array( 'jquery' ) );
 		wp_enqueue_script( 'ar_modal.windows_js', MY_PLUGIN_PATH . 'modal/js/modal.windows.js', array( 'jquery' ) );
 		wp_enqueue_style( 'ar_modal_css', MY_PLUGIN_PATH . '/modal/css/modal-windows.css' );
@@ -270,7 +271,6 @@
 	add_action( 'admin_menu', 'aranalyzer_admin_actions' );
 
 	function aranalyzer_review( $post_ID = 0 ) {
-
 		if ( $post_ID == 0 ) {
 			$post_ID = intval( $_POST['postID'] );
 			$arajax  = 1;
@@ -510,16 +510,16 @@
 		<script type="text/javascript">
 			//<![CDATA[
 			jQuery(document).ready(function ($) {
-				$('#toplevel_page_ar-analyzer-admin').pointer({
+				$('#arScore_WP').pointer({
 					content: '<?php echo $pointer_content; ?>',
 					position: {
-						edge: 'left', // arrow direction
+						edge: 'bottom', // arrow direction
 						align: 'center' // vertical alignment
 					},
 					pointerWidth: 350,
 					close: function () {
 						$.post(ajaxurl, {
-							pointer: 'ar_settings_pointer', // pointer ID
+							pointer: 'ar_settings_pointer2', // pointer ID
 							action: 'dismiss-wp-pointer'
 						});
 					}
@@ -550,6 +550,7 @@
 	add_action( 'wp_ajax_aranalyzer_ajax', 'aranalyzer_ajax_callback' );
 	add_action( 'wp_ajax_awSignUpEmail_ajax', 'awSignUpEmail_ajax_callback' );
 	add_action( 'wp_ajax_awSignInEmail_ajax', 'awSignInEmail_ajax_callback' );
+	add_action( 'wp_ajax_awCheckScoreFreq_ajax', 'awCheckScoreFreq_ajax_callback' );
 
 	function  awSignInEmail_ajax_callback() {
 
@@ -563,7 +564,6 @@
 		if ( isset( $email ) && isset( $pass ) ) {
 
 
-
 			$host = API_HOST;
 
 			require_once( MY_PLUGIN_FOLDER . '/includes/ARClient.php' );
@@ -572,8 +572,8 @@
 
 			if ( $apiClient->key != "" && $apiClient->secret != "" ) {
 
-				update_option('aranalyzer_consumerkey', $apiClient->key);
-				update_option('aranalyzer_secretkey', $apiClient->secret);
+				update_option( 'aranalyzer_consumerkey', $apiClient->key );
+				update_option( 'aranalyzer_secretkey', $apiClient->secret );
 				aranalyzer_hatchbuckIntegration( $email );
 
 				echo "ok";
@@ -590,7 +590,6 @@
 	}
 
 	function  awSignUpEmail_ajax_callback() {
-
 
 
 		if ( isset( $_POST['email'] ) ) {
@@ -612,7 +611,7 @@
 				update_option( 'aranalyzer_secretkey', $res->data->consumerSecret );
 				update_option( 'aranalyzer_accountId', $res->data->accountId );
 
-				echo "ok-".$res->data->accountId;
+				echo "ok-" . $res->data->accountId;
 
 				aranalyzer_hatchbuckIntegration( $email );
 				die();
@@ -656,7 +655,11 @@
 		}
 	}
 
+
 	function aranalyzer_ajax_callback() {
+
+		update_user_option( get_current_user_id(), 'arLastScoreDate', date( 'Y-m-d' ) );// saves the latest date of when user scores.
+
 		/*$postID = intval($_POST['postID']);
 
 		$post_info = get_post($postID);
@@ -752,6 +755,35 @@
 		} else {
 			return "Error Message: " . $result->error . "  Status Code: [" . $result->status . "]";
 		}
+	}
+
+	function awCheckScoreFreq_ajax_callback() {
+		$screen                 = get_current_screen();
+		$numDaysLastScore       = getDays();
+		$numDaysSinceActivation = getDays( TRUE );
+		$consumerkey            = get_option( 'aranalyzer_consumerkey' );
+		$secretkey              = get_option( 'aranalyzer_secretkey' );
+
+		//	If user is signed in - check how active they are.
+		if ( ! empty( $consumerkey ) || ! empty( $secretkey ) ) {
+			if ( $numDaysSinceActivation >= 1 ) {
+				// activated for more than a day but never scored any post.
+				if (!$numDaysLastScore)  {
+					echo 20;
+				}
+				// activated the plugin more than a day but haven't score a post in last 3 days.
+				elseif ( $numDaysLastScore > 3 ) {
+					echo 22;
+				}
+				else{
+					echo 0;// see writer.js:6
+				}
+			}else{
+				echo 0;
+			}
+
+		}
+		die();
 	}
 
 
@@ -881,21 +913,38 @@
 
 	// TOP banner
 	function aranalyzer_admin_user_area_notice() {
-		$screen = get_current_screen();
+		$screen                 = get_current_screen();
+		$numDaysLastScore       = getDays();
+		$numDaysSinceActivation = getDays( TRUE );
+		$consumerkey            = get_option( 'aranalyzer_consumerkey' );
+		$secretkey              = get_option( 'aranalyzer_secretkey' );
+		$aranalyzer_state_keys  = get_option( 'aranalyzer_state_keys' );
 
 		if ( current_user_can( 'manage_options' ) ) {
-			$consumerkey           = get_option( 'aranalyzer_consumerkey' );
-			$secretkey             = get_option( 'aranalyzer_secretkey' );
-			$aranalyzer_state_keys = get_option( 'aranalyzer_state_keys' );
-			if ( $screen->id !== 'toplevel_page_ar-analyzer-admin' ) {
-				if ( ( empty( $consumerkey ) || empty( $secretkey ) ) || ( $aranalyzer_state_keys === 'FALSE' || empty( $aranalyzer_state_keys ) ) ) {
+			// if user is not logged in - Walk them through to the sign up screen.
+			if ( ! $consumerkey && ! $secretkey ) {
+				if ( $screen->id != "edit-post" && $screen->id != 'post' ) {
 					echo ' <div id="aw-atomicAdminNotice" class="update-nag">
                  <img id="awLogoNoticeArea" src="' . plugin_dir_url( __FILE__ ) . 'custom/imgs/AW_logo_icon_80px.png" />
                  <h2>Let\'s go use AtomicWriter! <a href="' . admin_url( 'edit.php' ) . '">Edit</a> some articles now.</h2>
           </div>';
+				} elseif ( $screen->id == "edit-post" ) {
+
+					echo ' <div id="aw-atomicAdminNotice" class="update-nag">
+                 <img id="awLogoNoticeArea" src="' . plugin_dir_url( __FILE__ ) . 'custom/imgs/AW_logo_icon_80px.png" />
+                 <h2><strong>Almost there!</strong> Click on any post title to setup AtomicWriter.</h2>
+          </div>';
+				} elseif ( $screen->id == 'post' ) {
+
+					echo ' <div id="aw-atomicAdminNotice" class="update-nag">
+                 <img id="awLogoNoticeArea" src="' . plugin_dir_url( __FILE__ ) . 'custom/imgs/AW_logo_icon_80px.png" />
+                 <h2><strong>One last step!</strong> <a id="awAdminNoticeSignup" href="">Sign up</a> to analyze this article.</h2>
+          </div>';
 				}
 			}
 		}
+
+
 	}
 
 	add_action( 'admin_notices', 'aranalyzer_admin_user_area_notice' );
@@ -905,6 +954,8 @@
 // custom feed
 		update_option( 'aranalyzer_RSS', 1 );
 		update_option( 'aranalyzer_view', 1 );
+		update_option( 'arActivatedDate', date( 'Y-m-d' ) );
+
 		arfeed();
 		flush_rewrite_rules();
 	}
@@ -917,7 +968,78 @@
 		delete_option( 'aranalyzer_tracking' );
 		delete_option( 'aranalyzer_view' );
 		delete_option( 'aranalyzer_RSS' );
+		delete_option( 'aranalyzer_consumerkey' );
+		delete_option( 'aranalyzer_secretkey' );
+		delete_option( 'aranalyzer_state_keys' );
+		delete_option( 'arActivatedDate' );
+		delete_user_option( get_current_user_id(), 'arLastScoreDate' );
 	}
 
 	register_deactivation_hook( __FILE__, 'atomic_engager_deactivation' );
+
+// Return number of days since user last score.
+	function getDays( $activation = FALSE ) {
+		$today          = date( 'Y-m-d' ); // Today's date
+		$lastScoreDate  = get_user_option( 'arLastScoreDate' );
+		$activationDate = get_option( 'arActivatedDate' );
+
+
+		if ( $activation ) {
+			if ( ! $activationDate ) {
+				return FALSE;
+			}
+			$requestedDate = $activationDate;
+		} else {
+			if ( ! $lastScoreDate ) {
+				return FALSE;
+			} // return 0 if user never scored before.
+			$requestedDate = $lastScoreDate;
+		}
+
+		$sec = strtotime( $today ) - strtotime( $requestedDate );
+
+		return secondsToTime( $sec );
+	}
+
+
+	/**
+	 * Convert number of seconds into hours, minutes and seconds
+	 * and return an array containing those values
+	 *
+	 * @param integer $inputSeconds Number of seconds to parse
+	 *
+	 * @return array
+	 */
+	function secondsToTime( $inputSeconds ) {
+
+		$secondsInAMinute = 60;
+		$secondsInAnHour  = 60 * $secondsInAMinute;
+		$secondsInADay    = 24 * $secondsInAnHour;
+
+		// extract days
+		$days = floor( $inputSeconds / $secondsInADay );
+
+		// extract hours
+		$hourSeconds = $inputSeconds % $secondsInADay;
+		$hours       = floor( $hourSeconds / $secondsInAnHour );
+
+		// extract minutes
+		$minuteSeconds = $hourSeconds % $secondsInAnHour;
+		$minutes       = floor( $minuteSeconds / $secondsInAMinute );
+
+		// extract the remaining seconds
+		$remainingSeconds = $minuteSeconds % $secondsInAMinute;
+		$seconds          = ceil( $remainingSeconds );
+
+		// return the final array
+//		$obj = array(
+//			'd' => (int) $days,
+//			'h' => (int) $hours,
+//			'm' => (int) $minutes,
+//			's' => (int) $seconds,
+//		);
+//		return $obj;
+		return $days;
+	}
+
 ?>

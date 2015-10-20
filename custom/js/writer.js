@@ -2,6 +2,63 @@
  * Created by Atomic 1 on 8/7/2015.
  */
 jQuery(document).ready(function ($) {
+
+    // ATOMIC REACH SCORE REMINDER
+    $("#awAdminNoticeSignup").click(function (e) {
+        e.preventDefault();
+        $('html, body').animate({
+            scrollTop: $("#aranalyzer_metabox").offset().top
+        }, 1000, function () {
+            // Animation complete.
+            $("#aranalyzer_metabox .inside").addClass('aw-glow');
+            setTimeout(function () {
+                $("#aranalyzer_metabox .inside").removeClass('aw-glow');
+            }, 1000)
+        });
+    });
+
+
+    (function () {
+        var s = $("#aranalyzer_metabox .inside #awScoreReminder");
+        $.ajax({
+            type: 'POST',
+            url: ajaxurl,
+            data: {'action': 'awCheckScoreFreq_ajax'},
+            success: function (arScoreReminder) {
+                if (typeof arScoreReminder == 'undefined') return;
+                /*
+                 * 20 = activated for more than a day but never scored any post.
+                 * 22 = Last time user scored any post is more than 4 days.
+                 * */
+
+                if (arScoreReminder == 20) {
+                    s.find('h2').html("Don't forget to edit your article with AtomicWriter!");
+                    showReminderMessage();
+
+                } else if (arScoreReminder == 22) {
+                    s.find('h2').html("See how you can quickly edit your article for your audience.");
+                    showReminderMessage();
+                }
+            }
+        })
+
+        function showReminderMessage(){
+            //hide after 10 seconds.
+            s.slideToggle('slow', function () {
+                $("#aranalyzer_metabox .inside").addClass('aw-glow');
+                setTimeout(function () {
+                    s.slideToggle("slow", function(){
+                        $("#aranalyzer_metabox .inside").removeClass('aw-glow');
+                    });
+
+                }, 4000)
+            })
+        }
+
+    })();
+    // ATOMIC REACH SCORE REMINDER
+
+
     $("#aw-goTosignUpForm").click(function (e) {
         e.preventDefault();
         $("#aw-signIn").fadeOut(function () {
@@ -36,7 +93,7 @@ jQuery(document).ready(function ($) {
             return;
 
         }
-        var newtab = window.open('','',"width=600, height=800, menubar=0, status=0, titlebar=0, toolbar=0") ;
+        var newtab = window.open('', '', "width=600, height=800, menubar=0, status=0, titlebar=0, toolbar=0");
         //var newtab = window.open('','_blank') ;
 
         var data = {
@@ -48,7 +105,7 @@ jQuery(document).ready(function ($) {
         $.post(ajaxurl, data, function (response) {
             console.log(response);
 
-            if(! response.match(/ok/g) ){
+            if (!response.match(/ok/g)) {
                 newtab.close();
                 var value = JSON.parse(response);
 
@@ -70,7 +127,7 @@ jQuery(document).ready(function ($) {
                 });
             } else {
                 var x = response.split("-");
-                newtab.location = 'https://www.atomicreach.com/wordpress-signup/?accountId='+x[1];
+                newtab.location = 'https://www.atomicreach.com/wordpress-signup/?accountId=' + x[1];
 
 
                 $("#aw-atomicAdminNotice").fadeOut();
@@ -102,25 +159,25 @@ jQuery(document).ready(function ($) {
             data: data,
             async: false,
             success: function (response) {
-            if (response != 'ok') {
+                if (response != 'ok') {
                     //clearTimeout(myVar);
-                $("#aw-API-Error").html(response).fadeIn().delay(5000).fadeOut("slow");
-            } else if (response == 'ok') {
-                $("#aw-atomicAdminNotice").fadeOut();
-                $("#AW-StandBy").load("../wp-content/plugins/atomic-reach-audience-engager/custom/html/audSlider-score.html", function () {
-                    $("#AW-notLoggedIn").slideUp("slow", function () {
-                        $("#AW-StandBy").slideDown("slow");
-                        createTooltipsyForTheI();
+                    $("#aw-API-Error").html(response).fadeIn().delay(5000).fadeOut("slow");
+                } else if (response == 'ok') {
+                    $("#aw-atomicAdminNotice").fadeOut();
+                    $("#AW-StandBy").load("../wp-content/plugins/atomic-reach-audience-engager/custom/html/audSlider-score.html", function () {
+                        $("#AW-notLoggedIn").slideUp("slow", function () {
+                            $("#AW-StandBy").slideDown("slow");
+                            createTooltipsyForTheI();
+                        });
                     });
-                });
 
-            }
+                }
 
-        },
+            },
             done: function () {
-        }, always:function () {
-        }
-    });
+            }, always: function () {
+            }
+        });
     });
     var audBand = 5;
     // change audience slider
@@ -128,7 +185,6 @@ jQuery(document).ready(function ($) {
 
         var audnum = $(this).val();
         var audText = '';
-
 
 
         if (audnum == 1) {
@@ -166,14 +222,14 @@ jQuery(document).ready(function ($) {
     $("#aranalyzer_metabox").on("click", "#arScore_WP", function (e) {
         e.preventDefault();
 
-
         var title = $("#title").val();
         var content = tinyMCE.activeEditor.getContent();
 
-        if (title == ""){
+        if (title == "") {
             $("#right-score").html("<span style='color: #ff0000;'>ERROR! : Title is missing. Please write your title and try again.</span>").fadeIn().delay(5000).fadeOut();
             return;
-        }if (content == ""){
+        }
+        if (content == "") {
             $("#right-score").html("<span style='color: #ff0000;'>ERROR! : Content is missing. Please write some content and try again.</span>").fadeIn().delay(5000).fadeOut();
             return;
         }
@@ -429,7 +485,7 @@ jQuery(document).ready(function ($) {
             $("#ar-wc").tooltipsy({
                 offset: [-10, 0],
                 className: 'arTooltipsy',
-                content: '<b>Tip:</b><br>'+contentWC
+                content: '<b>Tip:</b><br>' + contentWC
             })
         }
 
@@ -484,11 +540,7 @@ jQuery(document).ready(function ($) {
         }
 
 
-
     }
-
-
-
 
 
     $("#aw_moretips_WP p").click(function (e) {
@@ -497,11 +549,11 @@ jQuery(document).ready(function ($) {
         $("ul#aw_titletips_WP").slideToggle();
     });
 
-createTooltipsyForTheI();
+    createTooltipsyForTheI();
 
 
 });
-function createTooltipsyForTheI(){
+function createTooltipsyForTheI() {
 
 
     jQuery("#aud_info_WP").tooltipsy({
@@ -511,7 +563,7 @@ function createTooltipsyForTheI(){
         "<strong>General</strong> - your audience has a basic understanding of the content topic or theme.<br>" +
         "<strong>Knowledgeable</strong> - your audience has an advanced understanding of content or theme.<br>" +
         "<strong>Specialist</strong> - your audience has a superior understanding &nbsp;of content or theme.<br>" +
-        "<strong>Academic</strong> - your audience has an proficient&nbsp;understanding of content or theme.<br>" +
-        "<strong>Genius</strong> - your audience has a expert&nbsp;understanding of content or theme.</p>"
+        "<strong>Academic</strong> - your audience has a proficient&nbsp;understanding of content or theme.<br>" +
+        "<strong>Genius</strong> - your audience has an expert&nbsp;understanding of content or theme.</p>"
     });
 }

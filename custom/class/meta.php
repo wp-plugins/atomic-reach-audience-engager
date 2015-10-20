@@ -404,7 +404,7 @@
 			$out .= '<p style="cursor: pointer !important;font-family: \'Roboto\', sans-serif"><i>+ More Title Tips</i></p>' . PHP_EOL;
 			$out .= '<ul id="aw_titletips_WP" style="display: none;">' . PHP_EOL;
 			$out .= '<li>"How to" articles can increase audience engagement</li>' . PHP_EOL;
-			$out .= '<li>In listicles, numbers are easy to read than words</li>' . PHP_EOL;
+			$out .= '<li>In listicles, numbers are easier to read than words</li>' . PHP_EOL;
 			$out .= '<li>Headlines formed as a question provoke curiosity in a reader</li>' . PHP_EOL;
 			$out .= '</ul>' . PHP_EOL;
 			$out .= '<br>' . PHP_EOL;

@@ -1447,3 +1447,25 @@ img#aud_info_WP {
 .arTooltipsy * {
     color: #ffffff;
 }
+
+#aranalyzer_metabox .inside{
+    transition:All 1s ease;
+    -webkit-transition:All 1s ease;
+    -moz-transition:All 1s ease;
+    -o-transition:All 1s ease;
+}
+
+.aw-glow{
+    box-shadow: 0 0 11px #be2a4a;
+}
+#awScoreReminder{
+    border: 1px solid rgba(250, 235, 215, 1);
+    text-align: center;
+    margin: 0 3px;
+    padding: 0 6px;
+    background-color: rgba(250, 235, 215, 0.6);
+    transition:All 1s ease;
+}
+div#awScoreReminder h2 {
+    color: rgb(56, 55, 55);
+}

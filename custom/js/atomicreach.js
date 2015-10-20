@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-    $("#aranalyzer_metabox").on("change", ".onoffswitch > input[type=checkbox]", function(e){
+    $("#aranalyzer_metabox").on("change", ".onoffswitch > input[type=checkbox]", function (e) {
         jQuery(".onoffswitch > input[type=checkbox]").not($(this)).prop('checked', false);
     })
 
@@ -42,10 +42,9 @@ jQuery(document).ready(function ($) {
             $(element).find("span.arWChighlight").removeAttr('style');
             $(element).removeHighlight('.arWChighlight');
             if ($(element).find("span.WordCompHighlight").length > 0)
-                //$(element).removeHighlight('.WordCompHighlight');
+            //$(element).removeHighlight('.WordCompHighlight');
                 $(element).find('span.WordCompHighlight').contents().unwrap();
         }
-
 
 
     }
@@ -70,7 +69,7 @@ jQuery(document).ready(function ($) {
 
                                 if ($('span.arSMhighlight:contains(' + spellHL.detail[i].string + ')').length == 0) {
 
-                                    contentWrapper.highlightRegex('\\b'+spellHL.detail[i].string+'\\b', {'className': 'arSMhighlight'});
+                                    contentWrapper.highlightRegex('\\b' + spellHL.detail[i].string + '\\b', {'className': 'arSMhighlight'});
 
                                     thisSMword = $(contentWrapper).find('span.arSMhighlight');
                                     thisSMword.css({'background-color': 'rgba(234, 129, 142, 0.7)', 'position': 'relative', 'display': 'inline'});
@@ -134,7 +133,7 @@ jQuery(document).ready(function ($) {
                                                     //    ' style="display:inline; padding: 0 3px">' + p[key] + '</li>');
 
                                                     $(contentWrapper).find('.writer-spelling_fix .spellings_list').prepend('<li' +
-                                                        ' style="display:block; padding-left:75px;text-align:left;"><span class="dashicons dashicons-update r" style="vertical-align: middle;cursor: pointer;"></span><strong>'  +
+                                                        ' style="display:block; padding-left:75px;text-align:left;"><span class="dashicons dashicons-update r" style="vertical-align: middle;cursor: pointer;"></span><strong>' +
                                                         p[key] + '</strong></li>');
                                                 }
                                             }
@@ -184,7 +183,7 @@ jQuery(document).ready(function ($) {
                                         if (!$(contentWrapper).find("#load_spelling-popup").is(":hover")) {
                                             $(contentWrapper).find("#load_spelling-popup").remove();
 
-                                            if(beforeHover != afterHover){
+                                            if (beforeHover != afterHover) {
                                                 _this.removeAttr('style').removeClass('.arSMhighlight').contents().unwrap();
 
                                             }
@@ -368,7 +367,7 @@ jQuery(document).ready(function ($) {
                     });
                 }
 
-            $("#writer_EM").change(function() {
+            $("#writer_EM").change(function () {
                 clearAllhighlighting();
                 var contentWrapper = $('#content_ifr').contents().find('body');
 
@@ -376,17 +375,17 @@ jQuery(document).ready(function ($) {
                 if ($("#writer_EM").is(":checked")) {
                     var em = emWords;
 
-                    $.each(em, function(i,v){
+                    $.each(em, function (i, v) {
                         if ($('span.arEMhighlight:contains(' + i + ')').length == 0) {
-                            contentWrapper.highlightRegex('\\b'+i+'\\b', {'className': 'arEMhighlight'});
+                            contentWrapper.highlightRegex('\\b' + i + '\\b', {'className': 'arEMhighlight'});
                             thisEMword = $(contentWrapper).find('span.arEMhighlight');
 
-                            if(v == 'red'){
+                            if (v == 'red') {
 
-                                $(contentWrapper).find('span.arEMhighlight:contains('+i+')').css({'background-color': 'rgba(125, 208, 255, 0.7)', 'position': 'relative', 'display': 'inline'});
-                            }else if(v == 'green'){
+                                $(contentWrapper).find('span.arEMhighlight:contains(' + i + ')').css({'background-color': 'rgba(125, 208, 255, 0.7)', 'position': 'relative', 'display': 'inline'});
+                            } else if (v == 'green') {
 
-                                $(contentWrapper).find('span.arEMhighlight:contains('+i+')').css({'background-color': 'rgba(255, 243, 128, 0.7)', 'position': 'relative', 'display': 'inline'});
+                                $(contentWrapper).find('span.arEMhighlight:contains(' + i + ')').css({'background-color': 'rgba(255, 243, 128, 0.7)', 'position': 'relative', 'display': 'inline'});
                             }
 
 
@@ -424,7 +423,7 @@ jQuery(document).ready(function ($) {
                             });
 
                             $(contentWrapper).find("#load_emotion-popup").load("../wp-content/plugins/atomic-reach-audience-engager/custom/html/popups.html .writer-emotion_fix", {}, function () {
-                                $(contentWrapper).find('.writer-emotion_fix .suggestions_header-em').text( thisWord );
+                                $(contentWrapper).find('.writer-emotion_fix .suggestions_header-em').text(thisWord);
                                 if (p == "red") {
                                     $(contentWrapper).find('.writer-emotion_fix .ar-emRED').show();
                                 } else if (p == "green") {
@@ -445,7 +444,7 @@ jQuery(document).ready(function ($) {
 
                         }
 
-                    },function(){
+                    }, function () {
                         setTimeout(function () {
                             if ($(contentWrapper).find("#load_emotion-popup").length > 0)
                                 if (!$(contentWrapper).find("#load_emotion-popup").is(":hover")) {
@@ -454,7 +453,7 @@ jQuery(document).ready(function ($) {
                         }, 400);
                     });
 
-                }else{
+                } else {
                     var contentWrapper = $('#content_ifr').contents().find('body');
                     contentWrapper.removeClass("noun").removeHighlight('.arEMhighlight');
                     $(".writer-emotion_fix").addClass("writer-hide");
@@ -468,16 +467,16 @@ jQuery(document).ready(function ($) {
 
                 if ($("#writer_ParaDensity").is(":checked")) {
                     var p = pwdHL.detail.paragraphs;
-                    $.each($(contentWrapper).find('p'), function(ind, val){
-                       if (p[ind] != "length_hit" &&  p[ind] != "" && typeof p[ind] != "undefined"){
-                           $(this).wrapInner( "<span class='pwdHighlight'></span>");
-                           $(this).find('span.pwdHighlight').css({
-                               'background-color': 'rgba(220, 220, 244, 0.7)',
-                               'position': 'relative',
-                               'display': 'inline'
-                           });
-                           $(this).data("value", p[ind]);
-                       }
+                    $.each($(contentWrapper).find('p'), function (ind, val) {
+                        if (p[ind] != "length_hit" && p[ind] != "" && typeof p[ind] != "undefined") {
+                            $(this).wrapInner("<span class='pwdHighlight'></span>");
+                            $(this).find('span.pwdHighlight').css({
+                                'background-color': 'rgba(220, 220, 244, 0.7)',
+                                'position': 'relative',
+                                'display': 'inline'
+                            });
+                            $(this).data("value", p[ind]);
+                        }
                     });
 
                     var contentWrapper = $('#content_ifr').contents().find('body');
@@ -546,23 +545,23 @@ jQuery(document).ready(function ($) {
                 if ($("#writer_SenComp").is(":checked")) {
 
 
-
                     var contentWrapper = $('#content_ifr').contents().find('body');
 
 
-                    $.each($(contentWrapper).find('p'), function(i,v) {
-                        if (typeof soHL.sentences[i] != "undefined"){
-                            var sent = $(v).prop('innerText').split(/[\?\.\!]\n|[\?\.\!]\s/);
+                    $.each($(contentWrapper).find('p'), function (i, v) {
+                        if (typeof soHL.sentences[i] != "undefined") {
+                            var sent = $(v).prop('textContent').split(/[\?\.\!]\n|[\?\.\!]\s/);
 
                             for (var x = 0; x < sent.length; x++) {
 
                                 if (soHL.sentences[i][x] != "UNAVAILABLE") {
                                     $(this).highlight(sent[x].trim(), "SenCompHighlight");
                                     //$(this).wrapInner('<span class="SenCompHighlight"></span>');
-                                     $(this).find("span.SenCompHighlight").css({
-                                         "background-color": 'rgba(246, 197, 164, 0.70)',
-                                         "position": "relative",
-                                         "display": "inline"});
+                                    $(this).find("span.SenCompHighlight").css({
+                                        "background-color": 'rgba(246, 197, 164, 0.70)',
+                                        "position": "relative",
+                                        "display": "inline"
+                                    });
                                     $(this).data("value", soHL.sentences[i][x])
 
                                 }
@@ -615,7 +614,7 @@ jQuery(document).ready(function ($) {
                             $(contentWrapper).find('.writer-sentence_Complexity').removeClass("writer-hide");
                         });
                     }, function () {
-                            $(contentWrapper).find("#load_SenComp-popup").remove();
+                        $(contentWrapper).find("#load_SenComp-popup").remove();
                     })
 
                 } else {
@@ -631,64 +630,53 @@ jQuery(document).ready(function ($) {
             // +++++++++++++ WORD COMPLEXITY +++++++++++++++++++
             $("#writer_WordComp").change(function () {
                 if ($("#writer_WordComp").is(":checked")) {
-                clearAllhighlighting();
+                    clearAllhighlighting();
                     var so = soHL;
 
                     var contentWrapper = $('#content_ifr').contents().find('body');
-                    //var pArray = new Array();
+
 
                     var sugg = [];
 
-                    $.each($(contentWrapper).find('p'), function(i,v) {
+                    $.each($(contentWrapper).find('p'), function (i, v) {
+
 
                         if (typeof so.synonyms[i] != "undefined") {
 
-                            //pArray[i] = new Array();
-                        var sent = $(v).prop('innerText').split(/[\?\.\!]\n|[\?\.\!]\s/);
 
-                        for (var x = 0; x < sent.length; x++) {
-                            //pArray[i][x] = sent[x].trim();
+                            var sent = $(v).prop('textContent').split(/[\?\.\!]\n|[\?\.\!]\s/);
 
-
-                            if (typeof so.synonyms[i][x] !== "undefined") {
-
-                                //$(this).highlight(sent[x].trim(), "WordCompHighlight");
-                                $(this).wrapInner("<span class='WordCompHighlight'></span>");
+                            for (var x = 0; x < sent.length; x++) {
+                                if (typeof so.synonyms[i][x] !== "undefined") {
+                                    $(this).wrapInner("<span class='WordCompHighlight'></span>");
                                     var _this = $(this);
 
+                                    $.each(so.synonyms[i][x], function (i2, v2) {
 
-                                $.each(so.synonyms[i][x], function(i2, v2) {
+                                        $(_this).find("span.WordCompHighlight").highlightRegex('\\b' + i2 + '\\b', {'className': 'arWChighlight'});
+
+                                        thisWDword = $(contentWrapper).find('span.WordCompHighlight > span.arWChighlight');
+                                        thisWDword.css({
+                                            'background-color': 'rgba(255, 222, 137, 0.7)',
+                                            'position': 'relative',
+                                            'display': 'inline'
+                                        });
 
 
-                                    //if ($(_this).find('span.arWChighlight:contains(' + i2 + ')').length == 0) {
+                                        sugg = []; //reset variable
+                                        for (var k = 0; k < v2.length; k++) {
+                                            sugg.push(v2[k]);
 
+                                        }
 
-                                    $(_this).find("span.WordCompHighlight").highlightRegex('\\b'+i2+'\\b', {'className': 'arWChighlight'});
-
-
-                                    thisWDword = $(contentWrapper).find('span.WordCompHighlight > span.arWChighlight');
-                                    thisWDword.css({
-                                        'background-color': 'rgba(255, 222, 137, 0.7)',
-                                        'position': 'relative',
-                                        'display': 'inline'
+                                        $(_this).find('span.arWChighlight:contains(' + i2 + ')').data('suggestions', sugg);
+                                        //}
+                                        //    return false;
                                     });
 
-
-
-                                    sugg = []; //reset variable
-                                    for (var k = 0; k < v2.length; k++) {
-                                        sugg.push(v2[k]);
-
-                                    }
-
-                                    $(_this).find('span.arWChighlight:contains(' + i2 + ')').data('suggestions', sugg);
-                                //}
-                                //    return false;
-                                });
-
+                                }
                             }
                         }
-                    }
                     });
 
                     var contentWrapper = $('#content_ifr').contents().find('body');
@@ -698,12 +686,11 @@ jQuery(document).ready(function ($) {
                         beforeHover = $(this).prop("textContent");
 
                         var thisword = $(this).text();
-                       if (e.pageX > $(contentWrapper).width() - 200) {
+                        if (e.pageX > $(contentWrapper).width() - 200) {
                             var left = -180;
                         } else {
                             var left = 0;
                         }
-
 
 
                         var p;
@@ -739,24 +726,24 @@ jQuery(document).ready(function ($) {
                                     for (var key in p) {
                                         if (p.hasOwnProperty(key)) {
                                             var words = '';
+                                            if (typeof p[key][0] == "string")
+                                            $(contentWrapper).find('.writer_wordComplexity .wordCompright').append("<p style=\"margin: 0;" +
+                                                "padding: 0; border-top: 1px solid #fff; font-style: italic; display: block;\"" +
+                                                " class=\"word-complexity-def\">" + p[key][0] + "</p>");
 
-                                                    for (var x = 0; x < p[key][1].length; x++) {
-                                                        if (typeof p[key][1][x][0] != "undefined")
-                                                            words += "<span style='display: inline; text-transform: capitalize;'" +
-                                                                " class='ar-synonym'><span class=\"dashicons dashicons-update r\" style=\"vertical-align: middle;cursor: pointer;\"></span><strong>" +
-                                                                p[key][1][x][0].replace("_", " ") + "</strong></span>, ";
-                                                    }
-                                                    if (typeof words != 'undefined')
-                                                        $(contentWrapper).find('.writer_wordComplexity .wordCompright').append('<p style="margin: 0;' +
-                                                            ' padding: 0; " class="word-complexity-sug">' + words.replace(/,\s*$/, "") +
-                                                            "&nbsp;<span class='ARWCinfoBox' style='background-color: #5a5a5a;border-radius:" +
-                                                            " 32px;width: 14px;height: 14px;display: inline-block;line-height: 10px;'><i style='color:" +
-                                                            "#fff;padding: 6px;text-align: center;font-size: 11px;font-style: normal;font-weight: 600;'>i</i></span></p>");
+                                            for (var x = 0; x < p[key][1].length; x++) {
+                                                if (typeof p[key][1][x][0] != "undefined")
+                                                    words += "<span style='display: inline; text-transform: capitalize; color: #666666'" +
+                                                        " class='ar-synonym'><span class=\"dashicons dashicons-update r\" style=\"width: 16px; height: 20px;display:" +
+                                                        "inline-block;vertical-align: sub;margin-right: 5px;background-repeat: no-repeat; cursor: pointer;\"" +
+                                                        "></span><strong>" + p[key][1][x][0].replace("_", " ") + "</strong></span>, ";
+                                            }
+                                            if (typeof words != 'undefined')
+                                                $(contentWrapper).find('.writer_wordComplexity .wordCompright').append('<p style="margin: 0;' +
+                                                    ' padding: 0; " class="word-complexity-sug">' + words.replace(/,\s*$/, "") +
+                                                    "<span ></span>" +
+                                                    "</p>");
 
-                                                    if (typeof p[key][0] == "string")
-                                                        $(contentWrapper).find('.writer_wordComplexity .wordCompright').append("<p style=\"margin: 0;" +
-                                                            "padding: 0; border-top: 1px solid #fff; display: none;\"" +
-                                                            " class=\"word-complexity-def\">" + p[key][0]) + "</p>";
 
                                         }
                                     }
@@ -809,7 +796,7 @@ jQuery(document).ready(function ($) {
                                 if (!$(contentWrapper).find("#load_wordComplexity-popup").is(":hover")) {
                                     $(contentWrapper).find("#load_wordComplexity-popup").remove()
 
-                                    if(beforeHover != afterHover){
+                                    if (beforeHover != afterHover) {
                                         _this.removeAttr('style').removeClass('.arWChighlight').contents().unwrap();
 
                                     }
@@ -836,7 +823,7 @@ jQuery(document).ready(function ($) {
 
             });
 
-            $("#aw_moretips_WP p").unbind('click').bind('click', function(e){
+            $("#aw_moretips_WP p").unbind('click').bind('click', function (e) {
                 e.preventDefault();
                 $("ul#aw_titletips_WP").slideToggle();
             });
